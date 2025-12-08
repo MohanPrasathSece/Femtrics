@@ -107,7 +107,7 @@ export const Header = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-6 w-[90vw] max-w-sm"
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-[90vw] max-w-sm"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col gap-2">
