@@ -55,7 +55,7 @@ const Dashboard = () => {
               </div>
 
               {/* KPI Cards */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { icon: DollarSign, label: "Monthly Revenue", value: "₹1,24,500", change: "+12%", positive: true },
                   { icon: Users, label: "Customers", value: "342", change: "+8%", positive: true },
@@ -65,13 +65,13 @@ const Dashboard = () => {
                   <motion.div
                     key={kpi.label}
                     whileHover={{ y: -4, scale: 1.02 }}
-                    className="bg-background rounded-xl p-5 card-hover-lift"
+                    className="bg-background rounded-xl p-4 sm:p-5 card-hover-lift"
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <kpi.icon className="w-4 h-4 text-muted-foreground" />
                       <span className="text-muted-foreground text-xs">{kpi.label}</span>
                     </div>
-                    <div className="text-2xl font-bold mb-1 font-sans">{kpi.value}</div>
+                    <div className="text-lg sm:text-2xl font-bold mb-1 font-sans">{kpi.value}</div>
                     <span className={`text-xs font-medium ${kpi.positive ? "text-green-600" : "text-red-500"}`}>
                       {kpi.change} from last month
                     </span>
