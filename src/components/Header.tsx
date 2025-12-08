@@ -92,6 +92,48 @@ export const Header = () => {
         </div>
       </motion.header>
 
+      {/* Mobile Menu - Full Screen Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 md:hidden bg-black/50 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-6 w-[90vw] max-w-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
+                      location.pathname === item.path
+                        ? "bg-pink-100 text-pink-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <span>{t(item.key)}</span>
+                    <ChevronRight className={`w-4 h-4 transition-colors ${
+                      location.pathname === item.path ? "text-pink-600" : "text-gray-400"
+                    }`} />
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Desktop Header - Only visible on desktop */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
@@ -206,48 +248,6 @@ export const Header = () => {
             </div>
           </motion.nav>
         </div>
-
-        {/* Mobile Menu - Full Screen Overlay */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 md:hidden bg-black/50 backdrop-blur-sm"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-6 w-[90vw] max-w-sm"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex flex-col gap-2">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
-                        location.pathname === item.path
-                          ? "bg-pink-100 text-pink-700"
-                          : "text-gray-700 hover:bg-gray-100"
-                      }`}
-                    >
-                      <span>{t(item.key)}</span>
-                      <ChevronRight className={`w-4 h-4 transition-colors ${
-                        location.pathname === item.path ? "text-pink-600" : "text-gray-400"
-                      }`} />
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.header>
     </>
   );
