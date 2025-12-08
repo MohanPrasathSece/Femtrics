@@ -8,7 +8,7 @@ const EMAIL_PASS = (process.env.EMAIL_PASS || 'nmcugwmikuxifur').replace(/\s+/g,
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'zyradigitalsofficial@gmail.com';
 
 // Create transporter
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: EMAIL_USER,

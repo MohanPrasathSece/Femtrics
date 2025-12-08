@@ -146,24 +146,24 @@
     position: relative;
   }
 
-  /* Hide scrollbars on images and elements */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    overflow: hidden;
-  }
-
-  * {
+  /* Hide scrollbars only on specific elements, not globally */
+  .hide-scrollbar {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
   }
 
-  *::-webkit-scrollbar {
+  .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
 
-  /* Allow scrollbars only for specific elements that need them */
+  /* Allow scrollbars for images and content that needs them */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Custom scrollbar styling for elements that need scrollbars */
   .overflow-y-auto::-webkit-scrollbar,
   .overflow-y-scroll::-webkit-scrollbar {
     display: block;

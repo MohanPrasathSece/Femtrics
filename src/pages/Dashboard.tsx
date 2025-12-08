@@ -6,6 +6,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { Link } from "react-router-dom";
+import analyticsBg from "@/assets/analytics-bg.png";
 
 const Dashboard = () => {
   const { t } = useTranslation();
