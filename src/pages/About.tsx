@@ -60,18 +60,18 @@ const About = () => {
     tag.content = content;
   }
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
       <Header />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
+      <section className="pt-32 pb-20 relative overflow-hidden max-w-[100vw]">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 max-w-[100vw]" />
         <div className="absolute top-20 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
         
-        <div className="container-tight relative">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container-tight relative max-w-[100vw] overflow-x-hidden">
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-[100vw] overflow-x-hidden">
             <AnimatedSection direction="left" className="max-w-2xl">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm">
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
