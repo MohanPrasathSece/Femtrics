@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Email configuration - Load from environment variables
 // Note: Google App Passwords should not have spaces - remove spaces if present
@@ -7,17 +9,51 @@ const EMAIL_USER = process.env.EMAIL_USER || 'zyradigitalsofficial@gmail.com';
 const EMAIL_PASS = (process.env.EMAIL_PASS || 'nmcugwmikuxifur').replace(/\s+/g, ''); // Remove any spaces
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'zyradigitalsofficial@gmail.com';
 
-// Create transporter
+// Create transporter with optimized settings
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: EMAIL_USER,
     pass: EMAIL_PASS,
   },
+  // Connection settings for faster delivery
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 5000, // 5 seconds
+  socketTimeout: 10000, // 10 seconds
+  pool: true, // Use connection pooling
+  maxConnections: 5, // Max 5 connections
+  maxMessages: 100, // Max 100 messages per connection
+  rateDelta: 1000, // 1 second
+  rateLimit: 5, // Max 5 messages per second
 });
 
 // Email logging for frontend terminal
 let emailLogs: Array<{ timestamp: string; type: string; message: string; status: 'success' | 'error' | 'info' }> = [];
+
+// Local backup directory
+const BACKUP_DIR = path.join(__dirname, '../backups');
+const ensureBackupDir = () => {
+  if (!fs.existsSync(BACKUP_DIR)) {
+    fs.mkdirSync(BACKUP_DIR, { recursive: true });
+  }
+};
+
+// Save submission to local file
+const saveSubmissionToFile = (data: any) => {
+  try {
+    ensureBackupDir();
+    const filename = `submission_${Date.now()}_${data.name.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+    const filepath = path.join(BACKUP_DIR, filename);
+    fs.writeFileSync(filepath, JSON.stringify({
+      ...data,
+      timestamp: new Date().toISOString(),
+      backupFile: filename
+    }, null, 2));
+    addLog('FILE_BACKUP', `Submission saved to ${filename}`, 'success');
+  } catch (error) {
+    addLog('BACKUP_ERROR', `Failed to save submission: ${error}`, 'error');
+  }
+};
 
 const addLog = (type: string, message: string, status: 'success' | 'error' | 'info' = 'info') => {
   const log = {
@@ -37,13 +73,63 @@ const addLog = (type: string, message: string, status: 'success' | 'error' | 'in
   console.log(`[${status.toUpperCase()}] ${type}: ${message}`);
 };
 
+// Email queue for background processing
+const emailQueue: Array<{
+  adminMailOptions: any;
+  userMailOptions: any;
+  name: string;
+  email: string;
+  timestamp: Date;
+}> = [];
+
+// Process emails in background
+const processEmailQueue = async () => {
+  if (emailQueue.length === 0) return;
+  
+  const email = emailQueue.shift();
+  if (!email) return;
+  
+  try {
+    // Try to send with a very short timeout
+    await Promise.race([
+      transporter.sendMail(email.adminMailOptions),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Admin email timeout')), 5000))
+    ]);
+    addLog('ADMIN_EMAIL', `Admin notification sent for ${email.name}`, 'success');
+  } catch (error) {
+    addLog('ADMIN_EMAIL_ERROR', `Failed to send admin email: ${error}`, 'error');
+  }
+  
+  try {
+    // Try to send with a very short timeout
+    await Promise.race([
+      transporter.sendMail(email.userMailOptions),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('User email timeout')), 5000))
+    ]);
+    addLog('USER_EMAIL', `Confirmation email sent to ${email.email}`, 'success');
+  } catch (error) {
+    addLog('USER_EMAIL_ERROR', `Failed to send user email: ${error}`, 'error');
+  }
+};
+
+// Process queue every 30 seconds
+setInterval(processEmailQueue, 30000);
+
 export const sendEmail = async (req: Request, res: Response) => {
   const { name, email, phone, businessType, message, formType } = req.body;
   
   try {
     addLog('EMAIL_REQUEST', `New ${formType} submission from ${name}`, 'info');
     
-    // Email to admin
+    // Quick validation
+    if (!name || !email || !phone) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields'
+      });
+    }
+
+    // Create email options
     const adminMailOptions = {
       from: EMAIL_USER,
       to: ADMIN_EMAIL,
@@ -71,7 +157,6 @@ export const sendEmail = async (req: Request, res: Response) => {
       `,
     };
 
-    // Email to user (confirmation)
     const userMailOptions = {
       from: EMAIL_USER,
       to: email,
@@ -103,28 +188,41 @@ export const sendEmail = async (req: Request, res: Response) => {
       `,
     };
 
-    // Send emails
-    await transporter.sendMail(adminMailOptions);
-    addLog('ADMIN_EMAIL', `Admin notification sent for ${name}`, 'success');
+    // Add to queue for background processing
+    emailQueue.push({
+      adminMailOptions,
+      userMailOptions,
+      name,
+      email,
+      timestamp: new Date()
+    });
+
+    // Save to local file as backup
+    saveSubmissionToFile({
+      name, email, phone, businessType, message, formType
+    });
+
+    addLog('EMAIL_QUEUED', `Email queued for ${name}`, 'success');
     
-    await transporter.sendMail(userMailOptions);
-    addLog('USER_EMAIL', `Confirmation email sent to ${email}`, 'success');
+    // Try immediate processing (but don't wait for it)
+    processEmailQueue().catch(() => {}); // Ignore errors, will be processed later
     
+    // Return immediately
     res.status(200).json({ 
       success: true, 
-      message: 'Emails sent successfully!',
-      logs: emailLogs.slice(-5) // Return last 5 logs for frontend display
+      message: 'Your submission has been received successfully!',
+      logs: emailLogs.slice(-5)
     });
     
   } catch (error) {
-    addLog('EMAIL_ERROR', `Failed to send email: ${error}`, 'error');
-    console.error('Email sending error:', error);
+    addLog('EMAIL_ERROR', `Failed to process submission: ${error}`, 'error');
+    console.error('Email processing error:', error);
     
     res.status(500).json({ 
       success: false, 
-      message: 'Failed to send email',
+      message: 'Failed to process submission',
       error: error instanceof Error ? error.message : 'Unknown error',
-      logs: emailLogs.slice(-5) // Return last 5 logs for frontend display
+      logs: emailLogs.slice(-5)
     });
   }
 };

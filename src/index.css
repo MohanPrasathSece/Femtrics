@@ -125,10 +125,73 @@
     @apply border-border;
   }
 
+  /* Hide ALL scrollbars except main page scrollbar */
+  body * {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+    overflow: visible !important; /* Force visible overflow */
+    max-height: none !important; /* Remove height constraints */
+  }
+
+  body *::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Opera */
+  }
+
+  /* Specifically target common overflow containers */
+  body *:not(html):not(body) {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    overflow: visible !important;
+  }
+
+  /* Prevent scrolling on all containers except main page */
+  .overflow-auto,
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-scroll,
+  .overflow-y-scroll,
+  .overflow-x-scroll,
+  .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  /* Force all elements to expand naturally */
+  div, section, article, main, aside, nav, header, footer {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Keep main page scrollbar functional */
+  html, body {
+    scrollbar-width: auto !important;
+    -ms-overflow-style: auto !important;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: block !important;
+    width: 12px;
+  }
+
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+  }
+
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
   html {
     scroll-behavior: smooth;
     font-size: 16px;
-    overflow-x: hidden;
     width: 100%;
   }
 
@@ -141,44 +204,48 @@
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 1rem;
     line-height: 1.7;
-    overflow-x: hidden;
     width: 100%;
     position: relative;
   }
 
   /* Hide scrollbars only on specific elements, not globally */
   .hide-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
   }
 
   .hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none !important; /* Chrome, Safari, Opera */
   }
 
-  /* Allow scrollbars for images and content that needs them */
+  /* Image styling to prevent scrolling issues */
   img {
     max-width: 100%;
     height: auto;
     display: block;
+    overflow: visible !important;
   }
 
-  /* Custom scrollbar styling for elements that need scrollbars */
-  .overflow-y-auto::-webkit-scrollbar,
-  .overflow-y-scroll::-webkit-scrollbar {
-    display: block;
-    width: 8px;
+  /* Card styling to prevent internal scrolling */
+  .card,
+  [class*="card"],
+  .rounded-2xl,
+  [class*="rounded"] {
+    overflow: visible !important;
+    max-height: none !important;
   }
 
-  .overflow-y-auto::-webkit-scrollbar-track,
-  .overflow-y-scroll::-webkit-scrollbar-track {
-    background: transparent;
+  /* Prevent scrolling on all interactive elements */
+  button, input, textarea, select {
+    overflow: visible !important;
   }
 
-  .overflow-y-auto::-webkit-scrollbar-thumb,
-  .overflow-y-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+  /* Ensure containers expand to fit content */
+  .container-tight,
+  .container,
+  [class*="container"] {
+    overflow: visible !important;
+    max-height: none !important;
   }
 
   h1, h2, h3, h4, h5, h6 {

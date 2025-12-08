@@ -90,6 +90,86 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
+      {/* Landing Hero - Minimal & Clean */}
+      <section className="relative bg-white overflow-hidden pt-28 pb-16 md:pb-24">
+        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 via-white to-transparent pointer-events-none" />
+        <div className="container-tight relative z-10">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-14 items-center">
+            {/* Text */}
+            <div className="space-y-6 lg:space-y-7">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                {t("hero.tagline")}
+              </div>
+              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+                {t("hero.title")}
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                {t("hero.subheadline")}
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                {t("hero.description")}
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                <Button
+                  onClick={() => setShowMicroConversion(true)}
+                  size="lg"
+                  className="px-5 py-3 md:px-7 md:py-4 bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg font-semibold rounded-lg text-sm md:text-base"
+                >
+                  <span className="flex items-center gap-2">
+                    {t("hero.apply")}
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="px-5 py-3 md:px-7 md:py-4 border border-border text-foreground hover:bg-primary/5 font-semibold rounded-lg text-sm md:text-base"
+                >
+                  <Link to="/about">{t("hero.learnMore")}</Link>
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+                {[
+                  { label: t("hero.statsBusinesses"), value: "100+" },
+                  { label: t("hero.statsTurnaround"), value: "24-48 hrs" },
+                  { label: t("hero.statsSuccess"), value: "92%" },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="bg-white border border-border rounded-xl px-4 py-3 shadow-sm"
+                  >
+                    <p className="text-2xl font-bold text-primary">{item.value}</p>
+                    <p className="text-sm text-muted-foreground leading-snug">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual */}
+            <div className="relative">
+              <div className="bg-white border border-border rounded-3xl p-6 md:p-8 shadow-xl card-elevated">
+                <div className="grid gap-4">
+                  <div className="rounded-2xl overflow-hidden border border-border">
+                    <img src={hero1} alt="Analytics preview" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="rounded-2xl overflow-hidden border border-border">
+                      <img src={hero2} alt="Women entrepreneurs" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="rounded-2xl overflow-hidden border border-border">
+                      <img src={hero3} alt="Growth insights" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Who We Serve */}
 
       {/* Who We Serve */}

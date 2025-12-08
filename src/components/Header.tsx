@@ -51,7 +51,7 @@ export const Header = () => {
             layout
             className={`flex items-center justify-between transition-all duration-500 w-full md:w-auto ${
               isScrolled
-                ? "glass-morphism border border-border/30 text-foreground px-4 py-2 shadow-xl backdrop-blur-md md:px-6 md:py-3 md:rounded-3xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
+                ? "glass-morphism border border-border/30 text-foreground px-3 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
                 : "bg-transparent md:bg-transparent"
             }`}
           >

@@ -17,6 +17,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { isBusinessEmail, isValidPhoneNumber } from "@/lib/emailValidation";
 
 const faqs = [
@@ -58,6 +65,7 @@ export const Contact = () => {
   });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [showEmailAlert, setShowEmailAlert] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [emailErrors, setEmailErrors] = useState<{ email?: string; phone?: string }>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -110,6 +118,7 @@ export const Contact = () => {
     
     if (result.success) {
       setSubmitStatus('success');
+      setShowThankYouModal(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } else {
       setSubmitStatus('error');
@@ -218,14 +227,6 @@ export const Contact = () => {
               <div className="bg-card rounded-3xl p-8 card-hover-lift border border-border">
                 <h3 className="font-display text-2xl font-semibold mb-6">{t("contact.sendEnquiry")}</h3>
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {submitStatus === 'success' && (
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                      <div className="flex items-center gap-2 text-green-700">
-                        <CheckCircle className="w-5 h-5" />
-                        <span className="font-medium">{t("contact.messageSent")}</span>
-                      </div>
-                    </div>
-                  )}
                   {submitStatus === 'error' && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                       <div className="flex items-center gap-2 text-red-700">
@@ -391,6 +392,46 @@ export const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Thank You Modal */}
+      <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-2xl">
+              <CheckCircle className="w-6 h-6 text-green-600" />
+              Thank You!
+            </DialogTitle>
+            <DialogDescription className="text-base">
+              Your message has been sent successfully, {formData.name || 'there'}! 
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <p className="text-green-700 text-sm">
+                We've received your inquiry and will get back to you within 24-48 hours. 
+                Our team is excited to connect with you and discuss how we can support your journey.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">What happens next?</p>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Our team will review your inquiry</li>
+                <li>• We'll contact you via phone or email</li>
+                <li>• We'll schedule a consultation call</li>
+                <li>• Your personalized dashboard will be set up</li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex justify-center pt-4">
+            <Button 
+              onClick={() => setShowThankYouModal(false)}
+              className="w-full"
+            >
+              Got it, thank you!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
