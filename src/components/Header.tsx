@@ -79,7 +79,7 @@ export const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative -ml-16 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
+              className="md:hidden relative -ml-12 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
