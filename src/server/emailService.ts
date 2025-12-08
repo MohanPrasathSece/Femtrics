@@ -76,63 +76,83 @@ export const sendEmail = async (req: Request, res: Response) => {
       to: RECIPIENT_EMAIL,
       subject: `New Contact: ${validatedData.subject}`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; background: #ffffff;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
           
           <!-- Header -->
-          <div style="background: #000000; padding: 24px; text-align: center;">
-            <h1 style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 600; letter-spacing: 0.5px;">
+          <div style="background: #000000; padding: 20px; text-align: center;">
+            <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600; letter-spacing: 1px;">
               FEMTRICS
             </h1>
-            <p style="margin: 4px 0 0; color: #ffffff; font-size: 12px; opacity: 0.8;">
+            <p style="margin: 4px 0 0; color: #ffffff; font-size: 13px; opacity: 0.9;">
               New Contact Form Submission
             </p>
           </div>
           
           <!-- Content -->
-          <div style="padding: 32px;">
+          <div style="padding: 30px;">
             
-            <!-- Contact Info -->
-            <div style="margin-bottom: 32px;">
-              <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
-                Contact Information
-              </h2>
-              <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-                <div style="display: grid; gap: 12px;">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #6b7280; font-size: 14px;">Name</span>
-                    <span style="color: #1a1a1a; font-weight: 500; font-size: 14px;">${validatedData.name}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #6b7280; font-size: 14px;">Email</span>
-                    <a href="mailto:${validatedData.email}" style="color: #000000; text-decoration: none; font-weight: 500; font-size: 14px;">
+            <!-- Contact Info Table -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #f8f9fa; border-radius: 8px; overflow: hidden;">
+              <thead>
+                <tr style="background: #e9ecef;">
+                  <th colspan="2" style="padding: 15px; text-align: left; color: #495057; font-size: 14px; font-weight: 600; border-bottom: 1px solid #dee2e6;">
+                    Contact Information
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #dee2e6;">
+                  <td style="padding: 15px; color: #6c757d; font-size: 14px; font-weight: 500; width: 120px;">
+                    Name
+                  </td>
+                  <td style="padding: 15px; color: #212529; font-size: 14px; font-weight: 500;">
+                    ${validatedData.name}
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #dee2e6;">
+                  <td style="padding: 15px; color: #6c757d; font-size: 14px; font-weight: 500;">
+                    Email
+                  </td>
+                  <td style="padding: 15px; color: #212529; font-size: 14px;">
+                    <a href="mailto:${validatedData.email}" style="color: #007bff; text-decoration: none; font-weight: 500;">
                       ${validatedData.email}
                     </a>
-                  </div>
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #6b7280; font-size: 14px;">Subject</span>
-                    <span style="color: #1a1a1a; font-weight: 500; font-size: 14px;">${validatedData.subject}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 15px; color: #6c757d; font-size: 14px; font-weight: 500;">
+                    Subject
+                  </td>
+                  <td style="padding: 15px; color: #212529; font-size: 14px; font-weight: 500;">
+                    ${validatedData.subject}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             
-            <!-- Message -->
-            <div>
-              <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
-                Message
-              </h2>
-              <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-                <p style="margin: 0; color: #374151; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">
-                  ${validatedData.message}
-                </p>
-              </div>
-            </div>
+            <!-- Message Table -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #f8f9fa; border-radius: 8px; overflow: hidden;">
+              <thead>
+                <tr style="background: #e9ecef;">
+                  <th style="padding: 15px; text-align: left; color: #495057; font-size: 14px; font-weight: 600; border-bottom: 1px solid #dee2e6;">
+                    Message
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 20px; color: #212529; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">
+                    ${validatedData.message}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             
           </div>
           
           <!-- Footer -->
-          <div style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
-            <p style="margin: 0; color: #6b7280; font-size: 12px;">
+          <div style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #dee2e6;">
+            <p style="margin: 0; color: #6c757d; font-size: 12px;">
               Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
             </p>
           </div>
