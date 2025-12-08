@@ -118,18 +118,18 @@ const Join = () => {
     e.preventDefault();
     
     if (!businessFormData.phone || !isValidPhoneNumber(businessFormData.phone)) {
-      setEmailErrors({ phone: 'Please enter a valid phone number' });
+      setEmailErrors({ phone: t("form.validPhoneError") });
       return;
     }
 
     if (!businessFormData.email) {
-      setEmailErrors({ email: 'Business email is required' });
+      setEmailErrors({ email: t("form.businessEmailRequired") });
       return;
     }
 
     if (!isBusinessEmail(businessFormData.email)) {
       setShowEmailAlert(true);
-      setEmailErrors({ email: 'Please use a business email address' });
+      setEmailErrors({ email: t("form.businessEmailError") });
       return;
     }
 
@@ -142,7 +142,7 @@ const Join = () => {
     e.preventDefault();
     
     if (!volunteerFormData.phone || !isValidPhoneNumber(volunteerFormData.phone)) {
-      setEmailErrors({ phone: 'Please enter a valid phone number' });
+      setEmailErrors({ phone: t("form.validPhoneError") });
       return;
     }
 
@@ -153,7 +153,7 @@ const Join = () => {
 
     if (!isBusinessEmail(volunteerFormData.email)) {
       setShowEmailAlert(true);
-      setEmailErrors({ email: 'Please use a business email address' });
+      setEmailErrors({ email: t("form.businessEmailError") });
       return;
     }
 
@@ -163,7 +163,7 @@ const Join = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero */}
@@ -229,11 +229,10 @@ const Join = () => {
               <div className="grid lg:grid-cols-2 gap-12">
                 <AnimatedSection direction="left">
                   <h2 className="font-display text-3xl md:text-4xl font-semibold mb-6">
-                    Grow your business with data
+                    {t("join.growBusiness")}
                   </h2>
                   <p className="text-muted-foreground mb-8 leading-relaxed">
-                    Join 100+ women entrepreneurs who are already using Femtrics to make 
-                    smarter business decisions and grow their revenue.
+                    {t("join.join100")}
                   </p>
 
                   <div className="space-y-4 mb-8">
@@ -282,7 +281,7 @@ const Join = () => {
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.businessApplication")}</h3>
                     <form onSubmit={handleBusinessSubmit} className="space-y-5">
                       <div>
-                        <label className="block text-sm font-medium mb-2">Full Name *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.fullName")} *</label>
                         <input
                           type="text"
                           name="name"
@@ -290,11 +289,11 @@ const Join = () => {
                           onChange={handleBusinessChange}
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="Enter your full name"
+                          placeholder={t("form.enterFullName")}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.phoneNumber")} *</label>
                         <input
                           type="tel"
                           name="phone"
@@ -306,7 +305,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder="+91 98765 43210"
+                          placeholder={t("form.enterPhone")}
                         />
                         {emailErrors.phone && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -316,7 +315,7 @@ const Join = () => {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Business Email *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.businessEmail")} *</label>
                         <input
                           type="email"
                           name="email"
@@ -328,7 +327,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder="your@business.com"
+                          placeholder={t("form.enterBusinessEmail")}
                         />
                         {emailErrors.email && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -337,11 +336,11 @@ const Join = () => {
                           </p>
                         )}
                         <p className="text-xs text-muted-foreground mt-1">
-                          Please use your business email address (not Gmail, Yahoo, etc.)
+                          {t("form.businessEmailHelper")}
                         </p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">WhatsApp Number</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.whatsappNumber")}</label>
                         <input
                           type="tel"
                           name="whatsapp"
@@ -352,7 +351,7 @@ const Join = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Business Name *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.businessName")} *</label>
                         <input
                           type="text"
                           name="businessName"
@@ -360,11 +359,11 @@ const Join = () => {
                           onChange={handleBusinessChange}
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="Your business name"
+                          placeholder={t("form.enterBusinessName")}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Business Type *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.businessType")} *</label>
                         <select 
                           name="businessType"
                           value={businessFormData.businessType}
@@ -372,14 +371,14 @@ const Join = () => {
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                         >
-                          <option value="">Select type</option>
+                          <option value="">{t("form.selectType")}</option>
                           {businessTypes.map((type) => (
                             <option key={type} value={type.toLowerCase().replace(/\s+/g, "-")}>{type}</option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Location (Area) *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.location")} *</label>
                         <input
                           type="text"
                           name="location"
@@ -391,14 +390,14 @@ const Join = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">How long have you been in business?</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.businessDuration")}</label>
                         <select 
                           name="businessDuration"
                           value={businessFormData.businessDuration}
                           onChange={handleBusinessChange}
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                         >
-                          <option value="">Select duration</option>
+                          <option value="">{t("form.selectDuration")}</option>
                           <option value="less-than-3">Less than 3 months</option>
                           <option value="3-6">3-6 months</option>
                           <option value="6-12">6-12 months</option>
@@ -407,14 +406,14 @@ const Join = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">What's your biggest business challenge?</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.biggestChallenge")}</label>
                         <textarea
                           name="challenge"
                           value={businessFormData.challenge}
                           onChange={handleBusinessChange}
                           rows={3}
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
-                          placeholder="Tell us about your challenges..."
+                          placeholder={t("form.tellChallenges")}
                         />
                       </div>
                       <Button type="submit" variant="hero" className="w-full" size="lg">
@@ -442,15 +441,14 @@ const Join = () => {
               <div className="grid lg:grid-cols-2 gap-12">
                 <AnimatedSection direction="left">
                   <h2 className="font-display text-3xl md:text-4xl font-semibold mb-6">
-                    Make a real difference
+                    {t("join.makeDifference")}
                   </h2>
                   <p className="text-muted-foreground mb-8 leading-relaxed">
-                    Use your skills to empower women entrepreneurs. Whether you're a data enthusiast, 
-                    designer, or just passionate about social impact—we need you.
+                    {t("join.useSkills")}
                   </p>
 
                   <div className="space-y-6 mb-8">
-                    <h3 className="font-semibold text-lg">Volunteer Roles:</h3>
+                    <h3 className="font-semibold text-lg">{t("join.volunteerRoles")}</h3>
                     {volunteerRoles.map((role) => (
                       <motion.div 
                         key={role.title} 
@@ -475,7 +473,7 @@ const Join = () => {
                   </div>
 
                   <div className="bg-gradient-to-br from-primary/10 via-secondary to-accent/5 rounded-xl p-6">
-                    <h4 className="font-semibold mb-3">What Every Volunteer Gets</h4>
+                    <h4 className="font-semibold mb-3">{t("join.whatVolunteerGets")}</h4>
                     <ul className="space-y-2">
                       {[
                         "Comprehensive Bootcamp Training",
@@ -491,8 +489,7 @@ const Join = () => {
                       ))}
                     </ul>
                     <p className="text-muted-foreground text-sm mt-4">
-                      <span className="font-medium">Time Commitment:</span> Flexible! 4-8 hours per week. 
-                      We work around your schedule.
+                      <span className="font-medium">{t("join.timeCommitment")}</span> {t("join.flexibleHours")}
                     </p>
                   </div>
                 </AnimatedSection>
@@ -502,7 +499,7 @@ const Join = () => {
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.volunteerApplication")}</h3>
                     <form onSubmit={handleVolunteerSubmit} className="space-y-5">
                       <div>
-                        <label className="block text-sm font-medium mb-2">Full Name *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.fullName")} *</label>
                         <input
                           type="text"
                           name="name"
@@ -510,11 +507,11 @@ const Join = () => {
                           onChange={handleVolunteerChange}
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="Enter your full name"
+                          placeholder={t("form.enterFullName")}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Business Email *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.businessEmail")} *</label>
                         <input
                           type="email"
                           name="email"
@@ -526,7 +523,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder="your@business.com"
+                          placeholder={t("form.enterBusinessEmail")}
                         />
                         {emailErrors.email && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -535,11 +532,11 @@ const Join = () => {
                           </p>
                         )}
                         <p className="text-xs text-muted-foreground mt-1">
-                          Please use your business email address (not Gmail, Yahoo, etc.)
+                          {t("form.businessEmailHelper")}
                         </p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.phoneNumber")} *</label>
                         <input
                           type="tel"
                           name="phone"
@@ -551,7 +548,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder="+91 98765 43210"
+                          placeholder={t("form.enterPhone")}
                         />
                         {emailErrors.phone && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -561,7 +558,7 @@ const Join = () => {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Interested Role *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.interestedRole")} *</label>
                         <select 
                           name="role"
                           value={volunteerFormData.role}
@@ -569,7 +566,7 @@ const Join = () => {
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                         >
-                          <option value="">Select role</option>
+                          <option value="">{t("form.selectRole")}</option>
                           <option value="data-associate">Data Associate</option>
                           <option value="designer">Designer</option>
                           <option value="outreach-lead">Outreach Lead</option>
@@ -577,7 +574,7 @@ const Join = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Your Skills *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.yourSkills")} *</label>
                         <input
                           type="text"
                           name="skills"
@@ -589,7 +586,7 @@ const Join = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Availability *</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.availability")} *</label>
                         <select 
                           name="availability"
                           value={volunteerFormData.availability}
@@ -597,7 +594,7 @@ const Join = () => {
                           required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                         >
-                          <option value="">Select availability</option>
+                          <option value="">{t("form.selectAvailability")}</option>
                           <option value="weekdays">Weekdays only</option>
                           <option value="weekends">Weekends only</option>
                           <option value="flexible">Flexible</option>
@@ -605,14 +602,14 @@ const Join = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Why do you want to volunteer with Femtrics?</label>
+                        <label className="block text-sm font-medium mb-2">{t("form.volunteerMotivation")}</label>
                         <textarea
                           name="motivation"
                           value={volunteerFormData.motivation}
                           onChange={handleVolunteerChange}
                           rows={4}
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
-                          placeholder="Tell us about yourself and why you're interested..."
+                          placeholder={t("form.tellMotivation")}
                         />
                       </div>
                       <Button type="submit" variant="hero" className="w-full" size="lg">
@@ -673,16 +670,15 @@ const Join = () => {
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-primary" />
-              Business Email Required
+              {t("form.businessEmailRequiredTitle")}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Please use your business email address instead of a personal email (Gmail, Yahoo, Hotmail, etc.). 
-              This helps us verify your business and provide better service.
+              {t("form.businessEmailRequiredDesc")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setShowEmailAlert(false)}>
-              I Understand
+              {t("form.iUnderstand")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

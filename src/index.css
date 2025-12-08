@@ -128,6 +128,8 @@
   html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   @media (min-width: 1024px) {
@@ -139,6 +141,44 @@
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 1rem;
     line-height: 1.7;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Hide scrollbars on images and elements */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    overflow: hidden;
+  }
+
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Allow scrollbars only for specific elements that need them */
+  .overflow-y-auto::-webkit-scrollbar,
+  .overflow-y-scroll::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-track,
+  .overflow-y-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb,
+  .overflow-y-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -305,7 +345,9 @@
   }
 
   .container-tight {
-    @apply max-w-6xl mx-auto px-6;
+    @apply max-w-6xl mx-auto px-4 sm:px-6;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .bg-teal {

@@ -33,7 +33,7 @@ const partnerships = [
 const About = () => {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero */}
@@ -106,6 +106,13 @@ const About = () => {
       <section id="mission" className="section-padding bg-pink-soft">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
+            <div className="mb-8">
+              <img 
+                src={hero3} 
+                alt="Femtrics team and mission" 
+                className="w-full max-w-2xl mx-auto h-auto rounded-3xl shadow-2xl"
+              />
+            </div>
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
               Our Foundation
             </h2>

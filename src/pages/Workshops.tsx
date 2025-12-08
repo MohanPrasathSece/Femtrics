@@ -66,7 +66,7 @@ const Workshops = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero */}
@@ -100,17 +100,17 @@ const Workshops = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="hidden lg:block"
+              className="relative"
             >
               <div className="relative">
                 <motion.img 
                   src={workshopsHero} 
                   alt="Women in workshop learning data analytics"
-                  className="rounded-3xl shadow-2xl"
+                  className="rounded-3xl shadow-2xl w-full h-auto"
                   whileHover={{ scale: 1.02 }}
                 />
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft" />
-                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10" />
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft hidden lg:block" />
+                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10 hidden lg:block" />
               </div>
             </motion.div>
           </div>

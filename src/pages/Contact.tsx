@@ -80,19 +80,19 @@ export const Contact = () => {
     
     // Validate phone number
     if (!formData.phone || !isValidPhoneNumber(formData.phone)) {
-      setEmailErrors({ phone: 'Please enter a valid phone number' });
+      setEmailErrors({ phone: t("form.validPhoneError") });
       return;
     }
 
     // Validate business email
     if (!formData.email) {
-      setEmailErrors({ email: 'Business email is required' });
+      setEmailErrors({ email: t("form.businessEmailRequired") });
       return;
     }
 
     if (!isBusinessEmail(formData.email)) {
       setShowEmailAlert(true);
-      setEmailErrors({ email: 'Please use a business email address' });
+      setEmailErrors({ email: t("form.businessEmailError") });
       return;
     }
 
@@ -117,7 +117,7 @@ export const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero */}
@@ -222,19 +222,19 @@ export const Contact = () => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                       <div className="flex items-center gap-2 text-green-700">
                         <CheckCircle className="w-5 h-5" />
-                        <span className="font-medium">Message sent successfully! We'll get back to you soon.</span>
+                        <span className="font-medium">{t("contact.messageSent")}</span>
                       </div>
                     </div>
                   )}
                   {submitStatus === 'error' && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                       <div className="flex items-center gap-2 text-red-700">
-                        <span className="font-medium">Failed to send message. Please try again.</span>
+                        <span className="font-medium">{t("contact.messageFailed")}</span>
                       </div>
                     </div>
                   )}
                   <div>
-                    <label className="block text-sm font-medium mb-2">Name *</label>
+                    <label className="block text-sm font-medium mb-2">{t("form.name")} *</label>
                     <input
                       type="text"
                       name="name"
@@ -242,11 +242,11 @@ export const Contact = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                      placeholder="Your full name"
+                      placeholder={t("form.enterFullName")}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                    <label className="block text-sm font-medium mb-2">{t("form.phoneNumber")} *</label>
                     <input
                       type="tel"
                       name="phone"
@@ -258,7 +258,7 @@ export const Contact = () => {
                           ? 'border-red-300 focus:ring-red-300' 
                           : 'border-border focus:ring-primary/30'
                       }`}
-                      placeholder="+91 98765 43210"
+                      placeholder={t("form.enterPhone")}
                     />
                     {emailErrors.phone && (
                       <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -268,7 +268,7 @@ export const Contact = () => {
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Business Email *</label>
+                    <label className="block text-sm font-medium mb-2">{t("form.businessEmail")} *</label>
                     <input
                       type="email"
                       name="email"
@@ -289,11 +289,11 @@ export const Contact = () => {
                       </p>
                     )}
                     <p className="text-xs text-muted-foreground mt-1">
-                      Please use your business email address (not Gmail, Yahoo, etc.)
+                      {t("form.businessEmailHelper")}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Subject *</label>
+                    <label className="block text-sm font-medium mb-2">{t("form.subject")} *</label>
                     <select 
                       name="subject"
                       value={formData.subject}
@@ -301,17 +301,17 @@ export const Contact = () => {
                       required
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                     >
-                      <option value="">Select subject</option>
-                      <option value="business">Join as a Business</option>
-                      <option value="volunteer">Volunteer Inquiry</option>
-                      <option value="partnership">Partnership Opportunity</option>
-                      <option value="workshop">Workshop Request</option>
-                      <option value="media">Media & Press</option>
-                      <option value="other">General Inquiry</option>
+                      <option value="">{t("form.selectSubject")}</option>
+                      <option value="business">{t("contact.business")}</option>
+                      <option value="volunteer">{t("contact.volunteer")}</option>
+                      <option value="partnership">{t("contact.partnership")}</option>
+                      <option value="workshop">{t("contact.workshop")}</option>
+                      <option value="media">{t("contact.media")}</option>
+                      <option value="other">{t("contact.other")}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Message *</label>
+                    <label className="block text-sm font-medium mb-2">{t("form.message")} *</label>
                     <textarea
                       name="message"
                       value={formData.message}
@@ -319,7 +319,7 @@ export const Contact = () => {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
-                      placeholder="How can we help you?"
+                      placeholder={t("form.howCanHelp")}
                     />
                   </div>
                   <Button type="submit" variant="hero" className="w-full" size="lg" disabled={isLoading}>
@@ -342,16 +342,15 @@ export const Contact = () => {
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-primary" />
-              Business Email Required
+              {t("form.businessEmailRequiredTitle")}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Please use your business email address instead of a personal email (Gmail, Yahoo, Hotmail, etc.). 
-              This helps us verify your business and provide better service.
+              {t("form.businessEmailRequiredDesc")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setShowEmailAlert(false)}>
-              I Understand
+              {t("form.iUnderstand")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

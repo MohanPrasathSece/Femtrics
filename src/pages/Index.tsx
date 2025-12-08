@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, TrendingUp, Target, Users, Smartphone, PieChart, LineChart, Zap, Shield, Sparkles, DollarSign, Package, TrendingDown, Smartphone as PhoneIcon } from "lucide-react";
@@ -7,6 +8,7 @@ import { CounterAnimation } from "@/components/CounterAnimation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { MicroConversionModal, MicroConversionData } from "@/components/MicroConversionModal";
 import analyticsBg from "@/assets/analytics-bg.png";
 import hero1 from "@/assets/hero-1.png";
 import hero2 from "@/assets/hero-2.png";
@@ -76,13 +78,20 @@ const products = [
 
 const Index = () => {
   const { t } = useTranslation();
+  const [showMicroConversion, setShowMicroConversion] = useState(false);
+  
+  const handleMicroConversionSuccess = (data: MicroConversionData) => {
+    console.log("Micro-conversion data:", data);
+    // Here you would typically send to WhatsApp API or your backend
+    // For now, the email service will handle the notification
+  };
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero Section - Minimal Design */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+      <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden bg-white">
         {/* Subtle Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-white to-rose-50/50" />
         
@@ -154,14 +163,14 @@ const Index = () => {
                 className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start pt-4"
               >
                 <Button 
-                  asChild 
+                  onClick={() => setShowMicroConversion(true)}
                   size="lg" 
                   className="px-4 py-3 md:px-8 md:py-6 bg-primary text-white hover:bg-primary/90 transition-all shadow-md hover:shadow-lg font-semibold rounded-lg text-sm md:text-base"
                 >
-                  <Link to="/join" className="flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2">
                     {t("hero.apply")}
                     <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-                  </Link>
+                  </span>
                 </Button>
                 <Button 
                   asChild 
@@ -227,7 +236,14 @@ const Index = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection direction="left">
-              <h3 className="font-display text-2xl font-semibold mb-6">{t("common.businessTypes")}</h3>
+              <div className="mb-6">
+                <img 
+                  src={hero2} 
+                  alt="Women entrepreneurs" 
+                  className="w-full h-auto rounded-2xl shadow-lg mb-6"
+                />
+                <h3 className="font-display text-2xl font-semibold">{t("common.businessTypes")}</h3>
+              </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 {businessTypes.map((type, index) => (
                   <motion.div
@@ -247,7 +263,7 @@ const Index = () => {
 
             <AnimatedSection direction="right" delay={0.2}>
               <h3 className="font-display text-2xl font-semibold mb-6">{t("common.challenges")}</h3>
-              <div className="space-y-4">
+              <div className="space-y-4 mb-6">
                 {painPoints.map((point, index) => {
                   const IconComponent = point.icon;
                   return (
@@ -267,6 +283,11 @@ const Index = () => {
                   );
                 })}
               </div>
+              <img 
+                src={hero3} 
+                alt="Business analytics" 
+                className="w-full h-auto rounded-2xl shadow-lg"
+              />
               <p className="mt-6 text-lg font-semibold text-primary">
                 {t("common.fillsGap")}
               </p>
@@ -394,9 +415,9 @@ const Index = () => {
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
-            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-              {t("common.ourReach")}
-            </span>
+              <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
+                {t("common.ourReach")}
+              </span>
               <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
                 Serving Women Across Hyderabad
               </h2>
@@ -404,6 +425,11 @@ const Index = () => {
                 We're expanding our reach across Hyderabad to empower more women entrepreneurs 
                 with data-driven insights.
               </p>
+              <img 
+                src={hero2} 
+                alt="Women entrepreneurs across Hyderabad" 
+                className="w-full h-auto rounded-2xl shadow-lg mb-8 lg:hidden"
+              />
 
               <div className="grid sm:grid-cols-2 gap-8">
                 <div>
@@ -552,6 +578,13 @@ const Index = () => {
       </section>
 
       <Footer />
+
+      {/* Micro-Conversion Modal */}
+      <MicroConversionModal
+        open={showMicroConversion}
+        onOpenChange={setShowMicroConversion}
+        onSuccess={handleMicroConversionSuccess}
+      />
     </div>
   );
 };

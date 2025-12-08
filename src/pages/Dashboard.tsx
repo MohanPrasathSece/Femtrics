@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
       {/* Hero */}
@@ -33,6 +33,13 @@ const Dashboard = () => {
       {/* Dashboard Preview */}
       <section className="section-padding bg-background">
         <div className="container-tight">
+          <AnimatedSection className="mb-8">
+            <img 
+              src={analyticsBg} 
+              alt="Analytics dashboard preview" 
+              className="w-full max-w-4xl mx-auto h-auto rounded-3xl shadow-2xl mb-8"
+            />
+          </AnimatedSection>
           <AnimatedSection>
             <motion.div 
               whileHover={{ scale: 1.01 }}

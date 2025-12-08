@@ -5,6 +5,7 @@ import { Menu, X, Globe, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import femtricsLogo from "/logo.png";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import {
   Drawer,
   DrawerContent,
@@ -92,8 +93,9 @@ export const Header = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
+            {/* Language Toggle & CTA Button */}
+            <div className="hidden md:flex items-center gap-3">
+              <LanguageToggle />
               <Button 
                 asChild 
                 variant={isScrolled ? "default" : "default"} 
@@ -113,7 +115,10 @@ export const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors"
+              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60]"
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <motion.div
                 className="relative w-6 h-5 flex flex-col justify-between items-center"
@@ -146,10 +151,9 @@ export const Header = () => {
         </div>
 
         {/* Mobile Menu - Bottom Sheet Style */}
-        <Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <DrawerContent className="bg-[#FAF7F5] border-t-0 rounded-t-3xl pb-safe">
-            <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-gray-300" />
-            <DrawerHeader className="px-6 pt-4 pb-2">
+        <Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen} modal={true}>
+          <DrawerContent id="mobile-menu" className="bg-[#FAF7F5] border-t-0 rounded-t-3xl pb-safe max-h-[85vh]">
+            <DrawerHeader className="px-6 pt-6 pb-4">
               <div className="flex flex-col gap-1">
                 {navItems.map((item, index) => (
                   <Link
@@ -170,8 +174,11 @@ export const Header = () => {
                 ))}
               </div>
               
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <Button asChild variant="hero" size="lg" className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-semibold">
+              <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
+                <div className="flex justify-center">
+                  <LanguageToggle />
+                </div>
+                <Button asChild variant="hero" size="lg" className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-semibold shadow-lg">
                   <Link to="/join" onClick={() => setMobileMenuOpen(false)}>
                     {t("nav.getStarted")}
                   </Link>

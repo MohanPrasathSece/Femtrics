@@ -23,20 +23,22 @@ export const LanguageToggle = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 text-sm"
+          className="gap-2 text-sm border border-border/50 hover:bg-primary/5"
         >
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">
+          <Globe className="h-4 w-4 text-primary" />
+          <span className="font-medium">
             {languages.find((l) => l.code === language)?.native || "EN"}
           </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="min-w-[150px]">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
             onClick={() => setLanguage(lang.code)}
-            className={language === lang.code ? "bg-accent" : ""}
+            className={`cursor-pointer ${
+              language === lang.code ? "bg-primary/10 text-primary font-semibold" : ""
+            }`}
           >
             <span className="font-medium">{lang.native}</span>
             <span className="ml-2 text-muted-foreground text-xs">({lang.name})</span>
