@@ -51,23 +51,23 @@ export const Header = () => {
             layout
             className={`flex items-center justify-between transition-all duration-300 w-full overflow-hidden ${
               isScrolled
-                ? "glass-morphism text-foreground px-2 sm:px-3 py-1.5 md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-4xl"
+                ? "glass-morphism text-foreground px-0.75 py-0.5 md:px-1 md:py-0.75 md:rounded-xl md:mx-auto md:max-w-4xl"
                 : "bg-transparent"
             }`}
           >
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-1.5 group flex-shrink-0">
-              <div className="flex items-center gap-1.5">
+            <Link to="/" className="flex items-center gap-0 group flex-shrink-0">
+              <div className="flex items-center gap-0">
                 <img 
                   src={femtricsLogo} 
                   alt="Femtrics Logo" 
                   className={`transition-all duration-300 ${
-                    isScrolled ? "h-6 w-auto sm:h-7 md:h-8" : "h-6 w-auto sm:h-7 md:h-10"
+                    isScrolled ? "h-3.5 w-auto sm:h-4 md:h-5" : "h-6 w-auto sm:h-7 md:h-10"
                   }`}
                 />
                 {!isScrolled && (
-                  <span className="font-display text-base sm:text-lg md:text-xl font-semibold text-foreground hidden sm:block">
-                    Fem<span className="text-primary">trics</span>
+                  <span className="font-sans text-base sm:text-lg md:text-xl font-semibold text-foreground hidden sm:block">
+                    Fem<span className="text-pink-500">trics</span>
                   </span>
                 )}
               </div>
@@ -76,19 +76,19 @@ export const Header = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-colors z-[60] flex-shrink-0 ${
+              className={`md:hidden relative w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-sm transition-colors z-[60] flex-shrink-0 ${
                 isScrolled 
-                  ? "bg-white/30 hover:bg-white/50 backdrop-blur-sm" 
+                  ? "bg-pink-50/50 hover:bg-pink-100/50" 
                   : "hover:bg-gray-100"
               }`}
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              <div className="relative w-5 h-4 sm:w-6 sm:h-5 flex flex-col justify-between items-center">
+              <div className="relative w-3.5 h-3 sm:w-4 sm:h-3.5 flex flex-col justify-between items-center">
                 <span
                   className={`h-0.5 w-full bg-current transition-all duration-300 ${
-                    mobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                    mobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
                   }`}
                 />
                 <span
@@ -98,27 +98,27 @@ export const Header = () => {
                 />
                 <span
                   className={`h-0.5 w-full bg-current transition-all duration-300 ${
-                    mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                    mobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
                   }`}
                 />
               </div>
             </button>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - No gaps */}
             <div className={`hidden md:flex items-center ${
-              isScrolled ? "gap-0.5 mx-2" : "gap-2"
+              isScrolled ? "gap-0" : "gap-2"
             }`}>
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-all duration-300 px-3 py-1.5 rounded-lg ${
+                  className={`font-sans text-sm font-medium transition-all duration-300 px-1 py-0.5 rounded-sm ${
                     location.pathname === item.path
                       ? isScrolled
-                        ? "bg-pink-100 text-pink-600 backdrop-blur-sm"
+                        ? "bg-pink-100 text-pink-600"
                         : "bg-pink-100 text-pink-600"
                       : isScrolled
-                        ? "text-foreground/80 hover:text-pink-600 hover:bg-pink-50"
+                        ? "text-gray-600 hover:text-pink-600 hover:bg-pink-50"
                         : "text-muted-foreground hover:text-pink-600 hover:bg-pink-50"
                   }`}
                 >
@@ -128,17 +128,13 @@ export const Header = () => {
             </div>
 
             {/* Desktop Language Toggle & CTA Button */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2">
               <LanguageToggle />
               <Button 
                 asChild 
-                variant={isScrolled ? "default" : "default"} 
+                variant="default" 
                 size="sm"
-                className={`btn-shimmer ${
-                  isScrolled 
-                    ? "bg-pink-500 hover:bg-pink-600 text-white" 
-                    : "bg-pink-500 hover:bg-pink-600 text-white"
-                }`}
+                className="bg-pink-500 hover:bg-pink-600 text-white px-2 py-1 text-xs font-sans font-medium rounded-sm transition-all duration-300"
               >
                 <Link to="/join">{t("nav.getStarted")}</Link>
               </Button>
