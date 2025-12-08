@@ -1091,6 +1091,26 @@ const Join = () => {
       </section>
 
       <Footer />
+
+      {/* Success Alert */}
+      <AlertDialog open={showEmailAlert} onOpenChange={setShowEmailAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <CheckCircle className="w-6 h-6 text-green-600" />
+              Thank You!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Thank you for your submission! We have received your information and will be in touch soon.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowEmailAlert(false)}>
+              Got it
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

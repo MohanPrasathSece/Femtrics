@@ -283,10 +283,10 @@ const WorkshopRegister = () => {
                       <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
                     <h4 className="font-display text-xl font-semibold mb-2 text-green-600">
-                      Registration Successful!
+                      Thank You!
                     </h4>
-                    <p className="text-muted-foreground mb-6">
-                      Thank you for registering. We'll send you a confirmation email with workshop details.
+                    <p className="text-muted-foreground mb-4">
+                      Thank you for your submission! We have received your information and will be in touch soon.
                     </p>
                     <Button asChild variant="outline">
                       <Link to="/dashboard">Register for Another Workshop</Link>
