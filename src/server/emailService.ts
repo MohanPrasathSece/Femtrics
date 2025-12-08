@@ -5,9 +5,9 @@ import * as path from 'path';
 
 // Email configuration - Load from environment variables
 // Note: Google App Passwords should not have spaces - remove spaces if present
-const EMAIL_USER = process.env.EMAIL_USER || 'zyradigitalsofficial@gmail.com';
+const EMAIL_USER = process.env.EMAIL_USER || 'harshinik290@gmail.com';
 const EMAIL_PASS = (process.env.EMAIL_PASS || 'nmcugwmikuxifur').replace(/\s+/g, ''); // Remove any spaces
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'zyradigitalsofficial@gmail.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'harshinik290@gmail.com';
 
 // Create transporter with optimized settings
 const transporter = nodemailer.createTransport({

@@ -38,7 +38,9 @@ export const Footer = () => {
               </p>
               <div className="flex gap-4">
                 <motion.a
-                  href="#"
+                  href="https://instagram.com/femtrics"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-200"
@@ -47,7 +49,9 @@ export const Footer = () => {
                   <Instagram size={18} className="text-white" />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="https://linkedin.com/company/femtrics"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-200"
@@ -87,11 +91,11 @@ export const Footer = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <Mail className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-white/70 text-sm">info@femtrics.in</span>
+                  <span className="text-white/70 text-sm">harshinik290@gmail.com</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-white/70 text-sm">+91 XXX XXX XXXX</span>
+                  <span className="text-white/70 text-sm">+91 82478 90920</span>
                 </li>
               </ul>
             </div>
@@ -101,7 +105,7 @@ export const Footer = () => {
               <h4 className="text-base font-semibold text-white mb-3">{t("footer.resources")}</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="/dashboard" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     {t("footer.caseStudies")}
                   </a>
                 </li>
@@ -111,12 +115,12 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="/contact#faq" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     {t("footer.faq")}
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="/contact" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     {t("footer.support")}
                   </a>
                 </li>
