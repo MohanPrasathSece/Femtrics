@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Header } from "@/components/Header";
@@ -8,6 +8,16 @@ import { Footer } from "@/components/Footer";
 import { EmailTerminal } from "@/components/EmailTerminal";
 import { useEmailService } from "@/hooks/useEmailService";
 import { useTranslation } from "@/contexts/TranslationContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { isBusinessEmail, isValidPhoneNumber } from "@/lib/emailValidation";
 
 const faqs = [
   {
@@ -47,12 +57,54 @@ export const Contact = () => {
     message: ''
   });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [showEmailAlert, setShowEmailAlert] = useState(false);
+  const [emailErrors, setEmailErrors] = useState<{ email?: string; phone?: string }>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    // Clear error when user starts typing
+    if (emailErrors[name as keyof typeof emailErrors]) {
+      setEmailErrors({
+        ...emailErrors,
+        [name]: undefined
+      });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate phone number
+    if (!formData.phone || !isValidPhoneNumber(formData.phone)) {
+      setEmailErrors({ phone: 'Please enter a valid phone number' });
+      return;
+    }
+
+    // Validate business email
+    if (!formData.email) {
+      setEmailErrors({ email: 'Business email is required' });
+      return;
+    }
+
+    if (!isBusinessEmail(formData.email)) {
+      setShowEmailAlert(true);
+      setEmailErrors({ email: 'Please use a business email address' });
+      return;
+    }
+
+    // Clear any previous errors
+    setEmailErrors({});
+    
     const result = await sendEmail({
-      ...formData,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      businessType: formData.subject,
+      message: formData.message,
       formType: 'Contact Inquiry'
     });
     
@@ -67,7 +119,6 @@ export const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <EmailTerminal />
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">
@@ -164,13 +215,32 @@ export const Contact = () => {
 
             {/* Contact Form / Enquiry Form */}
             <AnimatedSection direction="right" delay={0.2}>
-              <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
+              <div className="bg-card rounded-3xl p-8 card-hover-lift border border-border">
                 <h3 className="font-display text-2xl font-semibold mb-6">{t("contact.sendEnquiry")}</h3>
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {submitStatus === 'success' && (
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                      <div className="flex items-center gap-2 text-green-700">
+                        <CheckCircle className="w-5 h-5" />
+                        <span className="font-medium">Message sent successfully! We'll get back to you soon.</span>
+                      </div>
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                      <div className="flex items-center gap-2 text-red-700">
+                        <span className="font-medium">Failed to send message. Please try again.</span>
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium mb-2">Name *</label>
                     <input
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                       placeholder="Your full name"
                     />
@@ -179,21 +249,58 @@ export const Contact = () => {
                     <label className="block text-sm font-medium mb-2">Phone Number *</label>
                     <input
                       type="tel"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                        emailErrors.phone 
+                          ? 'border-red-300 focus:ring-red-300' 
+                          : 'border-border focus:ring-primary/30'
+                      }`}
                       placeholder="+91 98765 43210"
                     />
+                    {emailErrors.phone && (
+                      <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {emailErrors.phone}
+                      </p>
+                    )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Email</label>
+                    <label className="block text-sm font-medium mb-2">Business Email *</label>
                     <input
                       type="email"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                      placeholder="your@email.com"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                        emailErrors.email 
+                          ? 'border-red-300 focus:ring-red-300' 
+                          : 'border-border focus:ring-primary/30'
+                      }`}
+                      placeholder="your@business.com"
                     />
+                    {emailErrors.email && (
+                      <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {emailErrors.email}
+                      </p>
+                    )}
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Please use your business email address (not Gmail, Yahoo, etc.)
+                    </p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Subject *</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
+                    <select 
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                    >
                       <option value="">Select subject</option>
                       <option value="business">Join as a Business</option>
                       <option value="volunteer">Volunteer Inquiry</option>
@@ -206,13 +313,17 @@ export const Contact = () => {
                   <div>
                     <label className="block text-sm font-medium mb-2">Message *</label>
                     <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
                       rows={5}
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
                       placeholder="How can we help you?"
                     />
                   </div>
-                  <Button type="submit" variant="hero" className="w-full" size="lg">
-                    {t("contact.sendEnquiry")}
+                  <Button type="submit" variant="hero" className="w-full" size="lg" disabled={isLoading}>
+                    {isLoading ? 'Sending...' : t("contact.sendEnquiry")}
                     <Send className="ml-2 w-4 h-4" />
                   </Button>
                 </form>
@@ -224,6 +335,27 @@ export const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Email Alert Dialog */}
+      <AlertDialog open={showEmailAlert} onOpenChange={setShowEmailAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-primary" />
+              Business Email Required
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Please use your business email address instead of a personal email (Gmail, Yahoo, Hotmail, etc.). 
+              This helps us verify your business and provide better service.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowEmailAlert(false)}>
+              I Understand
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* FAQ Section */}
       <section className="section-padding bg-background">

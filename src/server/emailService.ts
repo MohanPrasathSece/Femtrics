@@ -1,10 +1,11 @@
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
 
-// Email configuration
-const EMAIL_USER = process.env.EMAIL_USER || 'your-email@gmail.com';
-const EMAIL_PASS = process.env.EMAIL_PASS || 'your-app-password';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@femtrics.in';
+// Email configuration - Load from environment variables
+// Note: Google App Passwords should not have spaces - remove spaces if present
+const EMAIL_USER = process.env.EMAIL_USER || 'zyradigitalsofficial@gmail.com';
+const EMAIL_PASS = (process.env.EMAIL_PASS || 'nmcugwmikuxifur').replace(/\s+/g, ''); // Remove any spaces
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'zyradigitalsofficial@gmail.com';
 
 // Create transporter
 const transporter = nodemailer.createTransporter({
