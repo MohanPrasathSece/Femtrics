@@ -42,7 +42,7 @@ export const Header = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full hidden md:block ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full ${
           isScrolled ? "py-1 md:py-2" : "py-2 md:py-3"
         } overflow-hidden`}
       >
@@ -51,7 +51,7 @@ export const Header = () => {
             layout
             className={`flex items-center justify-between transition-all duration-300 w-full overflow-hidden ${
               isScrolled
-                ? "glass-morphism text-foreground px-2 py-1.5 md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-4xl"
+                ? "glass-morphism text-foreground px-2 py-1.5 md:px-4 md:py-2 md:rounded-2xl mx-auto max-w-[95vw] sm:max-w-[90vw] md:max-w-4xl"
                 : "bg-transparent"
             }`}
           >
