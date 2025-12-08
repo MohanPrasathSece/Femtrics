@@ -38,11 +38,43 @@ export const Header = () => {
 
   return (
     <>
+      {/* Dynamic Island - Only visible on mobile */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 md:hidden transition-all duration-300 ${
+          isScrolled 
+            ? "bg-black/20 backdrop-blur-lg border border-white/20" 
+            : "bg-black/10 backdrop-blur-md border border-white/10"
+        }`}
+      >
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="relative w-16 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
+          aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
+        >
+          <div className="flex items-center gap-1.5">
+            <div className={`w-1 h-1 rounded-full bg-white transition-all duration-300 ${
+              mobileMenuOpen ? "opacity-100" : "opacity-60"
+            }`} />
+            <div className={`w-1 h-1 rounded-full bg-white transition-all duration-300 ${
+              mobileMenuOpen ? "opacity-100" : "opacity-60"
+            }`} />
+            <div className={`w-1 h-1 rounded-full bg-white transition-all duration-300 ${
+              mobileMenuOpen ? "opacity-100" : "opacity-60"
+            }`} />
+          </div>
+        </button>
+      </motion.div>
+
+      {/* Desktop Header - Only visible on desktop */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full hidden md:block ${
           isScrolled ? "py-1 md:py-2" : "py-2 md:py-3"
         } overflow-hidden`}
       >
@@ -152,43 +184,47 @@ export const Header = () => {
           </motion.nav>
         </div>
 
-        {/* Mobile Menu - Bottom Sheet Style */}
-        <Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen} modal={true}>
-          <DrawerContent id="mobile-menu" className="bg-[#FAF7F5] border-t-0 rounded-t-3xl pb-safe max-h-[85vh]">
-            <DrawerHeader className="px-6 pt-6 pb-4">
-              <div className="flex flex-col gap-1">
-                {navItems.map((item, index) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-4 py-4 rounded-2xl text-base font-medium transition-all duration-200 ${
-                      location.pathname === item.path
-                        ? "bg-primary/15 text-primary"
-                        : "text-gray-700 hover:bg-white/60"
-                    }`}
-                  >
-                    <span>{t(item.key)}</span>
-                    <ChevronRight className={`w-5 h-5 transition-colors ${
-                      location.pathname === item.path ? "text-primary" : "text-gray-400"
-                    }`} />
-                  </Link>
-                ))}
-              </div>
-              
-              <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
-                <div className="flex justify-center">
-                  <LanguageToggle />
+        {/* Mobile Menu - Full Screen Overlay */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 md:hidden bg-black/50 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-6 w-[90vw] max-w-sm"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex flex-col gap-2">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
+                        location.pathname === item.path
+                          ? "bg-pink-100 text-pink-700"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      <span>{t(item.key)}</span>
+                      <ChevronRight className={`w-4 h-4 transition-colors ${
+                        location.pathname === item.path ? "text-pink-600" : "text-gray-400"
+                      }`} />
+                    </Link>
+                  ))}
                 </div>
-                <Button asChild variant="hero" size="lg" className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-semibold shadow-lg">
-                  <Link to="/join" onClick={() => setMobileMenuOpen(false)}>
-                    {t("nav.getStarted")}
-                  </Link>
-                </Button>
-              </div>
-            </DrawerHeader>
-          </DrawerContent>
-        </Drawer>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
     </>
   );
