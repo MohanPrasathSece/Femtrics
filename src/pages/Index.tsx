@@ -90,58 +90,30 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
-      {/* Landing Hero - Enhanced Design */}
-      <section className="relative bg-gradient-to-br from-white via-primary/5 to-secondary/5 overflow-hidden pt-28 pb-20 md:pb-32">
-        {/* Animated Background Elements */}
+      {/* Landing Hero - Simplified & Clean */}
+      <section className="relative bg-white overflow-hidden pt-28 pb-20 md:pb-32">
+        {/* Simple Background Elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-pulse" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-secondary/20 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-gradient-to-br from-accent/15 to-transparent rounded-full blur-3xl animate-pulse delay-500" />
-          
-          {/* Floating Elements */}
-          <motion.div 
-            className="absolute top-32 left-20 w-8 h-8 bg-primary/30 rounded-full"
-            animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute top-60 right-32 w-6 h-6 bg-secondary/30 rounded-full"
-            animate={{ y: [0, -15, 0], rotate: [0, -180, -360] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-40 left-40 w-10 h-10 bg-accent/30 rounded-full"
-            animate={{ y: [0, -25, 0], rotate: [0, 360, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
         </div>
-
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }} />
         
         <div className="container-tight relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center">
-            {/* Enhanced Text Section */}
-            <div className="space-y-8 lg:space-y-10">
+            {/* Simplified Text Section */}
+            <div className="space-y-8">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="space-y-6"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary text-sm font-semibold backdrop-blur-sm">
-                  <motion.div 
-                    className="w-2 h-2 rounded-full bg-primary"
-                    animate={{ scale: [1, 1.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
                   {t("hero.tagline")}
                 </div>
                 
                 <motion.h1 
-                  className="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-tight bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent"
+                  className="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
@@ -150,7 +122,7 @@ const Index = () => {
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-medium"
+                  className="text-xl md:text-2xl text-foreground max-w-2xl leading-relaxed font-medium"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -159,7 +131,7 @@ const Index = () => {
                 </motion.p>
                 
                 <motion.p 
-                  className="text-lg md:text-xl text-muted-foreground/80 max-w-2xl leading-relaxed"
+                  className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
@@ -177,10 +149,9 @@ const Index = () => {
                 <Button
                   onClick={() => setShowMicroConversion(true)}
                   size="lg"
-                  className="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-xl hover:shadow-2xl font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300 btn-shimmer"
+                  className="px-8 py-4 bg-primary text-white hover:bg-primary/90 shadow-lg hover:shadow-xl font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300"
                 >
                   <span className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5" />
                     {t("hero.apply")}
                     <ArrowRight className="w-5 h-5" />
                   </span>
@@ -189,7 +160,7 @@ const Index = () => {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="px-8 py-4 border-2 border-primary/20 text-foreground hover:bg-primary/5 font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+                  className="px-8 py-4 border-2 border-primary text-primary hover:bg-primary/5 font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300"
                 >
                   <Link to="/about">
                     <span className="flex items-center gap-2">
@@ -199,87 +170,27 @@ const Index = () => {
                   </Link>
                 </Button>
               </motion.div>
-
-              {/* Enhanced Stats Section */}
-              <motion.div 
-                className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              >
-                {[
-                  { label: t("hero.statsBusinesses"), value: "100+", icon: Users },
-                  { label: t("hero.statsTurnaround"), value: "24-48 hrs", icon: Zap },
-                  { label: t("hero.statsSuccess"), value: "92%", icon: TrendingUp },
-                ].map((item, index) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="bg-white/80 backdrop-blur-md border border-primary/20 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                        <item.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{item.value}</p>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-snug font-medium">{item.label}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
             </div>
 
-            {/* Enhanced Visual Section */}
+            {/* Simplified Visual Section */}
             <motion.div 
               className="relative"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-3xl blur-2xl" />
-              
-              {/* Main Card */}
-              <div className="relative bg-white/90 backdrop-blur-md border border-primary/20 rounded-3xl p-6 md:p-8 shadow-2xl card-elevated">
-                {/* Floating Badge */}
-                <motion.div 
-                  className="absolute -top-4 -right-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <span className="flex items-center gap-1">
-                    <Shield className="w-4 h-4" />
-                    Trusted by 100+ Women
-                  </span>
-                </motion.div>
-                
+              <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-xl">
                 <div className="grid gap-6">
-                  <motion.div 
-                    className="rounded-2xl overflow-hidden border border-primary/20 shadow-lg"
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div className="rounded-2xl overflow-hidden">
                     <img src={hero1} alt="Analytics preview" className="w-full h-full object-cover" />
-                  </motion.div>
-                  
+                  </div>
                   <div className="grid sm:grid-cols-2 gap-6">
-                    <motion.div 
-                      className="rounded-2xl overflow-hidden border border-secondary/20 shadow-lg"
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                    >
+                    <div className="rounded-2xl overflow-hidden">
                       <img src={hero2} alt="Women entrepreneurs" className="w-full h-full object-cover" />
-                    </motion.div>
-                    <motion.div 
-                      className="rounded-2xl overflow-hidden border border-accent/20 shadow-lg"
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      transition={{ duration: 0.3, delay: 0.2 }}
-                    >
+                    </div>
+                    <div className="rounded-2xl overflow-hidden">
                       <img src={hero3} alt="Growth insights" className="w-full h-full object-cover" />
-                    </motion.div>
+                    </div>
                   </div>
                 </div>
               </div>

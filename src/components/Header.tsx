@@ -49,81 +49,77 @@ export const Header = () => {
         <div className={`${isScrolled ? "container-tight" : "container-tight"} px-2 sm:px-4 max-w-full overflow-hidden`}>
           <motion.nav
             layout
-            className={`flex items-center justify-between transition-all duration-500 w-full overflow-hidden ${
+            className={`flex items-center justify-between transition-all duration-300 w-full overflow-hidden ${
               isScrolled
-                ? "glass-morphism border border-border/30 text-foreground px-1 sm:px-2 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
-                : "bg-transparent md:bg-transparent"
+                ? "glass-morphism text-foreground px-2 sm:px-3 py-1.5 md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-4xl"
+                : "bg-transparent"
             }`}
           >
-            {/* Logo - Main Position */}
-            <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="relative flex items-center gap-2"
-              >
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-1.5 group flex-shrink-0">
+              <div className="flex items-center gap-1.5">
                 <img 
                   src={femtricsLogo} 
                   alt="Femtrics Logo" 
-                  className="h-6 w-auto sm:h-7 md:h-10"
+                  className={`transition-all duration-300 ${
+                    isScrolled ? "h-6 w-auto sm:h-7 md:h-8" : "h-6 w-auto sm:h-7 md:h-10"
+                  }`}
                 />
                 {!isScrolled && (
                   <span className="font-display text-base sm:text-lg md:text-xl font-semibold text-foreground hidden sm:block">
                     Fem<span className="text-primary">trics</span>
                   </span>
                 )}
-              </motion.div>
+              </div>
             </Link>
 
             {/* Mobile Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
+              className={`md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-colors z-[60] flex-shrink-0 ${
+                isScrolled 
+                  ? "bg-white/30 hover:bg-white/50 backdrop-blur-sm" 
+                  : "hover:bg-gray-100"
+              }`}
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              <motion.div
-                className="relative w-5 h-4 sm:w-6 sm:h-5 flex flex-col justify-between items-center"
-              >
-                <motion.span
-                  animate={{
-                    rotate: mobileMenuOpen ? 45 : 0,
-                    y: mobileMenuOpen ? 6 : 0
-                  }}
-                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
-                  style={{ originX: "center", originY: "center" }}
+              <div className="relative w-5 h-4 sm:w-6 sm:h-5 flex flex-col justify-between items-center">
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
                 />
-                <motion.span
-                  animate={{
-                    opacity: mobileMenuOpen ? 0 : 1
-                  }}
-                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "opacity-0" : ""
+                  }`}
                 />
-                <motion.span
-                  animate={{
-                    rotate: mobileMenuOpen ? -45 : 0,
-                    y: mobileMenuOpen ? -6 : 0
-                  }}
-                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
-                  style={{ originX: "center", originY: "center" }}
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
                 />
-              </motion.div>
-            </motion.button>
+              </div>
+            </button>
 
             {/* Desktop Navigation */}
-            <div className={`hidden md:flex items-center ${isScrolled ? "gap-2 mx-6" : "gap-2"}`}>
+            <div className={`hidden md:flex items-center ${
+              isScrolled ? "gap-0.5 mx-2" : "gap-2"
+            }`}>
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-lg ${
+                  className={`text-sm font-medium transition-all duration-300 px-3 py-1.5 rounded-lg ${
                     location.pathname === item.path
-                      ? "bg-primary/10 text-primary"
+                      ? isScrolled
+                        ? "bg-pink-100 text-pink-600 backdrop-blur-sm"
+                        : "bg-pink-100 text-pink-600"
                       : isScrolled
-                        ? "text-foreground/80 hover:text-foreground hover:bg-primary/5"
-                        : "text-muted-foreground hover:text-foreground hover:bg-primary/5"
+                        ? "text-foreground/80 hover:text-pink-600 hover:bg-pink-50"
+                        : "text-muted-foreground hover:text-pink-600 hover:bg-pink-50"
                   }`}
                 >
                   {t(item.key)}
@@ -140,8 +136,8 @@ export const Header = () => {
                 size="sm"
                 className={`btn-shimmer ${
                   isScrolled 
-                    ? "bg-primary hover:bg-primary/90 text-primary-foreground" 
-                    : ""
+                    ? "bg-pink-500 hover:bg-pink-600 text-white" 
+                    : "bg-pink-500 hover:bg-pink-600 text-white"
                 }`}
               >
                 <Link to="/join">{t("nav.getStarted")}</Link>

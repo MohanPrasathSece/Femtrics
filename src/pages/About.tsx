@@ -9,20 +9,6 @@ import hero2 from "@/assets/hero-2.png";
 import hero3 from "@/assets/hero-3.png";
 import femtricsLogo from "/logo.png";
 
-const teamStructure = [
-  { role: "Founder & Chief Marketing + Analytics Strategist", count: "You" },
-  { role: "Data Associates", count: "12" },
-  { role: "Designers", count: "3" },
-  { role: "Outreach Lead", count: "1" },
-  { role: "Operations Lead", count: "1" },
-];
-
-const volunteerBenefits = [
-  "Comprehensive Bootcamp Training",
-  "Standard Operating Procedures (SOPs)",
-  "Real Client Experience",
-];
-
 const partnerships = [
   { icon: Users, title: "Women's Self-Help Groups", desc: "Connecting with grassroots women's networks" },
   { icon: Heart, title: "NGOs", desc: "Partnering with organizations in underserved areas" },
@@ -346,61 +332,6 @@ const About = () => {
                     <Heart className="w-4 h-4" />
                     <span className="text-sm font-medium">Women Empowerment</span>
                   </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Enterprise Structure */}
-      <section className="section-padding">
-        <div className="container-tight">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left">
-              <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-                Enterprise Structure
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
-                Our Team
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                A dedicated team of volunteers committed to empowering women entrepreneurs through data.
-              </p>
-              <div className="space-y-4">
-                {teamStructure.map((member, index) => (
-                  <motion.div
-                    key={member.role}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center justify-between bg-card p-4 rounded-xl card-elevated"
-                  >
-                    <span>{member.role}</span>
-                    <span className="font-display font-bold text-primary">{member.count}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" delay={0.2}>
-              <div className="bg-gradient-to-br from-primary/10 via-secondary to-accent/5 rounded-3xl p-8 md:p-12">
-                <h3 className="font-display text-2xl font-semibold mb-6">Every Volunteer Gets</h3>
-                <div className="space-y-4">
-                  {volunteerBenefits.map((benefit, index) => (
-                    <motion.div
-                      key={benefit}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.15 }}
-                      className="flex items-center gap-4 bg-card/80 backdrop-blur-sm p-4 rounded-xl"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                        {index + 1}
-                      </div>
-                      <span className="font-medium">{benefit}</span>
-                    </motion.div>
-                  ))}
                 </div>
               </div>
             </AnimatedSection>

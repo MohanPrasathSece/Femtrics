@@ -585,15 +585,36 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
-  /* Modern glass morphism for dynamic island */
+  /* Small glassy dynamic island with pink highlights */
   .glass-morphism {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(236, 72, 153, 0.25);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(236, 72, 153, 0.3);
     box-shadow: 
-      0 8px 32px rgba(236, 72, 153, 0.2),
+      0 8px 32px rgba(236, 72, 153, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 0 0 1px rgba(236, 72, 153, 0.15);
+      0 0 0 1px rgba(236, 72, 153, 0.1);
+  }
+
+  /* Small dynamic island states with pink */
+  .header-island {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .header-island.scrolled {
+    @apply bg-white/90 text-foreground;
+    max-width: 800px;
+    margin: 0.5rem auto;
+    padding: 0.4rem 0.8rem;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(236, 72, 153, 0.4);
+    box-shadow: 
+      0 12px 40px rgba(236, 72, 153, 0.15),
+      0 4px 12px rgba(236, 72, 153, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 0 0 1px rgba(236, 72, 153, 0.2);
   }
 }
