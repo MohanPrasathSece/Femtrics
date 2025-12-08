@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import femtricsLogo from "@/assets/femtrics-logo.png";
 import { useTranslation } from "@/contexts/TranslationContext";
@@ -16,10 +16,11 @@ const navItems = [
 ];
 
 export const Header = () => {
+  const { t, language, setLanguage } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const location = useLocation();
-  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +45,7 @@ export const Header = () => {
             layout
             className={`flex items-center justify-between transition-all duration-500 ${
               isScrolled
-                ? "glass-white border border-border/30 text-foreground rounded-2xl px-4 py-2 mx-auto max-w-fit shadow-lg"
+                ? "glass-morphism border border-border/30 text-foreground rounded-3xl px-6 py-3 mx-auto max-w-fit shadow-xl backdrop-blur-md"
                 : "bg-transparent"
             }`}
           >
@@ -108,20 +109,25 @@ export const Header = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 transition-colors ${
-                isScrolled ? "text-foreground" : "text-foreground"
-              }`}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+              <motion.div
+                animate={{ rotate: mobileMenuOpen ? 45 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.div>
+            </motion.button>
           </motion.nav>
         </div>
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
+          {mobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -139,7 +145,7 @@ export const Header = () => {
                   >
                     <Link
                       to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className={`block py-2 text-lg font-medium transition-colors ${
                         location.pathname === item.path
                           ? "text-primary"
@@ -156,7 +162,7 @@ export const Header = () => {
                   transition={{ delay: navItems.length * 0.1 }}
                 >
                   <Button asChild className="w-full mt-4">
-                    <Link to="/join" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link to="/join" onClick={() => setMobileMenuOpen(false)}>
                       {t("nav.getStarted")}
                     </Link>
                   </Button>

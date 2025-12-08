@@ -76,7 +76,7 @@ const Join = () => {
       </section>
 
       {/* Tab Selection */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection>
             <div className="flex justify-center mb-12">
@@ -170,7 +170,7 @@ const Join = () => {
                 </AnimatedSection>
 
                 <AnimatedSection direction="right" delay={0.2}>
-                  <div className="bg-card rounded-3xl p-8 card-elevated">
+                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.businessApplication")}</h3>
                     <form className="space-y-5">
                       <div>
@@ -279,7 +279,7 @@ const Join = () => {
                       <motion.div 
                         key={role.title} 
                         whileHover={{ x: 4 }}
-                        className="flex items-start gap-4 bg-card p-5 rounded-2xl card-elevated"
+                        className="flex items-start gap-4 bg-gradient-to-br from-pink-50 to-rose-50 p-5 rounded-2xl card-elevated"
                       >
                         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <role.icon className="w-6 h-6 text-primary" />
@@ -322,7 +322,7 @@ const Join = () => {
                 </AnimatedSection>
 
                 <AnimatedSection direction="right" delay={0.2}>
-                  <div className="bg-card rounded-3xl p-8 card-elevated">
+                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.volunteerApplication")}</h3>
                     <form className="space-y-5">
                       <div>
@@ -402,7 +402,7 @@ const Join = () => {
       </section>
 
       {/* Partners */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-semibold mb-4">
@@ -423,7 +423,7 @@ const Join = () => {
               <AnimatedSection key={partner.title} delay={index * 0.1}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="bg-card rounded-2xl p-6 card-elevated text-center"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 card-elevated text-center"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <partner.icon className="w-6 h-6 text-primary" />

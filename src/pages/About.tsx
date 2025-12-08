@@ -54,7 +54,7 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
@@ -238,7 +238,7 @@ const About = () => {
       </section>
 
       {/* Partnerships */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
@@ -269,7 +269,7 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">

@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, TrendingUp, Target, Users, Smartphone, PieChart, LineChart, Zap, Shield, Sparkles, DollarSign, Package, TrendingDown, Smartphone as PhoneIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CounterAnimation } from "@/components/CounterAnimation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HeroImageCarousel } from "@/components/HeroImageCarousel";
 import { useTranslation } from "@/contexts/TranslationContext";
 import analyticsBg from "@/assets/analytics-bg.png";
 
@@ -73,45 +72,62 @@ const products = [
 
 const Index = () => {
   const { t } = useTranslation();
-  const { scrollYProgress } = useScroll();
-  const heroImageY = useTransform(scrollYProgress, [0, 0.5], ["0%", "30%"]);
   
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section - Left Content, Right Image Carousel */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-24 hero-bg">
+      {/* Hero Section - New Modern Design */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+          <div className="absolute top-40 right-10 w-96 h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000"></div>
+        </div>
+        
         <div className="container-tight relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Content */}
-            <div className="max-w-2xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-left"
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-6"
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-pink-200"
               >
-                <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-base font-medium">
-                  <Sparkles className="w-4 h-4" />
-                  {t("hero.tagline")}
-                </span>
+                <Sparkles className="w-4 h-4 text-pink-600" />
+                <span className="text-sm font-semibold text-pink-800">Empowering Women Entrepreneurs</span>
               </motion.div>
 
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 tracking-tight"
+                transition={{ delay: 0.3 }}
+                className="font-display text-6xl md:text-7xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent leading-tight"
               >
-                {t("hero.title")}
+                Femtrics
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed font-light"
+                transition={{ delay: 0.4 }}
+                className="text-2xl md:text-3xl font-medium text-gray-800 mb-4 italic"
+              >
+                {t("hero.title")}
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-lg"
               >
                 {t("hero.description")}
               </motion.p>
@@ -119,60 +135,92 @@ const Index = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{ delay: 0.6 }}
                 className="flex flex-wrap gap-4 mb-8"
               >
-                <Button asChild variant="hero" size="lg" className="btn-shimmer text-base px-8 py-6">
+                <Button asChild size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                   <Link to="/join" className="group flex items-center">
                     {t("hero.apply")}
                     <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
-                <Button asChild variant="heroOutline" size="lg" className="text-base px-8 py-6">
+                <Button asChild variant="outline" size="lg" className="px-8 py-4 text-lg border-pink-300 text-pink-700 hover:bg-pink-50 rounded-xl">
                   <Link to="/about">{t("hero.learnMore")}</Link>
                 </Button>
               </motion.div>
 
-              {/* Trust Signals */}
-              <motion.div
+              <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="flex flex-wrap gap-6 text-base text-muted-foreground"
+                transition={{ delay: 0.7 }}
+                className="text-sm text-gray-600 flex items-center gap-2"
               >
-                <div className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-primary" />
-                  <span>{t("hero.free")}</span>
+                <div className="flex -space-x-2">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-rose-400 border-2 border-white"></div>
+                  ))}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-primary" />
-                  <span>{t("hero.noTech")}</span>
-                </div>
-              </motion.div>
-            </div>
+                Trusted by 200+ women entrepreneurs across Hyderabad
+              </motion.p>
+            </motion.div>
 
-            {/* Right Side - Image Carousel with Parallax */}
+            {/* Right Visual */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="hidden lg:block"
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative"
             >
-              <motion.div 
-                className="relative"
-                style={{ y: heroImageY }}
-              >
-                <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
-                  <HeroImageCarousel />
+              <div className="relative">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  <div className="w-full h-full rounded-full bg-gradient-to-r from-pink-200 to-rose-200 opacity-30"></div>
+                </motion.div>
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-pink-200">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-pink-600 mb-2">200+</div>
+                      <div className="text-sm text-gray-600">Women Empowered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-rose-600 mb-2">35%</div>
+                      <div className="text-sm text-gray-600">Revenue Growth</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-pink-600 mb-2">10+</div>
+                      <div className="text-sm text-gray-600">Areas Covered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-rose-600 mb-2">100+</div>
+                      <div className="text-sm text-gray-600">Dashboards</div>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl shadow-lg flex items-center justify-center"
+                >
+                  <TrendingUp className="w-10 h-10 text-white" />
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                  className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-400 rounded-xl shadow-lg flex items-center justify-center"
+                >
+                  <BarChart3 className="w-8 h-8 text-white" />
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Who We Serve */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
@@ -197,7 +245,7 @@ const Index = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.02, x: 4 }}
-                    className="flex items-center gap-3 bg-card p-4 rounded-xl card-elevated cursor-pointer"
+                    className="flex items-center gap-3 bg-gradient-to-br from-pink-50 to-rose-50 p-4 rounded-xl card-elevated cursor-pointer"
                   >
                     <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
                     <span className="text-base">{type}</span>
@@ -218,7 +266,7 @@ const Index = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ scale: 1.01, y: -4 }}
-                      className="flex items-center gap-4 bg-card p-6 rounded-xl cursor-pointer card-elevated"
+                      className="flex items-center gap-4 bg-gradient-to-br from-pink-50 to-rose-50 p-6 rounded-xl cursor-pointer card-elevated"
                     >
                       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                         <IconComponent className="w-6 h-6 text-primary" />
@@ -237,11 +285,11 @@ const Index = () => {
       </section>
 
       {/* Analytics Solutions */}
-      <section className="section-padding relative bg-pink-soft">
+      <section className="section-padding relative bg-background">
         <div className="absolute top-0 right-0 w-96 h-96 opacity-20">
           <img src={analyticsBg} alt="" className="w-full h-full object-contain" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 md:px-6">
+        <div className="container-tight relative">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
               {t("common.ourSolutions")}
@@ -260,7 +308,7 @@ const Index = () => {
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-card rounded-2xl p-8 h-full flex flex-col border border-border/60 hover:shadow-lg"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 h-full flex flex-col border border-pink-200 hover:shadow-lg"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <motion.div 
@@ -301,7 +349,7 @@ const Index = () => {
       </section>
 
       {/* Mission, Vision, Values */}
-      <section className="section-padding bg-pink-medium">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <h2 className="font-display text-5xl md:text-6xl font-semibold mb-4 tracking-tight">
@@ -333,7 +381,7 @@ const Index = () => {
               <AnimatedSection key={item.title} delay={item.delay}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-card rounded-2xl p-8 card-elevated h-full"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 card-elevated h-full"
                 >
                   <motion.div 
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -351,7 +399,7 @@ const Index = () => {
       </section>
 
       {/* Our Reach */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
@@ -421,90 +469,16 @@ const Index = () => {
                   </div>
                 </motion.div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft" />
-                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-pink-medium -z-10" />
+                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10" />
               </div>
             </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Journey Timeline */}
-      <section className="section-padding bg-foreground text-background">
-        <div className="container-tight">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-              {t("common.ourJourney")}
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
-              Year-Long Execution Plan
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                phase: "1",
-                title: "Build",
-                period: "Month 1-2",
-                items: ["Recruit volunteers", "Create dashboards/templates", "Train team", "Partner with 1 NGO", "Onboard first 10 businesses"],
-                delay: 0.1,
-              },
-              {
-                phase: "2",
-                title: "Scale",
-                period: "Month 3-6",
-                items: ["50+ clients", "Release forecasting model v1", "Start school workshops", "Build 2 more NGO partnerships", "Publish case studies"],
-                delay: 0.2,
-              },
-              {
-                phase: "3",
-                title: "Impact",
-                period: "Month 6-12",
-                items: ["120+ businesses", "Full analytics suite", "Sponsorships/funding", "Expansion to Warangal/Vijayawada", "Ambassador program"],
-                delay: 0.3,
-              },
-            ].map((phase) => (
-              <AnimatedSection key={phase.phase} delay={phase.delay}>
-                <motion.div
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  className="relative bg-background/5 backdrop-blur-sm rounded-2xl p-8 border border-background/10 h-full"
-                >
-                  <div className="absolute -top-6 left-8">
-                    <motion.div 
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center font-display text-xl font-bold text-primary-foreground"
-                    >
-                      {phase.phase}
-                    </motion.div>
-                  </div>
-                  <div className="pt-4">
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-base text-background/50 uppercase tracking-wider">Phase {phase.phase}</span>
-                    </div>
-                    <h3 className="font-display text-2xl font-semibold mb-1">{phase.title}</h3>
-                    <p className="text-primary text-base mb-6">{phase.period}</p>
-                    <ul className="space-y-3">
-                      {phase.items.map((item, i) => (
-                        <motion.li 
-                          key={i} 
-                          whileHover={{ x: 4 }}
-                          className="flex items-start gap-3 text-background/70 text-base cursor-pointer"
-                        >
-                          <span className="w-1 h-1 rounded-full bg-primary mt-2 flex-shrink-0" />
-                          {item}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      
       {/* Goals / Impact Metrics */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
@@ -526,12 +500,12 @@ const Index = () => {
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-gradient-to-br from-card to-card/50 rounded-3xl p-8 text-center card-elevated backdrop-blur-sm"
+                  className="bg-gradient-to-br from-card to-card/50 rounded-3xl p-6 text-center card-elevated backdrop-blur-sm"
                 >
-                  <div className="font-display text-5xl md:text-6xl font-bold text-primary mb-3 tracking-tight">
+                  <div className="text-2xl md:text-3xl font-semibold text-primary mb-2 tracking-tight">
                     {metric.display}
                   </div>
-                  <p className="text-muted-foreground text-lg font-medium leading-relaxed">{metric.label}</p>
+                  <p className="text-muted-foreground text-base font-medium leading-relaxed">{metric.label}</p>
                 </motion.div>
               </AnimatedSection>
             ))}
@@ -548,12 +522,12 @@ const Index = () => {
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-gradient-to-br from-card to-card/50 rounded-3xl p-8 text-center card-elevated backdrop-blur-sm"
+                  className="bg-gradient-to-br from-card to-card/50 rounded-3xl p-6 text-center card-elevated backdrop-blur-sm"
                 >
-                  <div className="font-display text-5xl md:text-6xl font-bold text-primary mb-3 tracking-tight">
+                  <div className="text-2xl md:text-3xl font-semibold text-primary mb-2 tracking-tight">
                     {metric.display}
                   </div>
-                  <p className="text-muted-foreground text-lg font-medium leading-relaxed">{metric.label}</p>
+                  <p className="text-muted-foreground text-base font-medium leading-relaxed">{metric.label}</p>
                 </motion.div>
               </AnimatedSection>
             ))}
@@ -562,7 +536,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-primary/10 via-background to-accent/5">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <h2 className="font-display text-5xl md:text-7xl font-semibold mb-6 tracking-tight">

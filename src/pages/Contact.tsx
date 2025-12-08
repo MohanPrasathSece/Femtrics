@@ -57,7 +57,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -134,7 +134,7 @@ const Contact = () => {
 
             {/* Contact Form / Enquiry Form */}
             <AnimatedSection direction="right" delay={0.2}>
-              <div className="bg-card rounded-3xl p-8 card-elevated">
+              <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
                 <h3 className="font-display text-2xl font-semibold mb-6">{t("contact.sendEnquiry")}</h3>
                 <form className="space-y-5">
                   <div>
@@ -196,7 +196,7 @@ const Contact = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">

@@ -6,7 +6,7 @@ export const Footer = () => {
   const { t } = useTranslation();
   
   return (
-    <footer className="relative mt-20 w-full">
+    <footer className="relative mt-20 w-full px-2 md:px-4">
       <div className="bg-black text-white rounded-t-[2.5rem] px-4 md:px-6 py-8 w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">

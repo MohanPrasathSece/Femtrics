@@ -31,12 +31,12 @@ const Dashboard = () => {
       </section>
 
       {/* Dashboard Preview */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection>
             <motion.div 
               whileHover={{ scale: 1.01 }}
-              className="bg-card rounded-3xl p-6 md:p-8 card-hover-glow border border-border"
+              className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-6 md:p-8 card-hover-glow border border-pink-200"
             >
               {/* Dashboard Header */}
               <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-border">
@@ -65,7 +65,7 @@ const Dashboard = () => {
                   <motion.div
                     key={kpi.label}
                     whileHover={{ y: -4, scale: 1.02 }}
-                    className="bg-pink-medium rounded-xl p-5 card-hover-lift"
+                    className="bg-background rounded-xl p-5 card-hover-lift"
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <kpi.icon className="w-4 h-4 text-muted-foreground" />
@@ -84,7 +84,7 @@ const Dashboard = () => {
                 {/* Revenue Chart Placeholder */}
                 <motion.div 
                   whileHover={{ scale: 1.02 }}
-                  className="bg-pink-medium rounded-xl p-6"
+                  className="bg-background rounded-xl p-6"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <h4 className="font-semibold">Revenue Trend</h4>
@@ -112,7 +112,7 @@ const Dashboard = () => {
                 {/* Category Breakdown */}
                 <motion.div 
                   whileHover={{ scale: 1.02 }}
-                  className="bg-pink-medium rounded-xl p-6"
+                  className="bg-background rounded-xl p-6"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <h4 className="font-semibold">Sales by Category</h4>
@@ -176,7 +176,7 @@ const Dashboard = () => {
       </section>
 
       {/* Features */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
@@ -199,7 +199,7 @@ const Dashboard = () => {
               <AnimatedSection key={feature.title} delay={index * 0.1}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-card rounded-2xl p-8 card-hover-glow h-full border border-border/50 gradient-border"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 card-hover-glow h-full border border-pink-200 gradient-border"
                 >
                   <motion.div 
                     whileHover={{ rotate: 10, scale: 1.1 }}
@@ -217,7 +217,7 @@ const Dashboard = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center">
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">

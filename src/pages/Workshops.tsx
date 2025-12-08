@@ -101,7 +101,7 @@ const Workshops = () => {
                   whileHover={{ scale: 1.02 }}
                 />
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft" />
-                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-pink-soft -z-10" />
+                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10" />
               </div>
             </motion.div>
           </div>
@@ -109,7 +109,7 @@ const Workshops = () => {
       </section>
 
       {/* Educational Impact Section */}
-      <section className="section-padding bg-pink-soft">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
@@ -132,7 +132,7 @@ const Workshops = () => {
               <AnimatedSection key={stat.label} delay={index * 0.1}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-card rounded-2xl p-8 text-center card-hover-glow border border-border/50"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 text-center card-hover-glow border border-pink-200"
                 >
                   <motion.div 
                     whileHover={{ rotate: 10, scale: 1.1 }}
@@ -167,7 +167,7 @@ const Workshops = () => {
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-card rounded-3xl p-8 h-full flex flex-col card-elevated"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 h-full flex flex-col card-elevated"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className={`px-4 py-1.5 rounded-full text-base font-medium ${
@@ -185,19 +185,19 @@ const Workshops = () => {
                   <div className="flex flex-wrap gap-4 mb-6 text-base text-muted-foreground">
                     <motion.span 
                       whileHover={{ scale: 1.05 }}
-                      className="flex items-center gap-1.5 bg-pink-soft px-3 py-1.5 rounded-lg"
+                      className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
                       <Clock className="w-4 h-4" /> {workshop.duration}
                     </motion.span>
                     <motion.span 
                       whileHover={{ scale: 1.05 }}
-                      className="flex items-center gap-1.5 bg-pink-soft px-3 py-1.5 rounded-lg"
+                      className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
                       <Users className="w-4 h-4" /> {workshop.participants} participants
                     </motion.span>
                     <motion.span 
                       whileHover={{ scale: 1.05 }}
-                      className="flex items-center gap-1.5 bg-pink-soft px-3 py-1.5 rounded-lg"
+                      className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
                       {workshop.level}
                     </motion.span>
@@ -227,7 +227,7 @@ const Workshops = () => {
       </section>
 
       {/* Upcoming Schedule */}
-      <section className="section-padding bg-pink-medium">
+      <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
@@ -244,7 +244,7 @@ const Workshops = () => {
                 <motion.div
                   whileHover={{ x: 6, scale: 1.01 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-card rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-elevated"
+                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-elevated"
                 >
                   <div className="flex items-start gap-4">
                     <motion.div 
@@ -256,7 +256,7 @@ const Workshops = () => {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold">{event.workshop}</h3>
-                        <span className="text-sm px-2 py-0.5 rounded-full bg-pink-soft text-muted-foreground">
+                        <span className="text-sm px-2 py-0.5 rounded-full bg-background text-muted-foreground">
                           {event.type}
                         </span>
                       </div>
@@ -282,7 +282,7 @@ const Workshops = () => {
       </section>
 
       {/* Registration Form */}
-      <section id="register" className="section-padding bg-pink-soft">
+      <section id="register" className="section-padding bg-background">
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
@@ -319,7 +319,7 @@ const Workshops = () => {
             <AnimatedSection direction="right" delay={0.2}>
               <motion.div 
                 whileHover={{ scale: 1.01 }}
-                className="bg-card rounded-3xl p-8 card-hover-glow border border-border/50"
+                className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-hover-glow border border-pink-200"
               >
                 <h3 className="font-display text-2xl font-semibold mb-6">Registration Form</h3>
                 <form className="space-y-5">
@@ -380,7 +380,7 @@ const Workshops = () => {
       </section>
 
       {/* Resources */}
-      <section id="resources" className="section-padding bg-pink-soft">
+      <section id="resources" className="section-padding bg-background">
         <div className="container-tight">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
