@@ -433,55 +433,6 @@ const Workshops = () => {
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-pink-500 flex items-center justify-center">
                     <Calendar className="w-8 h-8 text-white" />
-                              workshop = 'Girls in Data';
-                              workshopCode = 'GD';
-                            }
-                            
-                            return (
-                              <div
-                                key={day}
-                                onClick={() => workshop && handleDateSelect(workshop, `Feb ${day}, 2025`)}
-                                className={`text-center py-3 text-sm rounded-lg transition-all duration-200 ${
-                                  workshop 
-                                    ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-md hover:shadow-lg transform hover:scale-105' 
-                                    : 'text-gray-300 cursor-not-allowed bg-gray-50'
-                                }`}
-                              >
-                                <div className="font-medium">{day}</div>
-                                {workshop && <div className="text-xs mt-1 font-bold">{workshopCode}</div>}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Legend */}
-                  <div className="mt-8 pt-6 border-t border-border/50">
-                    <div className="flex justify-center gap-8 text-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 bg-pink-500 rounded shadow-sm"></div>
-                        <span className="font-medium">DD = Data for Didi</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 bg-pink-500 rounded shadow-sm"></div>
-                        <span className="font-medium">GD = Girls in Data</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          {/* Registration CTA Section */}
-          <AnimatedSection className="mt-16">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 border border-pink-200">
-                <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full bg-pink-500 flex items-center justify-center">
-                    <Calendar className="w-8 h-8 text-white" />
                   </div>
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">Ready to Join?</h3>
@@ -496,7 +447,7 @@ const Workshops = () => {
                   Register for Workshops
                 </button>
                 <p className="text-sm text-muted-foreground mt-4">
-                  Click on any pink date in the calendar above or use this button to start registration
+                  Choose your preferred date during registration
                 </p>
               </div>
             </div>
@@ -526,15 +477,22 @@ const Workshops = () => {
                   <div className="flex items-center justify-between mb-2">
                     {[1, 2, 3, 4, 5].map((step) => (
                       <div key={step} className="flex items-center">
-                        <div
+                        <button
+                          onClick={() => {
+                            if (step <= currentStep || canProceedToNext || step === 1) {
+                              setCurrentStep(step);
+                            }
+                          }}
                           className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-colors ${
                             step <= currentStep
-                              ? 'bg-pink-500 text-white'
-                              : 'bg-gray-200 text-gray-600'
+                              ? 'bg-pink-500 text-white cursor-pointer hover:bg-pink-600'
+                              : step === currentStep + 1 && canProceedToNext
+                              ? 'bg-pink-500 text-white cursor-pointer hover:bg-pink-600'
+                              : 'bg-gray-200 text-gray-600 cursor-not-allowed'
                           }`}
                         >
                           {step}
-                        </div>
+                        </button>
                         {step < 5 && (
                           <div
                             className={`w-6 md:w-12 h-1 mx-1 md:mx-2 transition-colors ${
@@ -651,42 +609,44 @@ const Workshops = () => {
                   {currentStep === 3 && (
                     <div>
                       <h4 className="text-xl font-semibold mb-4">Choose Date</h4>
-                      <div className="space-y-4">
-                        {upcomingSchedule
-                          .filter(event => event.workshop === registrationData.workshop)
-                          .map((event, index) => (
-                            <button
-                              key={index}
-                              onClick={() => {
-                                setRegistrationData(prev => ({ ...prev, date: event.date }));
-                                setCurrentStep(4);
-                              }}
-                              className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
-                                registrationData.date === event.date
-                                  ? 'border-pink-500 bg-pink-50'
-                                  : 'border-gray-200 hover:border-pink-300'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <h5 className="font-semibold">{event.date}</h5>
-                                  <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">
-                                    <span className="flex items-center gap-1">
-                                      <Clock className="w-3 h-3" /> {event.time}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                      <MapPin className="w-3 h-3" /> {event.location}
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                  {registrationData.date === event.date && (
-                                    <div className="w-3 h-3 rounded-full bg-pink-500" />
-                                  )}
-                                </div>
+                      <div className="bg-white rounded-lg border border-gray-200 p-1">
+                        <div className="mb-1">
+                          <h5 className="font-medium text-center text-xs mb-1">Select Date</h5>
+                          <div className="grid grid-cols-7 gap-0 mb-0.5">
+                            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+                              <div key={day} className="text-center text-[10px] font-semibold text-gray-500">
+                                {day}
                               </div>
-                            </button>
-                          ))}
+                            ))}
+                          </div>
+                          <div className="grid grid-cols-7 gap-0">
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map(day => (
+                              <button
+                                key={day}
+                                onClick={() => {
+                                  const month = new Date().getMonth() + 1;
+                                  const year = new Date().getFullYear();
+                                  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June'];
+                                  const selectedMonth = monthNames[month - 1] || 'January';
+                                  setRegistrationData(prev => ({ 
+                                    ...prev, 
+                                    date: `${day} ${selectedMonth} ${year}`,
+                                    time: "10:00 AM - 1:00 PM",
+                                    location: "Various Locations"
+                                  }));
+                                  setTimeout(() => setCurrentStep(4), 100);
+                                }}
+                                className={`aspect-square flex items-center justify-center text-[10px] font-medium transition-all ${
+                                  registrationData.date.includes(`${day} `)
+                                    ? 'bg-pink-500 text-white'
+                                    : 'bg-gray-50 hover:bg-pink-100 text-gray-700'
+                                }`}
+                              >
+                                {day}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -798,14 +758,11 @@ const Workshops = () => {
                             </div>
                             
                             {/* File Upload Section */}
-                            <div className="mb-4">
-                              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                                <FileUp className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-                                <p className="text-xs text-gray-600 mb-2">
-                                  Upload CSV/Excel file with participant details
-                                </p>
-                                <p className="text-xs text-gray-500 mb-3">
-                                  Format: Name, Email (one per line)
+                            <div className="mb-3">
+                              <div className="border-2 border-dashed border-gray-300 rounded-lg p-3 text-center">
+                                <FileUp className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+                                <p className="text-xs text-gray-600 mb-1">
+                                  Upload CSV/Excel file
                                 </p>
                                 <input
                                   type="file"
@@ -816,22 +773,22 @@ const Workshops = () => {
                                 />
                                 <label
                                   htmlFor="file-upload"
-                                  className="inline-block px-3 py-1 text-sm bg-pink-500 text-white rounded-lg hover:bg-pink-600 cursor-pointer transition-colors"
+                                  className="inline-block px-2 py-1 text-xs bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer transition-colors"
                                 >
                                   Choose File
                                 </label>
                                 {registrationData.participantFile && (
-                                  <p className="text-xs text-green-600 mt-2">
-                                    File uploaded: {registrationData.participantFile.name}
+                                  <p className="text-xs text-green-600 mt-1">
+                                    {registrationData.participantFile.name}
                                   </p>
                                 )}
                               </div>
                             </div>
 
                             {/* Manual Entry Section */}
-                            <div className="mb-4">
+                            <div className="mb-3">
                               <div className="flex items-center justify-between mb-2">
-                                <p className="text-xs text-gray-600">Or add participants manually:</p>
+                                <p className="text-xs text-gray-600">Add manually:</p>
                                 <button
                                   onClick={addManualParticipant}
                                   className="text-xs px-2 py-1 bg-pink-100 text-pink-600 rounded-full hover:bg-pink-200 transition-colors"
@@ -841,21 +798,21 @@ const Workshops = () => {
                               </div>
                               
                               {registrationData.participants.length > 0 && (
-                                <div className="max-h-32 overflow-y-auto border rounded-lg">
+                                <div className="max-h-24 overflow-y-auto border rounded-lg">
                                   {registrationData.participants.map((participant, index) => (
-                                    <div key={index} className="flex gap-2 p-1 border-b last:border-b-0">
+                                    <div key={index} className="flex gap-1 p-1 border-b last:border-b-0">
                                       <input
                                         type="text"
                                         value={participant.name}
                                         onChange={(e) => updateParticipant(index, 'name', e.target.value)}
-                                        className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-pink-500"
+                                        className="flex-1 px-1 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-pink-500"
                                         placeholder="Name"
                                       />
                                       <input
                                         type="email"
                                         value={participant.email}
                                         onChange={(e) => updateParticipant(index, 'email', e.target.value)}
-                                        className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-pink-500"
+                                        className="flex-1 px-1 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-pink-500"
                                         placeholder="Email"
                                       />
                                       <button
