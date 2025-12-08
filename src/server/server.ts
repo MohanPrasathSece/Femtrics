@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import { sendEmail, getEmailLogs, clearEmailLogs, sendConfirmationEmail } from './emailService.js';
+import { sendEmail, getEmailLogs, clearEmailLogs, sendConfirmationEmail } from './emailService';
 
 // Extend Express Request type to include file
 declare global {
@@ -49,7 +49,7 @@ app.listen(PORT, () => {
 
 // Display email logs in console every 30 seconds
 setInterval(() => {
-  import('./emailService.js').then(({ getEmailLogs }) => {
+  import('./emailService').then(({ getEmailLogs }) => {
     const mockReq = {} as any;
     const mockRes = {
       status: () => ({ json: (data: any) => {

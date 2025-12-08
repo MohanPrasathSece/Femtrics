@@ -459,9 +459,19 @@ export const Contact = () => {
 
       {/* Thank You Modal */}
       <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
-        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent 
+          className="sm:max-w-2xl max-h-[80vh] overflow-y-auto transition-all duration-500 ease-out"
+          style={{
+            animation: 'modalFadeIn 0.3s ease-out'
+          }}
+        >
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-2xl">
+            <DialogTitle 
+              className="flex items-center gap-2 text-2xl"
+              style={{
+                animation: 'titleFadeIn 0.3s ease-out'
+              }}
+            >
               <CheckCircle className="w-6 h-6 text-green-600" />
               Thank You!
             </DialogTitle>
@@ -469,14 +479,30 @@ export const Contact = () => {
               Your message has been sent successfully, {formData.name || 'there'}! 
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div 
+            className="space-y-4"
+            style={{
+              animation: 'contentSlideUp 0.5s ease-out 0.2s both'
+            }}
+          >
+            <div 
+              className="bg-green-50 border border-green-200 rounded-lg p-4 transform transition-all duration-500 hover:scale-105"
+              style={{
+                animation: 'boxScale 0.5s ease-out 0.3s both'
+              }}
+            >
               <p className="text-green-700 text-sm">
                 We've received your inquiry and will get back to you within 24-48 hours. 
                 Our team is excited to connect with you and discuss how we can support your journey.
               </p>
             </div>
-            <div className="space-y-2">
+            <div 
+              className="space-y-2"
+              style={{
+                opacity: 0,
+                animation: 'listFadeIn 0.5s ease-out 0.4s forwards'
+              }}
+            >
               <p className="text-sm text-muted-foreground">What happens next?</p>
               <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• Our team will review your inquiry</li>
@@ -496,6 +522,66 @@ export const Contact = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Add animations to document head */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes modalFadeIn {
+            from {
+              opacity: 0;
+              transform: scale(0.95) translateY(-10px);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1) translateY(0);
+            }
+          }
+          
+          @keyframes titleFadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(-10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          @keyframes contentSlideUp {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          @keyframes boxScale {
+            from {
+              opacity: 0;
+              transform: scale(0.9);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+          
+          @keyframes listFadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `
+      }} />
 
       <Footer />
     </div>

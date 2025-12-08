@@ -198,25 +198,7 @@ const Join = () => {
         phone: businessFormData.phoneNumber,
         businessType: businessFormData.businessType,
         businessName: businessFormData.businessName,
-        message: `
-Business Application Details:
-
-Full Name: ${businessFormData.fullName}
-Business Name: ${businessFormData.businessName}
-Phone Number: ${businessFormData.phoneNumber}
-Email ID: ${businessFormData.email}
-Instagram ID: ${businessFormData.instagramId || 'Not provided'}
-Business Type: ${businessFormData.businessType}
-Primary Goal: ${businessFormData.primaryGoal}
-WhatsApp Opt-in: ${businessFormData.whatsappOptIn ? 'Yes' : 'No'}
-
-Application Summary:
-- Applicant: ${businessFormData.fullName} from ${businessFormData.businessName}
-- Contact: ${businessFormData.email} | ${businessFormData.phoneNumber}
-- Business Type: ${businessFormData.businessType}
-- Goal: ${businessFormData.primaryGoal}
-- WhatsApp Updates: ${businessFormData.whatsappOptIn ? 'Opted-in' : 'Not opted-in'}
-        `.trim()
+        message: businessFormData.message || 'Business application submitted'
       });
       
       await sendEmailWithGmailSMTP(emailData);
