@@ -55,8 +55,8 @@ export const Header = () => {
                 : "bg-transparent"
             }`}
           >
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-1.5 group flex-shrink-0">
+            {/* Logo - Hidden on mobile */}
+            <Link to="/" className="flex items-center gap-1.5 group flex-shrink-0 hidden md:flex">
               <div className="flex items-center gap-1.5">
                 <img 
                   src={femtricsLogo} 
@@ -73,10 +73,10 @@ export const Header = () => {
               </div>
             </Link>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Hidden on mobile */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-colors z-[60] flex-shrink-0 ${
+              className={`md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-colors z-[60] flex-shrink-0 hidden ${
                 isScrolled 
                   ? "bg-white/30 hover:bg-white/50 backdrop-blur-sm" 
                   : "hover:bg-gray-100"
