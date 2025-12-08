@@ -118,7 +118,7 @@ const Index = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  {t("hero.title")}
+                  Femtrics: {t("hero.title")}
                 </motion.h1>
                 
                 <motion.p 

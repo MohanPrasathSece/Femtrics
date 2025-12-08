@@ -1,3 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://femtrics.com/sitemap.xml
+
+# Allow search engines to crawl important directories
+Allow: /src/
+Allow: /public/
+Allow: /assets/
+
+# Specific bot allowances
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +25,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Crawl delay (optional, be nice to servers)
+Crawl-delay: 1

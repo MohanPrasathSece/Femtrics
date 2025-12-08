@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Target, TrendingUp, BarChart3, Users, Heart, Lightbulb, Award, Calendar, Building, GraduationCap, Handshake } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,6 +19,46 @@ const partnerships = [
 
 const About = () => {
   const { t } = useTranslation();
+
+  // SEO metadata for About page
+  useEffect(() => {
+    document.title = "About Femtrics | Empowering Women Entrepreneurs with Data Analytics";
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (metaDescription) {
+      metaDescription.content = "Learn about Femtrics - Our mission to empower women micro-entrepreneurs in Hyderabad with affordable data analytics solutions and business insights.";
+    }
+    
+    // Update canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = document.createElement('link') as HTMLLinkElement;
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = 'https://femtrics.com/about';
+    
+    // Update Open Graph tags
+    updateMetaTag('og:title', 'About Femtrics | Empowering Women Entrepreneurs');
+    updateMetaTag('og:description', 'Learn about Femtrics mission to empower women entrepreneurs with data analytics solutions.');
+    updateMetaTag('og:url', 'https://femtrics.com/about');
+    
+    // Update Twitter tags
+    updateMetaTag('twitter:title', 'About Femtrics | Empowering Women Entrepreneurs');
+    updateMetaTag('twitter:description', 'Femtrics mission: Empowering women micro-entrepreneurs with data analytics in Hyderabad.');
+  }, []);
+
+  function updateMetaTag(property: string, content: string) {
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
+              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    if (!tag) {
+      tag = document.createElement('meta') as HTMLMetaElement;
+      tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
+      document.head.appendChild(tag);
+    }
+    tag.content = content;
+  }
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
@@ -39,7 +80,7 @@ const About = () => {
               
               <div className="space-y-6">
                 <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1]">
-                  <span className="block">Business Analytics</span>
+                  <span className="block">Femtrics: Business Analytics</span>
                   <span className="block text-gradient">For Women</span>
                   <span className="block text-3xl md:text-4xl lg:text-5xl text-muted-foreground font-normal">By Women</span>
                 </h1>

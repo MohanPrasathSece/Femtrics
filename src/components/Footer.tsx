@@ -131,7 +131,7 @@ export const Footer = () => {
           {/* Copyright */}
           <div className="border-t border-white/20 pt-6">
             <p className="text-white/60 text-xs text-center">
-              {t("footer.copyright")} | All rights reserved
+              © 2025 Femtrics | All rights reserved
             </p>
           </div>
         </div>

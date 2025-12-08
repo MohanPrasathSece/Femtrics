@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,46 @@ const faqs = [
 export const Contact = () => {
   const { t } = useTranslation();
   const { sendEmail, isLoading } = useEmailService();
+
+  // SEO metadata for Contact page
+  useEffect(() => {
+    document.title = "Contact Femtrics | Get in Touch for Data Analytics Solutions";
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (metaDescription) {
+      metaDescription.content = "Contact Femtrics for data analytics solutions, workshops, and partnerships. Reach out to empower women entrepreneurs in Hyderabad with business insights.";
+    }
+    
+    // Update canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = document.createElement('link') as HTMLLinkElement;
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = 'https://femtrics.com/contact';
+    
+    // Update Open Graph tags
+    updateMetaTag('og:title', 'Contact Femtrics | Get in Touch');
+    updateMetaTag('og:description', 'Contact Femtrics for data analytics solutions and workshops for women entrepreneurs.');
+    updateMetaTag('og:url', 'https://femtrics.com/contact');
+    
+    // Update Twitter tags
+    updateMetaTag('twitter:title', 'Contact Femtrics | Get in Touch');
+    updateMetaTag('twitter:description', 'Reach out to Femtrics for data analytics solutions and workshops in Hyderabad.');
+  }, []);
+
+  function updateMetaTag(property: string, content: string) {
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
+              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    if (!tag) {
+      tag = document.createElement('meta') as HTMLMetaElement;
+      tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
+      document.head.appendChild(tag);
+    }
+    tag.content = content;
+  }
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -137,7 +178,7 @@ export const Contact = () => {
               {t("nav.contact")}
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] mb-6">
-              {t("contact.title")}
+              Femtrics: {t("contact.title")}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
               {t("contact.heroDesc")}

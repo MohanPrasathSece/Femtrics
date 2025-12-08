@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Calendar, Clock, Users, MapPin, BookOpen, CheckCircle, ArrowRight, GraduationCap, Award, Send, X } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -66,8 +67,52 @@ const Workshops = () => {
     name: "",
     email: "",
     phone: "",
+    groupName: "",
+    groupSize: "",
+    participantFile: null,
+    participants: []
   });
   const [selectedMonth, setSelectedMonth] = useState(0);
+
+  // SEO metadata for Workshops page
+  useEffect(() => {
+    document.title = "Femtrics Workshops | Data Analytics Training for Women Entrepreneurs";
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (metaDescription) {
+      metaDescription.content = "Join Femtrics workshops - Free data analytics training for women entrepreneurs in Hyderabad. Learn business insights, revenue tracking, and data-driven decisions.";
+    }
+    
+    // Update canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = document.createElement('link') as HTMLLinkElement;
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = 'https://femtrics.com/workshops';
+    
+    // Update Open Graph tags
+    updateMetaTag('og:title', 'Femtrics Workshops | Data Analytics Training');
+    updateMetaTag('og:description', 'Free data analytics workshops for women entrepreneurs. Learn business insights and revenue tracking.');
+    updateMetaTag('og:url', 'https://femtrics.com/workshops');
+    
+    // Update Twitter tags
+    updateMetaTag('twitter:title', 'Femtrics Workshops | Data Analytics Training');
+    updateMetaTag('twitter:description', 'Free data analytics workshops for women entrepreneurs in Hyderabad.');
+  }, []);
+
+  function updateMetaTag(property: string, content: string) {
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
+              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    if (!tag) {
+      tag = document.createElement('meta') as HTMLMetaElement;
+      tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
+      document.head.appendChild(tag);
+    }
+    tag.content = content;
+  }
 
   const handleDateSelect = (workshop, date) => {
     setRegistrationData(prev => ({
@@ -81,6 +126,75 @@ const Workshops = () => {
     setCurrentStep(4); // Jump to personal info step
   };
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        parseParticipantFile(text, file.name);
+      };
+      reader.readAsText(file);
+      setRegistrationData(prev => ({ ...prev, participantFile: file }));
+    }
+  };
+
+  const parseParticipantFile = (text, fileName) => {
+    const participants = [];
+    const lines = text.split('\n');
+    
+    // Skip header if exists
+    const startIndex = lines[0].toLowerCase().includes('name') ? 1 : 0;
+    
+    for (let i = startIndex; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      
+      // Handle CSV format
+      if (fileName.endsWith('.csv')) {
+        const [name, email] = line.split(',').map(item => item.trim().replace(/"/g, ''));
+        if (name && email && email.includes('@')) {
+          participants.push({ name, email });
+        }
+      } else {
+        // Handle simple text format (name,email per line)
+        const [name, email] = line.split(',').map(item => item.trim());
+        if (name && email && email.includes('@')) {
+          participants.push({ name, email });
+        }
+      }
+    }
+    
+    setRegistrationData(prev => ({ 
+      ...prev, 
+      participants: participants.slice(0, 50), // Limit to 50 participants
+      groupSize: participants.length.toString()
+    }));
+  };
+
+  const addManualParticipant = () => {
+    setRegistrationData(prev => ({
+      ...prev,
+      participants: [...prev.participants, { name: '', email: '' }]
+    }));
+  };
+
+  const updateParticipant = (index, field, value) => {
+    setRegistrationData(prev => ({
+      ...prev,
+      participants: prev.participants.map((p, i) => 
+        i === index ? { ...p, [field]: value } : p
+      )
+    }));
+  };
+
+  const removeParticipant = (index) => {
+    setRegistrationData(prev => ({
+      ...prev,
+      participants: prev.participants.filter((_, i) => i !== index)
+    }));
+  };
+
   const resetModal = () => {
     setCurrentStep(1);
     setRegistrationData({
@@ -90,6 +204,10 @@ const Workshops = () => {
       name: "",
       email: "",
       phone: "",
+      groupName: "",
+      groupSize: "",
+      participantFile: null,
+      participants: []
     });
     setShowModal(false);
   };
@@ -116,7 +234,7 @@ const Workshops = () => {
                   className="w-16 h-16 md:w-20 md:h-20"
                 />
                 <span>
-                  Learn to lead with <span className="text-gradient italic">data</span>
+                  Femtrics: Learn to lead with <span className="text-gradient italic">data</span>
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
@@ -567,11 +685,11 @@ const Workshops = () => {
 
                         <button
                           onClick={() => {
-                            setRegistrationData(prev => ({ ...prev, signupType: 'others' }));
+                            setRegistrationData(prev => ({ ...prev, signupType: 'group' }));
                             setCurrentStep(2);
                           }}
                           className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
-                            registrationData.signupType === 'others'
+                            registrationData.signupType === 'group'
                               ? 'border-pink-500 bg-pink-50'
                               : 'border-gray-200 hover:border-pink-300'
                           }`}
@@ -580,10 +698,10 @@ const Workshops = () => {
                             <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
                               <Users className="w-6 h-6 text-pink-600" />
                             </div>
-                            <h5 className="font-semibold text-lg">Someone Else</h5>
+                            <h5 className="font-semibold text-lg">Group Registration</h5>
                           </div>
                           <p className="text-muted-foreground">
-                            I'm registering a friend, family member, or colleague
+                            Register 20+ people for a dedicated workshop session
                           </p>
                         </button>
                       </div>
