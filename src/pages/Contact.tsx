@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { AnimatedSection } from "@/components/AnimatedSection";
-import { Button } from "@/components/ui/button";
+import { EmailTerminal } from "@/components/EmailTerminal";
+import { useEmailService } from "@/hooks/useEmailService";
 import { useTranslation } from "@/contexts/TranslationContext";
 
 const faqs = [
@@ -33,11 +36,38 @@ const faqs = [
   },
 ];
 
-const Contact = () => {
+export const Contact = () => {
   const { t } = useTranslation();
+  const { sendEmail, isLoading } = useEmailService();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const result = await sendEmail({
+      ...formData,
+      formType: 'Contact Inquiry'
+    });
+    
+    if (result.success) {
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } else {
+      setSubmitStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <EmailTerminal />
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">

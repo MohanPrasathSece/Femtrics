@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import femtricsLogo from "@/assets/femtrics-logo.png";
+import femtricsLogo from "/logo.png";
 import { useTranslation } from "@/contexts/TranslationContext";
 
 const navItems = [

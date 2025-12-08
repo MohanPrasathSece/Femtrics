@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Royal Pink - women-focused, professional */
-    --primary: 330 65% 50%;
+    --primary: 330 75% 45%;
     --primary-foreground: 0 0% 100%;
     
     /* Deep Teal for accents */
@@ -14,26 +14,26 @@
     
     /* Deep charcoal for text */
     --foreground: 220 20% 15%;
-    --background: 330 30% 99%;
+    --background: 330 25% 98%;
     
     /* Soft pink-tinted cards */
-    --card: 330 20% 99%;
+    --card: 330 15% 98%;
     --card-foreground: 220 20% 15%;
     
     /* Soft pink surfaces */
-    --secondary: 330 35% 96%;
+    --secondary: 330 30% 94%;
     --secondary-foreground: 220 20% 20%;
     
-    --muted: 330 15% 94%;
+    --muted: 330 10% 92%;
     --muted-foreground: 220 10% 45%;
     
     --accent: 180 60% 30%;
     --accent-foreground: 0 0% 100%;
     
     /* Pink-tinted background */
-    --pink-soft: 330 50% 97%;
-    --pink-medium: 330 40% 94%;
-    --pink-accent: 330 60% 92%;
+    --pink-soft: 330 40% 95%;
+    --pink-medium: 330 35% 92%;
+    --pink-accent: 330 55% 88%;
     
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 15%;
@@ -48,11 +48,11 @@
     --radius: 0.75rem;
     
     /* Custom tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(330 65% 50% / 0.08) 0%, hsl(330 30% 98%) 40%, hsl(180 60% 30% / 0.05) 100%);
-    --pink-gradient: linear-gradient(180deg, hsl(330 50% 97%) 0%, hsl(330 20% 99%) 100%);
-    --card-shadow: 0 4px 24px -4px hsl(330 65% 50% / 0.1);
-    --card-shadow-hover: 0 20px 40px -12px hsl(330 65% 50% / 0.25);
-    --glow: 0 0 60px hsl(330 65% 50% / 0.15);
+    --hero-gradient: linear-gradient(135deg, hsl(330 75% 45% / 0.12) 0%, hsl(330 25% 98%) 40%, hsl(180 60% 30% / 0.05) 100%);
+    --pink-gradient: linear-gradient(180deg, hsl(330 40% 95%) 0%, hsl(330 15% 98%) 100%);
+    --card-shadow: 0 4px 24px -4px hsl(330 75% 45% / 0.15);
+    --card-shadow-hover: 0 20px 40px -12px hsl(330 75% 45% / 0.3);
+    --glow: 0 0 60px hsl(330 75% 45% / 0.2);
     --glow-teal: 0 0 60px hsl(180 60% 30% / 0.15);
     
     /* Sidebar */
@@ -67,7 +67,7 @@
   }
 
   .dark {
-    --primary: 330 60% 60%;
+    --primary: 330 70% 55%;
     --primary-foreground: 220 20% 10%;
     
     --teal: 180 50% 45%;
@@ -88,9 +88,9 @@
     --accent: 180 50% 45%;
     --accent-foreground: 220 20% 10%;
     
-    --pink-soft: 330 40% 12%;
-    --pink-medium: 330 35% 15%;
-    --pink-accent: 330 50% 18%;
+    --pink-soft: 330 35% 10%;
+    --pink-medium: 330 30% 13%;
+    --pink-accent: 330 45% 16%;
     
     --popover: 220 18% 12%;
     --popover-foreground: 0 0% 95%;

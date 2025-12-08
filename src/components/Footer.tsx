@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
+import femtricsLogo from "/logo.png";
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -12,14 +13,26 @@ export const Footer = () => {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             {/* Branding */}
             <div className="flex flex-col">
-              <motion.h3 
-                className="text-xl font-bold text-white mb-2"
+              <motion.div 
+                className="flex items-center gap-3 mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Fem<span className="text-primary">trics</span>
-              </motion.h3>
+                <img 
+                  src={femtricsLogo} 
+                  alt="Femtrics Logo" 
+                  className="w-10 h-10"
+                />
+                <motion.h3 
+                  className="text-xl font-bold text-white"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  Fem<span className="text-primary">trics</span>
+                </motion.h3>
+              </motion.div>
               <p className="text-white/70 text-sm leading-relaxed mb-3">
                 {t("footer.tagline")}
               </p>

@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/contexts/TranslationContext";
 import workshopsHero from "@/assets/workshops-hero.png";
+import hero3 from "@/assets/hero-3.png";
+import femtricsLogo from "/logo.png";
 
 const workshops = [
   {
@@ -78,8 +80,15 @@ const Workshops = () => {
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
                 Educational Programs
               </span>
-              <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-                Learn to lead with <span className="text-gradient italic">data</span>
+              <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
+                <img 
+                  src={femtricsLogo} 
+                  alt="Femtrics Logo" 
+                  className="w-16 h-16 md:w-20 md:h-20"
+                />
+                <span>
+                  Learn to lead with <span className="text-gradient italic">data</span>
+                </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
                 Free, hands-on workshops designed for women entrepreneurs and students. 
@@ -317,63 +326,11 @@ const Workshops = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <motion.div 
-                whileHover={{ scale: 1.01 }}
-                className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-hover-glow border border-pink-200"
-              >
-                <h3 className="font-display text-2xl font-semibold mb-6">Registration Form</h3>
-                <form className="space-y-5">
-                  <div>
-                    <label className="block text-base font-medium mb-2">Full Name *</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Phone Number *</label>
-                    <input
-                      type="tel"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                      placeholder="+91 98765 43210"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email *</label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Select Workshop *</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
-                      <option value="">Choose a workshop</option>
-                      <option value="data-for-didi">Data for Didi (Women Entrepreneurs)</option>
-                      <option value="girls-in-data">Girls in Data (Students)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Preferred Date *</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
-                      <option value="">Select a date</option>
-                      <option value="dec-15">Dec 15, 2024 - Jubilee Hills</option>
-                      <option value="dec-20">Dec 20, 2024 - Madhapur</option>
-                      <option value="jan-5">Jan 5, 2025 - Gachibowli</option>
-                      <option value="jan-12">Jan 12, 2025 - Banjara Hills</option>
-                    </select>
-                  </div>
-                  <Button type="submit" variant="hero" className="w-full btn-shimmer" size="lg">
-                    Register Now
-                    <Send className="ml-2 w-4 h-4" />
-                  </Button>
-                </form>
-                <p className="text-muted-foreground text-sm mt-4 text-center">
-                  We'll send you a confirmation with all the details within 24 hours.
-                </p>
-              </motion.div>
+              <img 
+                src={hero3}
+                alt="Workshop resources and materials"
+                className="rounded-3xl shadow-2xl border border-pink-200"
+              />
             </AnimatedSection>
           </div>
         </div>

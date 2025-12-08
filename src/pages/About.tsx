@@ -5,6 +5,9 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CounterAnimation } from "@/components/CounterAnimation";
 import { useTranslation } from "@/contexts/TranslationContext";
+import hero2 from "@/assets/hero-2.png";
+import hero3 from "@/assets/hero-3.png";
+import femtricsLogo from "/logo.png";
 
 const teamStructure = [
   { role: "Founder & Chief Marketing + Analytics Strategist", count: "You" },
@@ -40,9 +43,16 @@ const About = () => {
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
               About Femtrics
             </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] mb-6">
-              A Business-Analytics Social Enterprise for{" "}
-              <span className="text-gradient italic">Women</span>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
+              <img 
+                src={femtricsLogo} 
+                alt="Femtrics Logo" 
+                className="w-16 h-16 md:w-20 md:h-20"
+              />
+              <span>
+                A Business-Analytics Social Enterprise for{" "}
+                <span className="text-gradient italic">Women</span>
+              </span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
               Femtrics is a social enterprise that provides affordable, simple, and actionable 
@@ -82,26 +92,11 @@ const About = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: Users, label: "Women Empowered", value: "120+" },
-                  { icon: BarChart3, label: "Dashboards Created", value: "100+" },
-                  { icon: TrendingUp, label: "Avg Revenue Increase", value: "35%" },
-                  { icon: Heart, label: "NGO Partners", value: "3+" },
-                ].map((stat) => (
-                  <motion.div
-                    key={stat.label}
-                    whileHover={{ y: -4 }}
-                    className="bg-card rounded-2xl p-6 card-elevated"
-                  >
-                    <stat.icon className="w-8 h-8 text-primary mb-4" />
-                    <div className="text-3xl font-bold text-foreground mb-1">
-                      {stat.value}
-                    </div>
-                    <p className="text-muted-foreground text-base">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </div>
+              <img 
+                src={hero2}
+                alt="Women entrepreneurs learning data analytics"
+                className="rounded-3xl shadow-2xl border border-pink-200"
+              />
             </AnimatedSection>
           </div>
         </div>

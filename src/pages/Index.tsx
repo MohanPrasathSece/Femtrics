@@ -8,6 +8,10 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useTranslation } from "@/contexts/TranslationContext";
 import analyticsBg from "@/assets/analytics-bg.png";
+import hero1 from "@/assets/hero-1.png";
+import hero2 from "@/assets/hero-2.png";
+import hero3 from "@/assets/hero-3.png";
+import femtricsLogo from "/logo.png";
 
 const businessTypes = [
   "Home bakers",
@@ -109,9 +113,16 @@ const Index = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="font-display text-6xl md:text-7xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent leading-tight"
+                className="flex items-center gap-4 mb-6"
               >
-                Femtrics
+                <img 
+                  src={femtricsLogo} 
+                  alt="Femtrics Logo" 
+                  className="w-20 h-20 lg:w-24 lg:h-24"
+                />
+                <span className="font-display text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent leading-tight">
+                  Femtrics
+                </span>
               </motion.h1>
 
               <motion.p
@@ -179,40 +190,17 @@ const Index = () => {
                 >
                   <div className="w-full h-full rounded-full bg-gradient-to-r from-pink-200 to-rose-200 opacity-30"></div>
                 </motion.div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-pink-200">
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="text-center">
-                      <div className="text-4xl font-bold text-pink-600 mb-2">200+</div>
-                      <div className="text-sm text-gray-600">Women Empowered</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-4xl font-bold text-rose-600 mb-2">35%</div>
-                      <div className="text-sm text-gray-600">Revenue Growth</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-4xl font-bold text-pink-600 mb-2">10+</div>
-                      <div className="text-sm text-gray-600">Areas Covered</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-4xl font-bold text-rose-600 mb-2">100+</div>
-                      <div className="text-sm text-gray-600">Dashboards</div>
-                    </div>
-                  </div>
+                <img 
+                  src={hero1}
+                  alt="Women entrepreneurs working with data analytics"
+                  className="w-full h-auto rounded-3xl shadow-2xl border border-pink-200"
+                />
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl shadow-lg flex items-center justify-center">
+                  <BarChart3 className="w-12 h-12 text-white" />
                 </div>
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl shadow-lg flex items-center justify-center"
-                >
+                <div className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-400 rounded-xl shadow-lg flex items-center justify-center">
                   <TrendingUp className="w-10 h-10 text-white" />
-                </motion.div>
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                  className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-400 rounded-xl shadow-lg flex items-center justify-center"
-                >
-                  <BarChart3 className="w-8 h-8 text-white" />
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           </div>
