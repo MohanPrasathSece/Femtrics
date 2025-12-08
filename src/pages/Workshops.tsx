@@ -282,7 +282,7 @@ const Workshops = () => {
                   </div>
                   <Link 
                     to={`/workshop-register?workshop=${encodeURIComponent(event.workshop)}&date=${event.date}&location=${encodeURIComponent(event.location)}&type=${encodeURIComponent(event.type)}&time=${event.time}`}
-                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium border border-input bg-background hover:bg-pink-500 hover:text-white rounded-md transition-colors"
                   >
                     Register
                   </Link>
