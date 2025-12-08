@@ -272,183 +272,213 @@ const Workshops = () => {
               {t("common.schedule")}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
-              Workshop Registration
+              Upcoming Workshops
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              Join our free workshops to learn data analytics and grow your business
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              View our workshop schedule and register for upcoming sessions
             </p>
-            <button
-              onClick={() => setShowModal(true)}
-              className="inline-flex items-center gap-2 px-8 py-3 bg-pink-500 text-white font-medium rounded-lg hover:bg-pink-600 transition-colors shadow-lg"
-            >
-              <Calendar className="w-5 h-5" />
-              Register for Workshops
-            </button>
           </AnimatedSection>
 
-          {/* Workshop Calendar Display */}
+          {/* Workshop Calendar Section */}
           <AnimatedSection>
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/50">
-              <h3 className="text-2xl font-semibold mb-6 text-center">Upcoming Workshop Schedule</h3>
-              
-              {/* Month Tabs */}
-              <div className="flex justify-center mb-6">
-                <div className="inline-flex bg-gray-100 rounded-lg p-1">
-                  {['December 2024', 'January 2025', 'February 2025'].map((month, index) => (
-                    <button
-                      key={month}
-                      onClick={() => setSelectedMonth(index)}
-                      className={`px-4 py-2 rounded-md transition-colors ${
-                        selectedMonth === index 
-                          ? 'bg-white text-pink-600 shadow-sm' 
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
-                    >
-                      {month}
-                    </button>
-                  ))}
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-lg border border-border/50 overflow-hidden">
+                {/* Calendar Header */}
+                <div className="bg-gradient-to-r from-pink-50 to-rose-50 p-6 border-b border-border/50">
+                  <h3 className="text-2xl font-semibold text-center mb-4">Workshop Schedule</h3>
+                  
+                  {/* Month Tabs */}
+                  <div className="flex justify-center">
+                    <div className="inline-flex bg-white rounded-lg p-1 shadow-sm">
+                      {['December 2024', 'January 2025', 'February 2025'].map((month, index) => (
+                        <button
+                          key={month}
+                          onClick={() => setSelectedMonth(index)}
+                          className={`px-4 py-2 rounded-md transition-colors text-sm font-medium ${
+                            selectedMonth === index 
+                              ? 'bg-pink-500 text-white shadow-sm' 
+                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                          }`}
+                        >
+                          {month}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Calendar Body */}
+                <div className="p-6">
+                  {/* Calendar Grid - Single Month Display */}
+                  <div className="space-y-6">
+                    {selectedMonth === 0 && (
+                      <div>
+                        <h4 className="font-medium mb-4 text-center text-lg">December 2024</h4>
+                        <div className="grid grid-cols-7 gap-2 mb-3">
+                          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                            <div key={day} className="text-center text-xs font-semibold text-muted-foreground py-2">
+                              {day}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-7 gap-2">
+                          {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
+                            let workshop = null;
+                            let workshopCode = '';
+                            
+                            if (day === 15) {
+                              workshop = 'Data for Didi';
+                              workshopCode = 'DD';
+                            } else if (day === 20) {
+                              workshop = 'Girls in Data';
+                              workshopCode = 'GD';
+                            }
+                            
+                            return (
+                              <div
+                                key={day}
+                                onClick={() => workshop && handleDateSelect(workshop, `Dec ${day}, 2024`)}
+                                className={`text-center py-3 text-sm rounded-lg transition-all duration-200 ${
+                                  workshop 
+                                    ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-md hover:shadow-lg transform hover:scale-105' 
+                                    : 'text-gray-300 cursor-not-allowed bg-gray-50'
+                                }`}
+                              >
+                                <div className="font-medium">{day}</div>
+                                {workshop && <div className="text-xs mt-1 font-bold">{workshopCode}</div>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedMonth === 1 && (
+                      <div>
+                        <h4 className="font-medium mb-4 text-center text-lg">January 2025</h4>
+                        <div className="grid grid-cols-7 gap-2 mb-3">
+                          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                            <div key={day} className="text-center text-xs font-semibold text-muted-foreground py-2">
+                              {day}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-7 gap-2">
+                          {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
+                            let workshop = null;
+                            let workshopCode = '';
+                            
+                            if (day === 5 || day === 18) {
+                              workshop = 'Data for Didi';
+                              workshopCode = 'DD';
+                            } else if (day === 12 || day === 25) {
+                              workshop = 'Girls in Data';
+                              workshopCode = 'GD';
+                            }
+                            
+                            return (
+                              <div
+                                key={day}
+                                onClick={() => workshop && handleDateSelect(workshop, `Jan ${day}, 2025`)}
+                                className={`text-center py-3 text-sm rounded-lg transition-all duration-200 ${
+                                  workshop 
+                                    ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-md hover:shadow-lg transform hover:scale-105' 
+                                    : 'text-gray-300 cursor-not-allowed bg-gray-50'
+                                }`}
+                              >
+                                <div className="font-medium">{day}</div>
+                                {workshop && <div className="text-xs mt-1 font-bold">{workshopCode}</div>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedMonth === 2 && (
+                      <div>
+                        <h4 className="font-medium mb-4 text-center text-lg">February 2025</h4>
+                        <div className="grid grid-cols-7 gap-2 mb-3">
+                          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                            <div key={day} className="text-center text-xs font-semibold text-muted-foreground py-2">
+                              {day}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-7 gap-2">
+                          {Array.from({ length: 28 }, (_, i) => i + 1).map(day => {
+                            let workshop = null;
+                            let workshopCode = '';
+                            
+                            if (day === 2) {
+                              workshop = 'Data for Didi';
+                              workshopCode = 'DD';
+                            } else if (day === 9) {
+                              workshop = 'Girls in Data';
+                              workshopCode = 'GD';
+                            }
+                            
+                            return (
+                              <div
+                                key={day}
+                                onClick={() => workshop && handleDateSelect(workshop, `Feb ${day}, 2025`)}
+                                className={`text-center py-3 text-sm rounded-lg transition-all duration-200 ${
+                                  workshop 
+                                    ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-md hover:shadow-lg transform hover:scale-105' 
+                                    : 'text-gray-300 cursor-not-allowed bg-gray-50'
+                                }`}
+                              >
+                                <div className="font-medium">{day}</div>
+                                {workshop && <div className="text-xs mt-1 font-bold">{workshopCode}</div>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Legend */}
+                  <div className="mt-8 pt-6 border-t border-border/50">
+                    <div className="flex justify-center gap-8 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 bg-pink-500 rounded shadow-sm"></div>
+                        <span className="font-medium">DD = Data for Didi</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 bg-pink-500 rounded shadow-sm"></div>
+                        <span className="font-medium">GD = Girls in Data</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+          </AnimatedSection>
 
-              {/* Calendar Grid - Single Month Display */}
-              <div className="space-y-6">
-                {selectedMonth === 0 && (
-                  <div>
-                    <h4 className="font-medium mb-3">December 2024</h4>
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
-                          {day}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
-                        let workshop = null;
-                        let workshopCode = '';
-                        
-                        if (day === 15) {
-                          workshop = 'Data for Didi';
-                          workshopCode = 'DD';
-                        } else if (day === 20) {
-                          workshop = 'Girls in Data';
-                          workshopCode = 'GD';
-                        }
-                        
-                        return (
-                          <div
-                            key={day}
-                            onClick={() => workshop && handleDateSelect(workshop, `Dec ${day}, 2024`)}
-                            className={`text-center py-2 text-sm rounded-md transition-colors ${
-                              workshop 
-                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
-                                : 'text-gray-300 cursor-not-allowed'
-                            }`}
-                          >
-                            {day}
-                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
-                          </div>
-                        );
-                      })}
-                    </div>
+          {/* Registration CTA Section */}
+          <AnimatedSection className="mt-16">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 border border-pink-200">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-pink-500 flex items-center justify-center">
+                    <Calendar className="w-8 h-8 text-white" />
                   </div>
-                )}
-
-                {selectedMonth === 1 && (
-                  <div>
-                    <h4 className="font-medium mb-3">January 2025</h4>
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
-                          {day}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
-                        let workshop = null;
-                        let workshopCode = '';
-                        
-                        if (day === 5 || day === 18) {
-                          workshop = 'Data for Didi';
-                          workshopCode = 'DD';
-                        } else if (day === 12 || day === 25) {
-                          workshop = 'Girls in Data';
-                          workshopCode = 'GD';
-                        }
-                        
-                        return (
-                          <div
-                            key={day}
-                            onClick={() => workshop && handleDateSelect(workshop, `Jan ${day}, 2025`)}
-                            className={`text-center py-2 text-sm rounded-md transition-colors ${
-                              workshop 
-                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
-                                : 'text-gray-300 cursor-not-allowed'
-                            }`}
-                          >
-                            {day}
-                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {selectedMonth === 2 && (
-                  <div>
-                    <h4 className="font-medium mb-3">February 2025</h4>
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
-                          {day}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {Array.from({ length: 28 }, (_, i) => i + 1).map(day => {
-                        let workshop = null;
-                        let workshopCode = '';
-                        
-                        if (day === 2) {
-                          workshop = 'Data for Didi';
-                          workshopCode = 'DD';
-                        } else if (day === 9) {
-                          workshop = 'Girls in Data';
-                          workshopCode = 'GD';
-                        }
-                        
-                        return (
-                          <div
-                            key={day}
-                            onClick={() => workshop && handleDateSelect(workshop, `Feb ${day}, 2025`)}
-                            className={`text-center py-2 text-sm rounded-md transition-colors ${
-                              workshop 
-                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
-                                : 'text-gray-300 cursor-not-allowed'
-                            }`}
-                          >
-                            {day}
-                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Legend */}
-              <div className="mt-6 flex justify-center gap-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-pink-500 rounded shadow-sm"></div>
-                  <span>DD = Data for Didi</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-pink-500 rounded shadow-sm"></div>
-                  <span>GD = Girls in Data</span>
-                </div>
+                <h3 className="text-2xl font-semibold mb-4">Ready to Join?</h3>
+                <p className="text-muted-foreground text-lg mb-6">
+                  Found a workshop that interests you? Register now and start your data analytics journey with our free, hands-on sessions.
+                </p>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  <Calendar className="w-5 h-5" />
+                  Register for Workshops
+                </button>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Click on any pink date in the calendar above or use this button to start registration
+                </p>
               </div>
             </div>
           </AnimatedSection>
