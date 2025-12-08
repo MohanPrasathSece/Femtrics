@@ -203,12 +203,15 @@ const Workshops = () => {
 
   const sendRegistrationEmail = async (formData) => {
     try {
-      const emailData = createWorkshopRegistrationEmail(formData);
+      const emailData = {
+        fromName: formData.signupType === 'self' ? formData.name : formData.groupName,
+        from: formData.email,
+        subject: `Workshop Registration: ${formData.workshop}`,
+        message: 'Workshop registration submitted'
+      };
       
-      // Send email to admin with file attachment
-      const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData, {
-        file: formData.participantFile
-      });
+      // Send email to admin
+      const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData);
       
       if (adminEmailSuccess) {
         // Send confirmation email to user

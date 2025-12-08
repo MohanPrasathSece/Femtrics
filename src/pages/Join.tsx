@@ -198,7 +198,7 @@ const Join = () => {
         phone: businessFormData.phoneNumber,
         businessType: businessFormData.businessType,
         businessName: businessFormData.businessName,
-        message: businessFormData.message || 'Business application submitted'
+        message: 'Business application submitted'
       });
       
       await sendEmailWithGmailSMTP(emailData);
@@ -312,30 +312,7 @@ const Join = () => {
         phone: volunteerFormData.phone,
         businessType: `Volunteer - ${volunteerFormData.position}`,
         businessName: '',
-        message: `
-Volunteer Application Details:
-
-Position: ${volunteerFormData.position}
-Experience: ${volunteerFormData.experience}
-Other Commitments: ${volunteerFormData.otherCommitments}
-Why Join: ${volunteerFormData.whyJoin}
-Availability Hours: ${volunteerFormData.availabilityHours}
-
-Skills Rating (1-5):
-- Technical: ${volunteerFormData.skillsRating.technical}
-- Communication: ${volunteerFormData.skillsRating.communication}
-- Teamwork: ${volunteerFormData.skillsRating.teamwork}
-- Leadership: ${volunteerFormData.skillsRating.leadership}
-- Creativity: ${volunteerFormData.skillsRating.creativity}
-
-${volunteerFormData.isHighSchoolStudent ? `
-High School Student Details:
-- Grade: ${volunteerFormData.grade}
-- School: ${volunteerFormData.schoolName}
-- Future Goals: ${volunteerFormData.futureGoals}
-${volunteerFormData.parentContact ? `- Parent Contact: ${volunteerFormData.parentContact}` : ''}
-` : ''}
-        `.trim()
+        message: 'Volunteer application submitted'
       });
       
       await sendEmailWithGmailSMTP(emailData);
