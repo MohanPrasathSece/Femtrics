@@ -44,19 +44,19 @@ export const Header = () => {
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? "py-1 md:py-2" : "py-2 md:py-3"
-        }`}
+        } overflow-hidden`}
       >
-        <div className={`${isScrolled ? "container-tight" : "container-tight"}`}>
+        <div className={`${isScrolled ? "container-tight" : "container-tight"} px-4 sm:px-6`}>
           <motion.nav
             layout
-            className={`flex items-center justify-between transition-all duration-500 w-full md:w-auto ${
+            className={`flex items-center justify-between transition-all duration-500 w-full max-w-full overflow-visible ${
               isScrolled
-                ? "glass-morphism border border-border/30 text-foreground px-3 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
+                ? "glass-morphism border border-border/30 text-foreground px-2 sm:px-3 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
                 : "bg-transparent md:bg-transparent"
             }`}
           >
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative flex items-center gap-2"
@@ -64,10 +64,10 @@ export const Header = () => {
                 <img 
                   src={femtricsLogo} 
                   alt="Femtrics Logo" 
-                  className="h-8 w-auto md:h-10"
+                  className="h-7 w-auto sm:h-8 md:h-10"
                 />
                 {!isScrolled && (
-                  <span className="font-display text-xl font-semibold text-foreground hidden sm:block">
+                  <span className="font-display text-lg sm:text-xl font-semibold text-foreground hidden sm:block">
                     Fem<span className="text-primary">trics</span>
                   </span>
                 )}
@@ -115,34 +115,34 @@ export const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60]"
+              className="md:hidden relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
             >
               <motion.div
-                className="relative w-6 h-5 flex flex-col justify-between items-center"
+                className="relative w-5 h-4 sm:w-6 sm:h-5 flex flex-col justify-between items-center"
               >
                 <motion.span
                   animate={{
                     rotate: mobileMenuOpen ? 45 : 0,
-                    y: mobileMenuOpen ? 8 : 0
+                    y: mobileMenuOpen ? 6 : 0
                   }}
-                  className="h-0.5 w-6 bg-foreground transition-all duration-300"
+                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
                   style={{ originX: "center", originY: "center" }}
                 />
                 <motion.span
                   animate={{
                     opacity: mobileMenuOpen ? 0 : 1
                   }}
-                  className="h-0.5 w-6 bg-foreground transition-all duration-300"
+                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
                 />
                 <motion.span
                   animate={{
                     rotate: mobileMenuOpen ? -45 : 0,
-                    y: mobileMenuOpen ? -8 : 0
+                    y: mobileMenuOpen ? -6 : 0
                   }}
-                  className="h-0.5 w-6 bg-foreground transition-all duration-300"
+                  className="h-0.5 w-5 sm:w-6 bg-foreground transition-all duration-300"
                   style={{ originX: "center", originY: "center" }}
                 />
               </motion.div>
