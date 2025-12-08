@@ -55,7 +55,7 @@ export const Header = () => {
                 : "bg-transparent md:bg-transparent"
             }`}
           >
-            {/* Logo */}
+            {/* Logo - Main Position */}
             <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -74,48 +74,12 @@ export const Header = () => {
               </motion.div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className={`hidden md:flex items-center ${isScrolled ? "gap-2 mx-6" : "gap-2"}`}>
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-lg ${
-                    location.pathname === item.path
-                      ? "bg-primary/10 text-primary"
-                      : isScrolled
-                        ? "text-foreground/80 hover:text-foreground hover:bg-primary/5"
-                        : "text-muted-foreground hover:text-foreground hover:bg-primary/5"
-                  }`}
-                >
-                  {t(item.key)}
-                </Link>
-              ))}
-            </div>
-
-            {/* Language Toggle & CTA Button */}
-            <div className="hidden md:flex items-center gap-3">
-              <LanguageToggle />
-              <Button 
-                asChild 
-                variant={isScrolled ? "default" : "default"} 
-                size="sm"
-                className={`btn-shimmer ${
-                  isScrolled 
-                    ? "bg-primary hover:bg-primary/90 text-primary-foreground" 
-                    : ""
-                }`}
-              >
-                <Link to="/join">{t("nav.getStarted")}</Link>
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Slightly Left of Logo */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
+              className="md:hidden relative -ml-16 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -147,6 +111,42 @@ export const Header = () => {
                 />
               </motion.div>
             </motion.button>
+
+            {/* Desktop Navigation */}
+            <div className={`hidden md:flex items-center ${isScrolled ? "gap-2 mx-6" : "gap-2"}`}>
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-lg ${
+                    location.pathname === item.path
+                      ? "bg-primary/10 text-primary"
+                      : isScrolled
+                        ? "text-foreground/80 hover:text-foreground hover:bg-primary/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-primary/5"
+                  }`}
+                >
+                  {t(item.key)}
+                </Link>
+              ))}
+            </div>
+
+            {/* Desktop Language Toggle & CTA Button */}
+            <div className="hidden md:flex items-center gap-3">
+              <LanguageToggle />
+              <Button 
+                asChild 
+                variant={isScrolled ? "default" : "default"} 
+                size="sm"
+                className={`btn-shimmer ${
+                  isScrolled 
+                    ? "bg-primary hover:bg-primary/90 text-primary-foreground" 
+                    : ""
+                }`}
+              >
+                <Link to="/join">{t("nav.getStarted")}</Link>
+              </Button>
+            </div>
           </motion.nav>
         </div>
 
