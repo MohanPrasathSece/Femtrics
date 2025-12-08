@@ -38,12 +38,81 @@ export const Header = () => {
 
   return (
     <>
+      {/* Mobile Header - Full width */}
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full md:hidden ${
+          isScrolled ? "py-2" : "py-3"
+        } overflow-hidden`}
+      >
+        <div className={`${isScrolled ? "container-tight" : "container-tight"} px-2 max-w-full overflow-hidden`}>
+          <motion.nav
+            layout
+            className={`flex items-center justify-between transition-all duration-300 w-full overflow-hidden ${
+              isScrolled
+                ? "glass-morphism text-foreground px-3 py-2 rounded-2xl mx-auto max-w-[95vw] sm:max-w-[90vw]"
+                : "bg-transparent"
+            }`}
+          >
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-1.5 group flex-shrink-0">
+              <div className="flex items-center gap-1.5">
+                <img 
+                  src={femtricsLogo} 
+                  alt="Femtrics Logo" 
+                  className={`transition-all duration-300 ${
+                    isScrolled ? "h-5 w-auto" : "h-6 w-auto"
+                  }`}
+                />
+                {!isScrolled && (
+                  <span className="font-display text-sm font-semibold text-foreground">
+                    Fem<span className="text-primary">trics</span>
+                  </span>
+                )}
+              </div>
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`relative w-8 h-8 flex items-center justify-center rounded-lg transition-colors z-[60] flex-shrink-0 ${
+                isScrolled 
+                  ? "bg-white/30 hover:bg-white/50 backdrop-blur-sm" 
+                  : "hover:bg-gray-100"
+              }`}
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <div className="relative w-5 h-4 flex flex-col justify-between items-center">
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
+                />
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "opacity-0" : ""
+                  }`}
+                />
+                <span
+                  className={`h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
+                />
+              </div>
+            </button>
+          </motion.nav>
+        </div>
+      </motion.header>
+
       {/* Dynamic Island - Only visible on mobile */}
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 md:hidden transition-all duration-300 ${
+        className={`fixed top-16 left-1/2 transform -translate-x-1/2 z-50 md:hidden transition-all duration-300 ${
           isScrolled 
             ? "bg-black/20 backdrop-blur-lg border border-white/20" 
             : "bg-black/10 backdrop-blur-md border border-white/10"
@@ -51,11 +120,11 @@ export const Header = () => {
       >
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="relative w-16 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
+          className="relative w-12 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
         >
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             <div className={`w-1 h-1 rounded-full bg-white transition-all duration-300 ${
               mobileMenuOpen ? "opacity-100" : "opacity-60"
             }`} />
