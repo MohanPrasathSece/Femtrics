@@ -86,6 +86,13 @@ export const Header = () => {
               </div>
             </button>
 
+            {/* Current Page - Center */}
+            <div className="flex-1 text-center">
+              <span className="text-sm font-medium text-foreground">
+                {t(navItems.find(item => item.path === location.pathname)?.key || "nav.home")}
+              </span>
+            </div>
+
             {/* Empty space on right */}
             <div className="w-8 h-8"></div>
           </motion.nav>
