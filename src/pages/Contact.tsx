@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, CheckCircle, Clock, MessageSquare, ArrowRight, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,8 +6,8 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { EmailTerminal } from "@/components/EmailTerminal";
-import { useEmailService } from "@/hooks/useEmailService";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { sendEmailWithGmailSMTP, sendConfirmationEmail, createContactEmail } from "@/utils/emailService";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -56,7 +55,19 @@ const faqs = [
 
 export const Contact = () => {
   const { t } = useTranslation();
-  const { sendEmail, isLoading } = useEmailService();
+  const errorRef = useRef<HTMLFormElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [showEmailAlert, setShowEmailAlert] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [emailErrors, setEmailErrors] = useState<{ email?: string; phone?: string }>({});
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
 
   // SEO metadata for Contact page
   useEffect(() => {
@@ -97,18 +108,6 @@ export const Contact = () => {
     }
     tag.content = content;
   }
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [showEmailAlert, setShowEmailAlert] = useState(false);
-  const [showThankYouModal, setShowThankYouModal] = useState(false);
-  const [emailErrors, setEmailErrors] = useState<{ email?: string; phone?: string }>({});
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -126,43 +125,67 @@ export const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     
     // Validate phone number
     if (!formData.phone || !isValidPhoneNumber(formData.phone)) {
       setEmailErrors({ phone: t("form.validPhoneError") });
+      setIsLoading(false);
+      // Scroll to error
+      setTimeout(() => {
+        errorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
       return;
     }
 
     // Validate business email
     if (!formData.email) {
       setEmailErrors({ email: t("form.businessEmailRequired") });
+      setIsLoading(false);
+      // Scroll to error
+      setTimeout(() => {
+        errorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
       return;
     }
 
     if (!isBusinessEmail(formData.email)) {
       setShowEmailAlert(true);
       setEmailErrors({ email: t("form.businessEmailError") });
+      setIsLoading(false);
+      // Scroll to error
+      setTimeout(() => {
+        errorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
       return;
     }
 
     // Clear any previous errors
     setEmailErrors({});
     
-    const result = await sendEmail({
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      businessType: formData.subject,
-      message: formData.message,
-      formType: 'Contact Inquiry'
-    });
-    
-    if (result.success) {
-      setSubmitStatus('success');
-      setShowThankYouModal(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    } else {
+    try {
+      // Send email using new service
+      const emailData = {
+        fromName: formData.name,
+        from: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      };
+      
+      const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData);
+      
+      if (adminEmailSuccess) {
+        setSubmitStatus('success');
+        setShowThankYouModal(true);
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
       setSubmitStatus('error');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -267,7 +290,7 @@ export const Contact = () => {
             <AnimatedSection direction="right" delay={0.2}>
               <div className="bg-card rounded-3xl p-8 card-hover-lift border border-border">
                 <h3 className="font-display text-2xl font-semibold mb-6">{t("contact.sendEnquiry")}</h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5" ref={errorRef}>
                   {submitStatus === 'error' && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                       <div className="flex items-center gap-2 text-red-700">
@@ -436,7 +459,7 @@ export const Contact = () => {
 
       {/* Thank You Modal */}
       <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl">
               <CheckCircle className="w-6 h-6 text-green-600" />

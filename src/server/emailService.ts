@@ -1,59 +1,48 @@
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
+import { z } from 'zod';
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Email configuration - Load from environment variables
-// Note: Google App Passwords should not have spaces - remove spaces if present
-const EMAIL_USER = process.env.EMAIL_USER || 'harshinik290@gmail.com';
-const EMAIL_PASS = (process.env.EMAIL_PASS || 'nmcugwmikuxifur').replace(/\s+/g, ''); // Remove any spaces
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'harshinik290@gmail.com';
+const SMTP_USER = process.env.EMAIL_USER || 'mohanprasath563@gmail.com';
+const SMTP_PASS = (process.env.EMAIL_PASS || 'dyys zlaj bzdv bbwo').replace(/\s+/g, '');
+const RECIPIENT_EMAIL = process.env.ADMIN_EMAIL || 'harshinik290@gmail.com';
 
-// Create transporter with optimized settings
+// Debug logging
+console.log('=== EMAIL CONFIG DEBUG ===');
+console.log('SMTP_USER:', SMTP_USER);
+console.log('SMTP_PASS length:', SMTP_PASS.length);
+console.log('SMTP_PASS format:', SMTP_PASS.includes(' ') ? 'HAS SPACES' : 'NO SPACES');
+console.log('RECIPIENT_EMAIL:', RECIPIENT_EMAIL);
+console.log('========================');
+
+// Create SMTP transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: false, // true for 465, false for other ports
   auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
+    user: SMTP_USER,
+    pass: SMTP_PASS,
   },
-  // Connection settings for faster delivery
-  connectionTimeout: 10000, // 10 seconds
-  greetingTimeout: 5000, // 5 seconds
-  socketTimeout: 10000, // 10 seconds
-  pool: true, // Use connection pooling
-  maxConnections: 5, // Max 5 connections
-  maxMessages: 100, // Max 100 messages per connection
-  rateDelta: 1000, // 1 second
-  rateLimit: 5, // Max 5 messages per second
+});
+
+// Email validation schema
+const emailSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  subject: z.string().min(5, 'Subject must be at least 5 characters'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
 // Email logging for frontend terminal
 let emailLogs: Array<{ timestamp: string; type: string; message: string; status: 'success' | 'error' | 'info' }> = [];
-
-// Local backup directory
-const BACKUP_DIR = path.join(__dirname, '../backups');
-const ensureBackupDir = () => {
-  if (!fs.existsSync(BACKUP_DIR)) {
-    fs.mkdirSync(BACKUP_DIR, { recursive: true });
-  }
-};
-
-// Save submission to local file
-const saveSubmissionToFile = (data: any) => {
-  try {
-    ensureBackupDir();
-    const filename = `submission_${Date.now()}_${data.name.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
-    const filepath = path.join(BACKUP_DIR, filename);
-    fs.writeFileSync(filepath, JSON.stringify({
-      ...data,
-      timestamp: new Date().toISOString(),
-      backupFile: filename
-    }, null, 2));
-    addLog('FILE_BACKUP', `Submission saved to ${filename}`, 'success');
-  } catch (error) {
-    addLog('BACKUP_ERROR', `Failed to save submission: ${error}`, 'error');
-  }
-};
 
 const addLog = (type: string, message: string, status: 'success' | 'error' | 'info' = 'info') => {
   const log = {
@@ -73,156 +62,241 @@ const addLog = (type: string, message: string, status: 'success' | 'error' | 'in
   console.log(`[${status.toUpperCase()}] ${type}: ${message}`);
 };
 
-// Email queue for background processing
-const emailQueue: Array<{
-  adminMailOptions: any;
-  userMailOptions: any;
-  name: string;
-  email: string;
-  timestamp: Date;
-}> = [];
-
-// Process emails in background
-const processEmailQueue = async () => {
-  if (emailQueue.length === 0) return;
-  
-  const email = emailQueue.shift();
-  if (!email) return;
-  
-  try {
-    // Try to send with a very short timeout
-    await Promise.race([
-      transporter.sendMail(email.adminMailOptions),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Admin email timeout')), 5000))
-    ]);
-    addLog('ADMIN_EMAIL', `Admin notification sent for ${email.name}`, 'success');
-  } catch (error) {
-    addLog('ADMIN_EMAIL_ERROR', `Failed to send admin email: ${error}`, 'error');
-  }
-  
-  try {
-    // Try to send with a very short timeout
-    await Promise.race([
-      transporter.sendMail(email.userMailOptions),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('User email timeout')), 5000))
-    ]);
-    addLog('USER_EMAIL', `Confirmation email sent to ${email.email}`, 'success');
-  } catch (error) {
-    addLog('USER_EMAIL_ERROR', `Failed to send user email: ${error}`, 'error');
-  }
-};
-
-// Process queue every 30 seconds
-setInterval(processEmailQueue, 30000);
-
 export const sendEmail = async (req: Request, res: Response) => {
-  const { name, email, phone, businessType, message, formType } = req.body;
-  
   try {
-    addLog('EMAIL_REQUEST', `New ${formType} submission from ${name}`, 'info');
-    
-    // Quick validation
-    if (!name || !email || !phone) {
+    addLog('EMAIL_REQUEST', `New email request received`, 'info');
+
+    // Validate request body
+    const validatedData = emailSchema.parse(req.body);
+    addLog('VALIDATION_SUCCESS', `Form validated for ${validatedData.name}`, 'success');
+
+    // Email options
+    const mailOptions = {
+      from: `"${validatedData.name}" <${SMTP_USER}>`,
+      to: RECIPIENT_EMAIL,
+      subject: `New Contact: ${validatedData.subject}`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; background: #ffffff;">
+          
+          <!-- Header -->
+          <div style="background: #000000; padding: 24px; text-align: center;">
+            <h1 style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 600; letter-spacing: 0.5px;">
+              FEMTRICS
+            </h1>
+            <p style="margin: 4px 0 0; color: #ffffff; font-size: 12px; opacity: 0.8;">
+              New Contact Form Submission
+            </p>
+          </div>
+          
+          <!-- Content -->
+          <div style="padding: 32px;">
+            
+            <!-- Contact Info -->
+            <div style="margin-bottom: 32px;">
+              <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
+                Contact Information
+              </h2>
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                <div style="display: grid; gap: 12px;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #6b7280; font-size: 14px;">Name</span>
+                    <span style="color: #1a1a1a; font-weight: 500; font-size: 14px;">${validatedData.name}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #6b7280; font-size: 14px;">Email</span>
+                    <a href="mailto:${validatedData.email}" style="color: #000000; text-decoration: none; font-weight: 500; font-size: 14px;">
+                      ${validatedData.email}
+                    </a>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #6b7280; font-size: 14px;">Subject</span>
+                    <span style="color: #1a1a1a; font-weight: 500; font-size: 14px;">${validatedData.subject}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Message -->
+            <div>
+              <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
+                Message
+              </h2>
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                <p style="margin: 0; color: #374151; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">
+                  ${validatedData.message}
+                </p>
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- Footer -->
+          <div style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; color: #6b7280; font-size: 12px;">
+              Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+            </p>
+          </div>
+          
+        </div>
+      `,
+    };
+
+    // Send email
+    console.log(`Attempting to send email | From: ${mailOptions.from} | To: ${mailOptions.to}`);
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    addLog('ADMIN_EMAIL', `Email sent to ${RECIPIENT_EMAIL}`, 'success');
+
+    // Send confirmation email to the user
+    const confirmationOptions = {
+      from: `"Femtrics" <${SMTP_USER}>`,
+      to: validatedData.email,
+      subject: 'Thank you for contacting Femtrics',
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; background: #ffffff;">
+          
+          <!-- Header -->
+          <div style="background: #000000; padding: 24px; text-align: center;">
+            <h1 style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 600; letter-spacing: 0.5px;">
+              FEMTRICS
+            </h1>
+            <p style="margin: 4px 0 0; color: #ffffff; font-size: 12px; opacity: 0.8;">
+              Thank You for Your Message
+            </p>
+          </div>
+          
+          <!-- Content -->
+          <div style="padding: 32px;">
+            
+            <div style="margin-bottom: 32px;">
+              <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
+                Hello ${validatedData.name},
+              </h2>
+              <p style="margin: 0; color: #374151; font-size: 14px; line-height: 1.6;">
+                We've received your message and will get back to you within 24-48 hours.
+              </p>
+            </div>
+            
+            <!-- Message Summary -->
+            <div style="margin-bottom: 32px;">
+              <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 14px; font-weight: 600;">
+                Your Message Summary
+              </h3>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                <div style="margin-bottom: 12px;">
+                  <span style="color: #6b7280; font-size: 12px;">Subject</span>
+                  <p style="margin: 4px 0 0; color: #1a1a1a; font-weight: 500; font-size: 14px;">
+                    ${validatedData.subject}
+                  </p>
+                </div>
+                <div>
+                  <span style="color: #6b7280; font-size: 12px;">Message</span>
+                  <p style="margin: 4px 0 0; color: #374151; font-size: 14px; line-height: 1.5;">
+                    ${validatedData.message.substring(0, 150)}${validatedData.message.length > 150 ? '...' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Next Steps -->
+            <div style="margin-bottom: 32px;">
+              <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 14px; font-weight: 600;">
+                What Happens Next
+              </h3>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                <div style="display: grid; gap: 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 4px; height: 4px; background: #000000; border-radius: 50%;"></div>
+                    <span style="color: #374151; font-size: 13px;">Our team reviews your inquiry</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 4px; height: 4px; background: #000000; border-radius: 50%;"></div>
+                    <span style="color: #374151; font-size: 13px;">We'll respond within 24-48 hours</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 4px; height: 4px; background: #000000; border-radius: 50%;"></div>
+                    <span style="color: #374151; font-size: 13px;">Personalized solutions for your business</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- Footer -->
+          <div style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0 0 8px; color: #6b7280; font-size: 12px;">
+              © 2024 Femtrics. All rights reserved.
+            </p>
+            <p style="margin: 0; color: #6b7280; font-size: 12px;">
+              This is an automated message. Please do not reply to this email.
+            </p>
+          </div>
+          
+        </div>
+      `,
+    };
+
+    console.log(`Attempting to send confirmation email | From: ${confirmationOptions.from} | To: ${confirmationOptions.to}`);
+    await transporter.sendMail(confirmationOptions);
+    console.log('Confirmation email sent successfully');
+    addLog('CONFIRMATION_EMAIL', `Confirmation email sent to ${validatedData.email}`, 'success');
+
+    res.status(200).json({
+      success: true,
+      message: 'Email sent successfully!',
+      logs: emailLogs.slice(-5)
+    });
+
+  } catch (error) {
+    console.error('Error sending email:', error);
+    addLog('EMAIL_ERROR', `Failed to send email: ${error}`, 'error');
+
+    if (error instanceof z.ZodError) {
+      addLog('VALIDATION_ERROR', `Form validation failed`, 'error');
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields'
+        message: 'Validation error',
+        errors: error.errors
       });
     }
 
-    // Create email options
-    const adminMailOptions = {
-      from: EMAIL_USER,
-      to: ADMIN_EMAIL,
-      subject: `New ${formType} - ${name}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 20px; border-radius: 10px 10px 0 0;">
-            <h2 style="color: white; margin: 0;">Femtrics - New ${formType}</h2>
-          </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e5e7eb;">
-            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ec4899; margin-top: 0;">Contact Information</h3>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Phone:</strong> ${phone}</p>
-              ${businessType ? `<p><strong>Business Type:</strong> ${businessType}</p>` : ''}
-              ${message ? `<p><strong>Message:</strong></p><p>${message}</p>` : ''}
-            </div>
-            <div style="text-align: center; color: #6b7280; font-size: 12px;">
-              <p>This email was sent from the Femtrics website</p>
-              <p>Time: ${new Date().toLocaleString()}</p>
-            </div>
-          </div>
-        </div>
-      `,
-    };
-
-    const userMailOptions = {
-      from: EMAIL_USER,
-      to: email,
-      subject: `Thank you for your ${formType} - Femtrics`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 20px; border-radius: 10px 10px 0 0;">
-            <h2 style="color: white; margin: 0;">Thank you for contacting Femtrics!</h2>
-          </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e5e7eb;">
-            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <p>Dear ${name},</p>
-              <p>Thank you for your interest in Femtrics! We have received your ${formType.toLowerCase()} and will get back to you within 24-48 hours.</p>
-              <p>Here's what happens next:</p>
-              <ul style="color: #ec4899;">
-                <li>We'll review your submission</li>
-                <li>Our team will contact you to discuss next steps</li>
-                <li>We'll help you get started with data-driven business growth</li>
-              </ul>
-              <p>If you have any questions, feel free to reply to this email.</p>
-              <p>Best regards,<br/>The Femtrics Team</p>
-            </div>
-            <div style="text-align: center; color: #6b7280; font-size: 12px;">
-              <p>Empowering women entrepreneurs with data-driven insights</p>
-              <p>Hyderabad, India | www.femtrics.in</p>
-            </div>
-          </div>
-        </div>
-      `,
-    };
-
-    // Add to queue for background processing
-    emailQueue.push({
-      adminMailOptions,
-      userMailOptions,
-      name,
-      email,
-      timestamp: new Date()
-    });
-
-    // Save to local file as backup
-    saveSubmissionToFile({
-      name, email, phone, businessType, message, formType
-    });
-
-    addLog('EMAIL_QUEUED', `Email queued for ${name}`, 'success');
-    
-    // Try immediate processing (but don't wait for it)
-    processEmailQueue().catch(() => {}); // Ignore errors, will be processed later
-    
-    // Return immediately
-    res.status(200).json({ 
-      success: true, 
-      message: 'Your submission has been received successfully!',
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send email. Please try again later.',
       logs: emailLogs.slice(-5)
     });
+  }
+};
+
+export const sendConfirmationEmail = async (req: Request, res: Response) => {
+  try {
+    const { to, subject, message, from } = req.body;
+
+    addLog('CONFIRMATION_EMAIL', `Sending confirmation to: ${to}`, 'info');
+
+    const mailOptions = {
+      from: from || SMTP_USER,
+      to: to,
+      subject: subject,
+      html: message
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    addLog('CONFIRMATION_EMAIL', `Confirmation email sent: ${info.messageId}`, 'success');
     
+    res.json({ 
+      success: true, 
+      messageId: info.messageId,
+      message: 'Confirmation email sent successfully' 
+    });
+
   } catch (error) {
-    addLog('EMAIL_ERROR', `Failed to process submission: ${error}`, 'error');
-    console.error('Email processing error:', error);
-    
+    addLog('CONFIRMATION_EMAIL_ERROR', `Failed to send confirmation: ${error}`, 'error');
+    console.error('Error sending confirmation email:', error);
     res.status(500).json({ 
       success: false, 
-      message: 'Failed to process submission',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      logs: emailLogs.slice(-5)
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 };

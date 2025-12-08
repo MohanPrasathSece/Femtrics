@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { sendEmailWithGmailSMTP, sendConfirmationEmail, createWorkshopRegistrationEmail } from "@/utils/emailService";
 import { useTranslation } from "@/contexts/TranslationContext";
 import workshopsHero from "@/assets/workshops-hero.png";
 import hero3 from "@/assets/hero-3.png";
@@ -199,6 +200,57 @@ const Workshops = () => {
   };
 
   const canProceedToNext = validateCurrentStep();
+
+  const sendRegistrationEmail = async (formData) => {
+    try {
+      const emailData = createWorkshopRegistrationEmail(formData);
+      
+      // Send email to admin with file attachment
+      const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData, {
+        file: formData.participantFile
+      });
+      
+      if (adminEmailSuccess) {
+        // Send confirmation email to user
+        const confirmationSuccess = await sendConfirmationEmail({
+          name: formData.signupType === 'self' ? formData.name : formData.groupName,
+          email: formData.email,
+          formType: 'Workshop Registration',
+          customMessage: `
+            <p style="color: #374151; margin: 0 0 15px;">
+              We have received your workshop registration for <strong>${formData.workshop}</strong>.
+            </p>
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+              <h4 style="color: #0369a1; margin: 0 0 10px;">Registration Details:</h4>
+              <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 5px;">Workshop: ${formData.workshop}</li>
+                <li style="margin-bottom: 5px;">Date: ${formData.date}</li>
+                <li style="margin-bottom: 5px;">Time: ${formData.time}</li>
+                <li style="margin-bottom: 5px;">Location: ${formData.location}</li>
+                ${formData.signupType === 'group' ? `<li style="margin-bottom: 5px;">Group Size: ${formData.groupSize} participants</li>` : ''}
+              </ul>
+            </div>
+            <p style="color: #374151; margin: 15px 0 0;">
+              Our team will contact you within 2-3 business days to confirm your registration and provide further details.
+            </p>
+          `
+        });
+        
+        if (confirmationSuccess) {
+          alert('Registration submitted successfully! You will receive a confirmation email shortly.');
+          resetModal();
+        } else {
+          alert('Registration submitted! (Confirmation email service temporarily unavailable)');
+          resetModal();
+        }
+      } else {
+        alert('Registration failed! Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending registration email:', error);
+      alert('Registration failed! Please try again later.');
+    }
+  };
 
   const resetModal = () => {
     setCurrentStep(1);
@@ -842,9 +894,7 @@ const Workshops = () => {
                     ) : (
                       <button
                         onClick={() => {
-                          // Handle submission
-                          alert('Registration submitted successfully!');
-                          resetModal();
+                          sendRegistrationEmail(registrationData);
                         }}
                         className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors flex-1 sm:flex-none"
                       >

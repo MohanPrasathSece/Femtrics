@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/TranslationContext";
-import { useEmailService } from "@/hooks/useEmailService";
+import { sendEmailWithGmailSMTP, sendConfirmationEmail, createJoinEmail } from "@/utils/emailService";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -64,7 +64,6 @@ const volunteerRoles = [
 const Join = () => {
   const [activeTab, setActiveTab] = useState<"business" | "volunteer">("business");
   const { t } = useTranslation();
-  const { sendEmail, sendConfirmationEmail } = useEmailService();
   const [businessFormData, setBusinessFormData] = useState({
     fullName: '',
     businessName: '',
@@ -193,42 +192,56 @@ const Join = () => {
     setEmailErrors({});
     
     try {
-      // Create structured email message
-      let message = `Business Application Details:\n\n`;
-      message += `Full Name: ${businessFormData.fullName}\n`;
-      message += `Business Name: ${businessFormData.businessName}\n`;
-      message += `Phone Number: ${businessFormData.phoneNumber}\n`;
-      message += `Email ID: ${businessFormData.email}\n`;
-      message += `Instagram ID: ${businessFormData.instagramId || 'Not provided'}\n`;
-      message += `Business Type: ${businessFormData.businessType}\n`;
-      message += `Primary Goal: ${businessFormData.primaryGoal}\n`;
-      message += `WhatsApp Opt-in: ${businessFormData.whatsappOptIn ? 'Yes' : 'No'}\n\n`;
-      
-      message += `Application Summary:\n`;
-      message += `- Applicant: ${businessFormData.fullName} from ${businessFormData.businessName}\n`;
-      message += `- Contact: ${businessFormData.email} | ${businessFormData.phoneNumber}\n`;
-      message += `- Business Type: ${businessFormData.businessType}\n`;
-      message += `- Goal: ${businessFormData.primaryGoal}\n`;
-      message += `- WhatsApp Updates: ${businessFormData.whatsappOptIn ? 'Opted-in' : 'Not opted-in'}\n`;
-      
-      // Send email with structured data
-      const emailData = {
+      const emailData = createJoinEmail({
         name: businessFormData.fullName,
-        email: 'harshinik290@gmail.com', // Admin email
+        email: businessFormData.email,
         phone: businessFormData.phoneNumber,
         businessType: businessFormData.businessType,
-        message: message,
-        formType: 'Business Application',
-      };
+        businessName: businessFormData.businessName,
+        message: `
+Business Application Details:
+
+Full Name: ${businessFormData.fullName}
+Business Name: ${businessFormData.businessName}
+Phone Number: ${businessFormData.phoneNumber}
+Email ID: ${businessFormData.email}
+Instagram ID: ${businessFormData.instagramId || 'Not provided'}
+Business Type: ${businessFormData.businessType}
+Primary Goal: ${businessFormData.primaryGoal}
+WhatsApp Opt-in: ${businessFormData.whatsappOptIn ? 'Yes' : 'No'}
+
+Application Summary:
+- Applicant: ${businessFormData.fullName} from ${businessFormData.businessName}
+- Contact: ${businessFormData.email} | ${businessFormData.phoneNumber}
+- Business Type: ${businessFormData.businessType}
+- Goal: ${businessFormData.primaryGoal}
+- WhatsApp Updates: ${businessFormData.whatsappOptIn ? 'Opted-in' : 'Not opted-in'}
+        `.trim()
+      });
       
-      await sendEmail(emailData);
+      await sendEmailWithGmailSMTP(emailData);
       
       // Send confirmation email to user
       await sendConfirmationEmail({
         name: businessFormData.fullName,
         email: businessFormData.email,
         formType: 'Business Application',
-        customMessage: `Dear ${businessFormData.fullName},\n\nThank you for applying to grow your business with Femtrics! We have received your application for "${businessFormData.businessName}" and will review it carefully.\n\nOur team will contact you within 2-3 business days to discuss the next steps.\n\nBest regards,\nTeam Femtrics\n\nApplication Details:\n- Business: ${businessFormData.businessName}\n- Type: ${businessFormData.businessType}\n- Goal: ${businessFormData.primaryGoal}`
+        customMessage: `
+          <p style="color: #374151; margin: 0 0 15px;">
+            Thank you for applying to grow your business with Femtrics! We have received your application for <strong>${businessFormData.businessName}</strong>.
+          </p>
+          <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
+            <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
+              <li style="margin-bottom: 5px;">Business: ${businessFormData.businessName}</li>
+              <li style="margin-bottom: 5px;">Type: ${businessFormData.businessType}</li>
+              <li style="margin-bottom: 5px;">Goal: ${businessFormData.primaryGoal}</li>
+            </ul>
+          </div>
+          <p style="color: #374151; margin: 15px 0 0;">
+            Our team will contact you within 2-3 business days to discuss the next steps.
+          </p>
+        `
       });
       
       // Show success alert
@@ -311,49 +324,61 @@ const Join = () => {
     setEmailErrors({});
     
     try {
-      // Create email message with all form data
-      let message = `Volunteer Application Details:\n\n`;
-      message += `Position: ${volunteerFormData.position}\n`;
-      message += `Experience: ${volunteerFormData.experience}\n`;
-      message += `Other Commitments: ${volunteerFormData.otherCommitments}\n`;
-      message += `Why Join: ${volunteerFormData.whyJoin}\n`;
-      message += `Availability Hours: ${volunteerFormData.availabilityHours}\n\n`;
-      
-      message += `Skills Rating (1-5):\n`;
-      message += `- Technical: ${volunteerFormData.skillsRating.technical}\n`;
-      message += `- Communication: ${volunteerFormData.skillsRating.communication}\n`;
-      message += `- Teamwork: ${volunteerFormData.skillsRating.teamwork}\n`;
-      message += `- Leadership: ${volunteerFormData.skillsRating.leadership}\n`;
-      message += `- Creativity: ${volunteerFormData.skillsRating.creativity}\n\n`;
-      
-      if (volunteerFormData.isHighSchoolStudent) {
-        message += `High School Student Details:\n`;
-        message += `- Grade: ${volunteerFormData.grade}\n`;
-        message += `- School: ${volunteerFormData.schoolName}\n`;
-        message += `- Future Goals: ${volunteerFormData.futureGoals}\n`;
-        if (volunteerFormData.parentContact) {
-          message += `- Parent Contact: ${volunteerFormData.parentContact}\n`;
-        }
-      }
-      
-      // Send email with attachment if exists
-      const emailData = {
+      const emailData = createJoinEmail({
         name: volunteerFormData.fullName,
-        email: 'harshinik290@gmail.com', // Admin email
+        email: volunteerFormData.email,
         phone: volunteerFormData.phone,
         businessType: `Volunteer - ${volunteerFormData.position}`,
-        message: message,
-        formType: 'Volunteer Application',
-      };
+        businessName: '',
+        message: `
+Volunteer Application Details:
+
+Position: ${volunteerFormData.position}
+Experience: ${volunteerFormData.experience}
+Other Commitments: ${volunteerFormData.otherCommitments}
+Why Join: ${volunteerFormData.whyJoin}
+Availability Hours: ${volunteerFormData.availabilityHours}
+
+Skills Rating (1-5):
+- Technical: ${volunteerFormData.skillsRating.technical}
+- Communication: ${volunteerFormData.skillsRating.communication}
+- Teamwork: ${volunteerFormData.skillsRating.teamwork}
+- Leadership: ${volunteerFormData.skillsRating.leadership}
+- Creativity: ${volunteerFormData.skillsRating.creativity}
+
+${volunteerFormData.isHighSchoolStudent ? `
+High School Student Details:
+- Grade: ${volunteerFormData.grade}
+- School: ${volunteerFormData.schoolName}
+- Future Goals: ${volunteerFormData.futureGoals}
+${volunteerFormData.parentContact ? `- Parent Contact: ${volunteerFormData.parentContact}` : ''}
+` : ''}
+        `.trim()
+      });
       
-      await sendEmail(emailData);
+      await sendEmailWithGmailSMTP(emailData);
       
       // Send confirmation email to user
       await sendConfirmationEmail({
         name: volunteerFormData.fullName,
         email: volunteerFormData.email,
         formType: 'Volunteer Application',
-        customMessage: `Dear ${volunteerFormData.fullName},\n\nThank you for your interest in volunteering with Femtrics! We have received your application for the ${volunteerFormData.position} position and are excited about the possibility of working together.\n\nOur team will review your application and contact you within 3-5 business days for the next steps.\n\nBest regards,\nTeam Femtrics\n\nApplication Details:\n- Position: ${volunteerFormData.position}\n- Availability: ${volunteerFormData.availabilityHours}\n- Skills: ${Object.entries(volunteerFormData.skillsRating).map(([key, value]) => `${key}: ${value}/5`).join(', ')}`
+        customMessage: `
+          <p style="color: #374151; margin: 0 0 15px;">
+            Thank you for your interest in volunteering with Femtrics! We have received your application for the <strong>${volunteerFormData.position}</strong> position.
+          </p>
+          <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
+            <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
+              <li style="margin-bottom: 5px;">Position: ${volunteerFormData.position}</li>
+              <li style="margin-bottom: 5px;">Availability: ${volunteerFormData.availabilityHours}</li>
+              <li style="margin-bottom: 5px;">Skills: ${Object.entries(volunteerFormData.skillsRating).map(([key, value]) => `${key}: ${value}/5`).join(', ')}</li>
+            </ul>
+          </div>
+          <p style="color: #374151; margin: 15px 0 0;">
+            Our team will review your application and contact you within 3-5 business days for the next steps.
+          </p>
+        `
       });
       
       // Show success alert
