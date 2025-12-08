@@ -102,12 +102,12 @@
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
     
-    --hero-gradient: linear-gradient(135deg, hsl(330 60% 60% / 0.05) 0%, hsl(220 20% 8%) 50%, hsl(180 50% 45% / 0.03) 100%);
-    --pink-gradient: linear-gradient(180deg, hsl(330 40% 12%) 0%, hsl(220 20% 8%) 100%);
-    --card-shadow: 0 4px 24px -4px hsl(0 0% 0% / 0.3);
-    --card-shadow-hover: 0 20px 40px -12px hsl(330 60% 60% / 0.3);
-    --glow: 0 0 60px hsl(330 60% 60% / 0.2);
-    --glow-teal: 0 0 60px hsl(180 50% 45% / 0.2);
+    --hero-gradient: linear-gradient(135deg, hsl(330 70% 55% / 0.15) 0%, hsl(220 20% 8%) 40%, hsl(180 50% 45% / 0.08) 100%);
+    --pink-gradient: linear-gradient(180deg, hsl(330 35% 10%) 0%, hsl(220 18% 12%) 100%);
+    --card-shadow: 0 4px 24px -4px hsl(330 70% 55% / 0.25);
+    --card-shadow-hover: 0 20px 40px -12px hsl(330 70% 55% / 0.4);
+    --glow: 0 0 60px hsl(330 70% 55% / 0.3);
+    --glow-teal: 0 0 60px hsl(180 50% 45% / 0.25);
     
     --sidebar-background: 220 20% 8%;
     --sidebar-foreground: 0 0% 95%;
@@ -164,12 +164,12 @@
 @layer components {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(180 60% 30%) 100%);
+    background-image: linear-gradient(135deg, hsl(330 75% 45%) 0%, hsl(180 60% 30%) 100%);
   }
 
   .text-gradient-pink {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(330 50% 40%) 100%);
+    background-image: linear-gradient(135deg, hsl(330 75% 45%) 0%, hsl(330 55% 40%) 100%);
   }
 
   .hero-bg {
@@ -216,7 +216,7 @@
   }
 
   .card-hover-glow:hover {
-    box-shadow: 0 20px 60px -12px hsl(var(--primary) / 0.3), 0 0 40px -8px hsl(var(--primary) / 0.2);
+    box-shadow: 0 20px 60px -12px hsl(330 75% 45% / 0.35), 0 0 40px -8px hsl(330 75% 45% / 0.25);
     transform: translateY(-4px) scale(1.02);
   }
 
@@ -227,7 +227,7 @@
 
   .hover-lift:hover {
     transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 30px 80px -15px hsl(var(--primary) / 0.4), 0 0 60px -10px hsl(var(--primary) / 0.3);
+    box-shadow: 0 30px 80px -15px hsl(330 75% 45% / 0.45), 0 0 60px -10px hsl(330 75% 45% / 0.35);
   }
 
   .hover-glow {
@@ -240,7 +240,7 @@
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.3));
+    background: linear-gradient(135deg, hsl(330 75% 45% / 0.35), hsl(180 60% 30% / 0.35));
     opacity: 0;
     transition: opacity 0.5s ease;
     z-index: -1;
@@ -253,7 +253,7 @@
 
   .hover-glow:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.4);
+    box-shadow: 0 0 40px hsl(330 75% 45% / 0.45);
   }
 
   /* Parallax Scroll Effects */
@@ -429,7 +429,7 @@
     position: absolute;
     inset: -4px;
     border-radius: inherit;
-    border: 2px solid hsl(var(--primary) / 0.3);
+    border: 2px solid hsl(330 75% 45% / 0.35);
     animation: pulseRing 2s ease-out infinite;
   }
 
@@ -480,10 +480,10 @@
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(236, 72, 153, 0.25);
     box-shadow: 
-      0 8px 32px rgba(31, 38, 135, 0.15),
+      0 8px 32px rgba(236, 72, 153, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
+      0 0 0 1px rgba(236, 72, 153, 0.15);
   }
 }

@@ -81,116 +81,264 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section - New Modern Design */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-          <div className="absolute top-40 right-10 w-96 h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000"></div>
+      {/* Hero Section - Modern Minimal Design */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-pink-50 to-rose-50 overflow-hidden">
+        {/* Subtle Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-pink-300 to-rose-300 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-rose-300 to-pink-300 rounded-full filter blur-3xl"></div>
         </div>
         
         <div className="container-tight relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left Content */}
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Trust Signals */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-left"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="flex flex-wrap justify-center items-center gap-6 mb-8"
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-pink-200"
-              >
-                <Sparkles className="w-4 h-4 text-pink-600" />
-                <span className="text-sm font-semibold text-pink-800">Empowering Women Entrepreneurs</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-4 mb-6"
-              >
-                <img 
-                  src={femtricsLogo} 
-                  alt="Femtrics Logo" 
-                  className="w-20 h-20 lg:w-24 lg:h-24"
-                />
-                <span className="font-display text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent leading-tight">
-                  Femtrics
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-2xl md:text-3xl font-medium text-gray-800 mb-4 italic"
-              >
-                {t("hero.title")}
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-lg"
-              >
-                {t("hero.description")}
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-wrap gap-4 mb-8"
-              >
-                <Button asChild size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Link to="/join" className="group flex items-center">
-                    {t("hero.apply")}
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="px-8 py-4 text-lg border-pink-300 text-pink-700 hover:bg-pink-50 rounded-xl">
-                  <Link to="/about">{t("hero.learnMore")}</Link>
-                </Button>
-              </motion.div>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
-                className="text-sm text-gray-600 flex items-center gap-2"
-              >
-                <div className="flex -space-x-2">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-rose-400 border-2 border-white"></div>
-                  ))}
-                </div>
-                Trusted by 200+ women entrepreneurs across Hyderabad
-              </motion.p>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>65+ Women Trained</span>
+              </div>
+              <div className="text-sm text-gray-400">•</div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>NGO Partners</span>
+              </div>
+              <div className="text-sm text-gray-400">•</div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>Hyderabad Focus</span>
+              </div>
             </motion.div>
 
-            {/* Right Visual */}
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+            >
+              <span className="text-gray-900">Femtrics —</span><br/>
+              <span className="text-gradient">Data that helps your business earn more.</span>
+            </motion.h1>
+
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              Dashboards, forecasts & Instagram insights—designed for women-run microbusinesses in Hyderabad.
+            </motion.p>
+
+            {/* Free Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full mb-8"
+            >
+              <span className="text-sm font-semibold">COMPLETELY FREE</span>
+              <span className="text-xs opacity-90">(We carefully select businesses we work with)</span>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            >
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+              >
+                Get my free mini-audit
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-2 border-pink-300 text-pink-700 hover:bg-pink-50 px-8 py-4 text-lg font-semibold transition-all duration-200"
+              >
+                See sample dashboard
+              </Button>
+            </motion.div>
+
+            {/* Phone Input Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="max-w-md mx-auto mb-12"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-pink-200">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Get started with your phone number
+                </label>
+                <div className="flex gap-2">
+                  <div className="flex items-center bg-gray-100 rounded-lg px-3 py-3 text-gray-600">
+                    <span>+91</span>
+                  </div>
+                  <input
+                    type="tel"
+                    placeholder="98765 43210"
+                    className="flex-1 px-4 py-3 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  />
+                  <Button className="bg-pink-600 hover:bg-pink-700 text-white px-6">
+                    Start
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Visual Section - Dashboard Mockup */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ delay: 0.7 }}
               className="relative"
             >
-              <div className="relative">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 w-full h-full"
-                >
-                  <div className="w-full h-full rounded-full bg-gradient-to-r from-pink-200 to-rose-200 opacity-30"></div>
-                </motion.div>
+              <div className="relative bg-white rounded-2xl shadow-2xl border border-pink-200 overflow-hidden">
                 <img 
+                  src={hero1}
+                  alt="Business Dashboard"
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+              
+              {/* Entrepreneur Photo Overlay */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white rounded-full shadow-lg border-4 border-pink-200 overflow-hidden">
+                <img 
+                  src={hero2}
+                  alt="Local Woman Entrepreneur"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Business Types Section */}
+      <section className="section-padding bg-background">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+              Perfect for Your Business Type
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              We work with women entrepreneurs across various sectors in Hyderabad
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {businessTypes.map((type, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-pink-100"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-400 rounded-lg flex items-center justify-center mb-4">
+                  <Package className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold text-lg mb-2">{type}</h3>
+              </motion.div>
+            ))}
+          </AnimatedSection>
+        </div>
+      {/* Features Section */}
+      <section className="section-padding bg-pink-soft">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+              Everything You Need to Grow
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Simple tools that make complex data easy to understand
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 card-hover-glow"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl flex items-center justify-center mb-6">
+                  <feature.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="font-display text-2xl font-semibold mb-4">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              </motion.div>
+            ))}
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section-padding bg-background">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+              Success Stories
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Hear from women entrepreneurs who transformed their businesses
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">{testimonial.name[0]}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">{testimonial.name}</h4>
+                    <p className="text-sm text-muted-foreground">{testimonial.business}</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+              </motion.div>
+            ))}
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-padding bg-gradient-to-br from-pink-600 to-rose-600">
+        <div className="container-tight">
+          <AnimatedSection className="text-center">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-white mb-6">
+              Ready to Grow Your Business?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Join 65+ women entrepreneurs who are already using data to make smarter decisions
+            </p>
+            <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold">
+              <Link to="/join">Get Started Free</Link>
+            </Button>
+          </AnimatedSection>
+        </div>
+      </section> 
                   src={hero1}
                   alt="Women entrepreneurs working with data analytics"
                   className="w-full h-auto rounded-3xl shadow-2xl border border-pink-200"
