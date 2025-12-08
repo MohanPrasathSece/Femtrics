@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Users, MapPin, BookOpen, CheckCircle, ArrowRight, GraduationCap, Award, Send } from "lucide-react";
+import { Calendar, Clock, Users, MapPin, BookOpen, CheckCircle, ArrowRight, GraduationCap, Award, Send, X } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -57,13 +57,42 @@ const upcomingSchedule = [
 
 const Workshops = () => {
   const { t } = useTranslation();
-  const [registrationForm, setRegistrationForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
+  const [showModal, setShowModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [registrationData, setRegistrationData] = useState({
+    signupType: "",
     workshop: "",
     date: "",
+    name: "",
+    email: "",
+    phone: "",
   });
+  const [selectedMonth, setSelectedMonth] = useState(0);
+
+  const handleDateSelect = (workshop, date) => {
+    setRegistrationData(prev => ({
+      ...prev,
+      workshop,
+      date,
+      location: "Various Locations",
+      time: "10:00 AM - 1:00 PM",
+      type: workshop === "Data for Didi" ? "Women Entrepreneurs" : "Students"
+    }));
+    setCurrentStep(4); // Jump to personal info step
+  };
+
+  const resetModal = () => {
+    setCurrentStep(1);
+    setRegistrationData({
+      signupType: "",
+      workshop: "",
+      date: "",
+      name: "",
+      email: "",
+      phone: "",
+    });
+    setShowModal(false);
+  };
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -243,53 +272,503 @@ const Workshops = () => {
               {t("common.schedule")}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
-              {t("common.upcomingWorkshops")}
+              Workshop Registration
             </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
+              Join our free workshops to learn data analytics and grow your business
+            </p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-flex items-center gap-2 px-8 py-3 bg-pink-500 text-white font-medium rounded-lg hover:bg-pink-600 transition-colors shadow-lg"
+            >
+              <Calendar className="w-5 h-5" />
+              Register for Workshops
+            </button>
           </AnimatedSection>
 
-          <div className="max-w-3xl mx-auto space-y-4">
-            {upcomingSchedule.map((event, index) => (
-              <AnimatedSection key={`${event.date}-${event.workshop}`} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ x: 6, scale: 1.01 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-elevated"
-                >
-                  <div className="flex items-start gap-4">
-                    <motion.div 
-                      whileHover={{ rotate: 10 }}
-                      className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0"
+          {/* Workshop Calendar Display */}
+          <AnimatedSection>
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/50">
+              <h3 className="text-2xl font-semibold mb-6 text-center">Upcoming Workshop Schedule</h3>
+              
+              {/* Month Tabs */}
+              <div className="flex justify-center mb-6">
+                <div className="inline-flex bg-gray-100 rounded-lg p-1">
+                  {['December 2024', 'January 2025', 'February 2025'].map((month, index) => (
+                    <button
+                      key={month}
+                      onClick={() => setSelectedMonth(index)}
+                      className={`px-4 py-2 rounded-md transition-colors ${
+                        selectedMonth === index 
+                          ? 'bg-white text-pink-600 shadow-sm' 
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
                     >
-                      <Calendar className="w-6 h-6 text-primary" />
-                    </motion.div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold">{event.workshop}</h3>
-                        <span className="text-sm px-2 py-0.5 rounded-full bg-background text-muted-foreground">
-                          {event.type}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-base text-muted-foreground">
-                        <span>{event.date}</span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> {event.time}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" /> {event.location}
-                        </span>
-                      </div>
+                      {month}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Calendar Grid - Single Month Display */}
+              <div className="space-y-6">
+                {selectedMonth === 0 && (
+                  <div>
+                    <h4 className="font-medium mb-3">December 2024</h4>
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
+                        let workshop = null;
+                        let workshopCode = '';
+                        
+                        if (day === 15) {
+                          workshop = 'Data for Didi';
+                          workshopCode = 'DD';
+                        } else if (day === 20) {
+                          workshop = 'Girls in Data';
+                          workshopCode = 'GD';
+                        }
+                        
+                        return (
+                          <div
+                            key={day}
+                            onClick={() => workshop && handleDateSelect(workshop, `Dec ${day}, 2024`)}
+                            className={`text-center py-2 text-sm rounded-md transition-colors ${
+                              workshop 
+                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
+                                : 'text-gray-300 cursor-not-allowed'
+                            }`}
+                          >
+                            {day}
+                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                  <Link 
-                    to={`/workshop-register?workshop=${encodeURIComponent(event.workshop)}&date=${event.date}&location=${encodeURIComponent(event.location)}&type=${encodeURIComponent(event.type)}&time=${event.time}`}
-                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium border border-input bg-background hover:bg-pink-500 hover:text-white rounded-md transition-colors"
-                  >
-                    Register
-                  </Link>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
+                )}
+
+                {selectedMonth === 1 && (
+                  <div>
+                    <h4 className="font-medium mb-3">January 2025</h4>
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {Array.from({ length: 31 }, (_, i) => i + 1).map(day => {
+                        let workshop = null;
+                        let workshopCode = '';
+                        
+                        if (day === 5 || day === 18) {
+                          workshop = 'Data for Didi';
+                          workshopCode = 'DD';
+                        } else if (day === 12 || day === 25) {
+                          workshop = 'Girls in Data';
+                          workshopCode = 'GD';
+                        }
+                        
+                        return (
+                          <div
+                            key={day}
+                            onClick={() => workshop && handleDateSelect(workshop, `Jan ${day}, 2025`)}
+                            className={`text-center py-2 text-sm rounded-md transition-colors ${
+                              workshop 
+                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
+                                : 'text-gray-300 cursor-not-allowed'
+                            }`}
+                          >
+                            {day}
+                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {selectedMonth === 2 && (
+                  <div>
+                    <h4 className="font-medium mb-3">February 2025</h4>
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {Array.from({ length: 28 }, (_, i) => i + 1).map(day => {
+                        let workshop = null;
+                        let workshopCode = '';
+                        
+                        if (day === 2) {
+                          workshop = 'Data for Didi';
+                          workshopCode = 'DD';
+                        } else if (day === 9) {
+                          workshop = 'Girls in Data';
+                          workshopCode = 'GD';
+                        }
+                        
+                        return (
+                          <div
+                            key={day}
+                            onClick={() => workshop && handleDateSelect(workshop, `Feb ${day}, 2025`)}
+                            className={`text-center py-2 text-sm rounded-md transition-colors ${
+                              workshop 
+                                ? 'bg-pink-500 text-white hover:bg-pink-600 cursor-pointer font-medium shadow-sm' 
+                                : 'text-gray-300 cursor-not-allowed'
+                            }`}
+                          >
+                            {day}
+                            {workshop && <div className="text-xs mt-1">{workshopCode}</div>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Legend */}
+              <div className="mt-6 flex justify-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-pink-500 rounded shadow-sm"></div>
+                  <span>DD = Data for Didi</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-pink-500 rounded shadow-sm"></div>
+                  <span>GD = Girls in Data</span>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Step-by-Step Registration Modal */}
+          {showModal && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              >
+                {/* Modal Header */}
+                <div className="p-6 border-b border-border">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-2xl font-semibold">Workshop Registration</h3>
+                    <button
+                      onClick={resetModal}
+                      className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  {/* Progress Steps */}
+                  <div className="flex items-center justify-between">
+                    {[1, 2, 3, 4, 5].map((step) => (
+                      <div key={step} className="flex items-center">
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                            step <= currentStep
+                              ? 'bg-pink-500 text-white'
+                              : 'bg-gray-200 text-gray-600'
+                          }`}
+                        >
+                          {step}
+                        </div>
+                        {step < 5 && (
+                          <div
+                            className={`w-12 h-1 mx-2 transition-colors ${
+                              step < currentStep ? 'bg-pink-500' : 'bg-gray-200'
+                            }`}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex justify-between mt-2 text-xs text-gray-600">
+                    <span>Who</span>
+                    <span>Workshop</span>
+                    <span>Date</span>
+                    <span>Details</span>
+                    <span>Confirm</span>
+                  </div>
+                </div>
+
+                {/* Modal Content */}
+                <div className="p-6">
+                  {/* Step 1: Who are you signing up? */}
+                  {currentStep === 1 && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-4">Who are you signing up?</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <button
+                          onClick={() => {
+                            setRegistrationData(prev => ({ ...prev, signupType: 'self' }));
+                            setCurrentStep(2);
+                          }}
+                          className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
+                            registrationData.signupType === 'self'
+                              ? 'border-pink-500 bg-pink-50'
+                              : 'border-gray-200 hover:border-pink-300'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                              <Users className="w-6 h-6 text-pink-600" />
+                            </div>
+                            <h5 className="font-semibold text-lg">Myself</h5>
+                          </div>
+                          <p className="text-muted-foreground">
+                            I want to register for a workshop to learn data analytics
+                          </p>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setRegistrationData(prev => ({ ...prev, signupType: 'others' }));
+                            setCurrentStep(2);
+                          }}
+                          className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
+                            registrationData.signupType === 'others'
+                              ? 'border-pink-500 bg-pink-50'
+                              : 'border-gray-200 hover:border-pink-300'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                              <Users className="w-6 h-6 text-pink-600" />
+                            </div>
+                            <h5 className="font-semibold text-lg">Someone Else</h5>
+                          </div>
+                          <p className="text-muted-foreground">
+                            I'm registering a friend, family member, or colleague
+                          </p>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 2: Choose Workshop */}
+                  {currentStep === 2 && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-4">Choose Workshop</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {workshops.map((workshop) => (
+                          <button
+                            key={workshop.title}
+                            onClick={() => {
+                              setRegistrationData(prev => ({ ...prev, workshop: workshop.title }));
+                              setCurrentStep(3);
+                            }}
+                            className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
+                              registrationData.workshop === workshop.title
+                                ? 'border-pink-500 bg-pink-50'
+                                : 'border-gray-200 hover:border-pink-300'
+                            }`}
+                          >
+                            <h5 className="font-semibold text-lg mb-2">{workshop.title}</h5>
+                            <p className="text-sm text-muted-foreground mb-3">{workshop.tagline}</p>
+                            <div className="flex items-center gap-4 text-xs text-gray-600">
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" /> {workshop.duration}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Users className="w-3 h-3" /> {workshop.participants}
+                              </span>
+                              <span className="px-2 py-1 bg-gray-100 rounded-full">
+                                {workshop.level}
+                              </span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: Choose Date */}
+                  {currentStep === 3 && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-4">Choose Date</h4>
+                      <div className="space-y-4">
+                        {upcomingSchedule
+                          .filter(event => event.workshop === registrationData.workshop)
+                          .map((event, index) => (
+                            <button
+                              key={index}
+                              onClick={() => {
+                                setRegistrationData(prev => ({ ...prev, date: event.date }));
+                                setCurrentStep(4);
+                              }}
+                              className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
+                                registrationData.date === event.date
+                                  ? 'border-pink-500 bg-pink-50'
+                                  : 'border-gray-200 hover:border-pink-300'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h5 className="font-semibold">{event.date}</h5>
+                                  <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">
+                                    <span className="flex items-center gap-1">
+                                      <Clock className="w-3 h-3" /> {event.time}
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                      <MapPin className="w-3 h-3" /> {event.location}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                  {registrationData.date === event.date && (
+                                    <div className="w-3 h-3 rounded-full bg-pink-500" />
+                                  )}
+                                </div>
+                              </div>
+                            </button>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 4: Personal Details */}
+                  {currentStep === 4 && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-4">
+                        {registrationData.signupType === 'self' ? 'Your Details' : 'Participant Details'}
+                      </h4>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Full Name</label>
+                          <input
+                            type="text"
+                            value={registrationData.name}
+                            onChange={(e) => setRegistrationData(prev => ({ ...prev, name: e.target.value }))}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            placeholder="Enter full name"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Email Address</label>
+                          <input
+                            type="email"
+                            value={registrationData.email}
+                            onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            placeholder="Enter email address"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Phone Number</label>
+                          <input
+                            type="tel"
+                            value={registrationData.phone}
+                            onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            placeholder="Enter phone number"
+                          />
+                        </div>
+                        {registrationData.signupType === 'self' && (
+                          <div className="bg-pink-50 p-3 rounded-lg text-sm text-pink-700">
+                            <strong>Note:</strong> You can also bring a group of 20+ people for special arrangements.
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 5: Confirmation */}
+                  {currentStep === 5 && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-4">Review & Confirm</h4>
+                      <div className="bg-gray-50 rounded-xl p-6 space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-sm text-gray-600">Registration Type</p>
+                            <p className="font-medium">{registrationData.signupType === 'self' ? 'Self Registration' : 'Registration for Others'}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Workshop</p>
+                            <p className="font-medium">{registrationData.workshop}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Date</p>
+                            <p className="font-medium">{registrationData.date}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Participant Name</p>
+                            <p className="font-medium">{registrationData.name}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Email</p>
+                            <p className="font-medium">{registrationData.email}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Phone</p>
+                            <p className="font-medium">{registrationData.phone}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 p-4 bg-pink-50 rounded-lg">
+                        <p className="text-sm text-pink-700">
+                          <strong>Important:</strong> You'll receive a confirmation email with workshop details and joining instructions.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Modal Footer */}
+                <div className="p-6 border-t border-border">
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => currentStep > 1 ? setCurrentStep(currentStep - 1) : resetModal()}
+                      className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      {currentStep === 1 ? 'Cancel' : 'Back'}
+                    </button>
+                    
+                    {currentStep < 5 ? (
+                      <button
+                        onClick={() => setCurrentStep(currentStep + 1)}
+                        disabled={
+                          (currentStep === 1 && !registrationData.signupType) ||
+                          (currentStep === 2 && !registrationData.workshop) ||
+                          (currentStep === 3 && !registrationData.date) ||
+                          (currentStep === 4 && (!registrationData.name || !registrationData.email || !registrationData.phone))
+                        }
+                        className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Next
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          // Handle submission
+                          alert('Registration submitted successfully!');
+                          resetModal();
+                        }}
+                        className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+                      >
+                        Submit Registration
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )}
         </div>
       </section>
 
