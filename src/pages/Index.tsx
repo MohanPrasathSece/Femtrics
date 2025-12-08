@@ -122,15 +122,6 @@ const Index = () => {
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-xl md:text-2xl text-foreground max-w-2xl leading-relaxed font-medium"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  {t("hero.subheadline")}
-                </motion.p>
-                
-                <motion.p 
                   className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -199,45 +190,46 @@ const Index = () => {
         </div>
       </section>
 
-      {/* NGO Partners Banner */}
-      <section className="section-padding bg-gradient-to-b from-background to-muted/30">
+      {/* Who We Serve */}
+      <section className="section-padding bg-gradient-to-b from-muted/30 to-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-12">
             <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
               Our Partners
             </span>
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold mb-4">
               Working Together for Women's Empowerment
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We're proud to collaborate with these amazing NGOs who share our vision of empowering women entrepreneurs through data literacy
+              We're proud to collaborate with these amazing organizations who share our vision of empowering women entrepreneurs through data literacy
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-border/50">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-border/50">
+              <div className="grid grid-cols-5 gap-6 md:gap-8 items-center justify-items-center">
                 {[
-                  { name: "Mahila Self Help Group", location: "Old City", type: "Community Development" },
-                  { name: "Women Entrepreneurs Network", location: "Secunderabad", type: "Business Support" },
-                  { name: "Sakthi Foundation", location: "LB Nagar", type: "Skill Development" },
-                  { name: "Umeed NGO", location: "Kukatpally", type: "Education & Training" },
-                  { name: "Sphoorti Foundation", location: "Madhapur", type: "Women Empowerment" },
-                  { name: "Navayuvaka Mandali", location: "Gachibowli", type: "Youth & Women Development" }
+                  { name: "Telangana Mahila Samakhya", initials: "TMS", color: "bg-pink-500" },
+                  { name: "Stree Nidhi Credit Cooperative", initials: "SNC", color: "bg-purple-500" },
+                  { name: "Chaitanya Mahila Sangham", initials: "CMS", color: "bg-blue-500" },
+                  { name: "Rubaroo", initials: "RB", color: "bg-green-500" },
+                  { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500" },
+                  { name: "Kriya Foundation", initials: "KF", color: "bg-red-500" },
+                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500" },
+                  { name: "ESAF Small Finance Bank", initials: "ESAF", color: "bg-indigo-500" },
+                  { name: "Oakridge International", initials: "OI", color: "bg-cyan-500" },
+                  { name: "Chirec International", initials: "CI", color: "bg-emerald-500" }
                 ].map((ngo, index) => (
                   <motion.div
                     key={ngo.name}
                     whileHover={{ scale: 1.05, y: -4 }}
                     className="text-center group cursor-pointer"
                   >
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
-                      <span className="text-2xl md:text-3xl font-bold text-primary">NGO</span>
+                    <div className={`w-16 h-16 md:w-20 md:h-20 ${ngo.color} rounded-xl flex items-center justify-center mx-auto group-hover:shadow-xl transition-all duration-300`}>
+                      <span className="text-white font-bold text-lg md:text-xl">
+                        {ngo.initials}
+                      </span>
                     </div>
-                    <h3 className="font-medium text-sm md:text-base mb-1 group-hover:text-primary transition-colors">
-                      {ngo.name}
-                    </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground mb-1">{ngo.location}</p>
-                    <span className="text-xs text-primary/70 font-medium">{ngo.type}</span>
                   </motion.div>
                 ))}
               </div>
@@ -245,7 +237,7 @@ const Index = () => {
               <div className="mt-12 text-center">
                 <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
                   <Shield className="w-5 h-5" />
-                  <span>6 NGO Partners Across Hyderabad</span>
+                  <span>10 NGO Partners Across Hyderabad</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
