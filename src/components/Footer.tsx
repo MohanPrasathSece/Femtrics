@@ -106,22 +106,22 @@ export const Footer = () => {
               <ul className="space-y-2">
                 <li>
                   <a href="/dashboard" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
-                    {t("footer.caseStudies")}
+                    Success Stories
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
-                    {t("footer.blog")}
+                  <a href="/workshops" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                    Training Programs
                   </a>
                 </li>
                 <li>
-                  <a href="/contact#faq" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
-                    {t("footer.faq")}
+                  <a href="/about" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                    Our Impact
                   </a>
                 </li>
                 <li>
-                  <a href="/contact" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
-                    {t("footer.support")}
+                  <a href="/join" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                    Partner With Us
                   </a>
                 </li>
               </ul>

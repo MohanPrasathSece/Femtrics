@@ -44,6 +44,7 @@ export const useEmailService = () => {
     businessType?: string;
     message?: string;
     formType: string;
+    userEmail?: string; // For confirmation emails
   }): Promise<EmailResponse> => {
     setIsLoading(true);
     
@@ -117,6 +118,58 @@ export const useEmailService = () => {
     }
   };
 
+  // Send confirmation email to user
+  const sendConfirmationEmail = async (userData: {
+    name: string;
+    email: string;
+    formType: string;
+    customMessage?: string;
+  }): Promise<EmailResponse> => {
+    setIsLoading(true);
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+      const confirmationData = {
+        ...userData,
+        isConfirmation: true,
+        businessType: 'Confirmation',
+        message: userData.customMessage || `Thank you for your ${userData.formType}! We have received your submission and will get back to you soon.`,
+        phone: 'N/A'
+      };
+
+      const response = await fetch('http://localhost:3001/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(confirmationData),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+      
+      const result = await response.json();
+      
+      if (result.logs) {
+        setLogs(prev => [...prev, ...result.logs]);
+      }
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to send confirmation email:', error);
+      // Don't fail the whole process if confirmation email fails
+      return {
+        success: true,
+        message: 'Main email sent, confirmation email may have failed',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Get email logs
   const fetchLogs = async () => {
     try {
@@ -140,6 +193,7 @@ export const useEmailService = () => {
 
   return {
     sendEmail,
+    sendConfirmationEmail,
     fetchLogs,
     clearLogs,
     logs,

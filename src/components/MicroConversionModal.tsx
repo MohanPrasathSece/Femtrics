@@ -32,6 +32,7 @@ interface MicroConversionModalProps {
 export interface MicroConversionData {
   fullName: string;
   businessName: string;
+  businessEmail: string;
   phoneNumber: string;
   businessType: string;
   primaryGoal: string;
@@ -63,6 +64,7 @@ export const MicroConversionModal = ({
   const [formData, setFormData] = useState<MicroConversionData>({
     fullName: "",
     businessName: "",
+    businessEmail: "",
     phoneNumber: "",
     businessType: "",
     primaryGoal: "",
@@ -93,6 +95,11 @@ export const MicroConversionModal = ({
     if (!formData.businessName.trim()) {
       newErrors.businessName = t("form.businessName") + " " + t("form.required");
     }
+    if (!formData.businessEmail.trim()) {
+      newErrors.businessEmail = t("form.email") + " " + t("form.required");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.businessEmail)) {
+      newErrors.businessEmail = t("form.validEmailError");
+    }
     if (!formData.phoneNumber || !isValidPhoneNumber(formData.phoneNumber)) {
       newErrors.phoneNumber = t("form.validPhoneError");
     }
@@ -121,10 +128,10 @@ export const MicroConversionModal = ({
       
       await sendEmail({
         name: formData.fullName,
-        email: "", // Not required for micro-conversion
+        email: formData.businessEmail,
         phone: formData.phoneNumber,
         businessType: `${finalBusinessType} - Goal: ${formData.primaryGoal}`,
-        message: `Business Name: ${formData.businessName}\nWhatsApp Opt-in: ${formData.whatsappOptIn ? "Yes" : "No"}`,
+        message: `Business Name: ${formData.businessName}\nBusiness Email: ${formData.businessEmail}\nWhatsApp Opt-in: ${formData.whatsappOptIn ? "Yes" : "No"}`,
         formType: "Micro-Conversion CTA",
       });
       
@@ -143,6 +150,7 @@ export const MicroConversionModal = ({
         setFormData({
           fullName: "",
           businessName: "",
+          businessEmail: "",
           phoneNumber: "",
           businessType: "",
           primaryGoal: "",
@@ -223,6 +231,23 @@ export const MicroConversionModal = ({
                 />
                 {errors.businessName && (
                   <p className="text-red-600 text-xs mt-1">{errors.businessName}</p>
+                )}
+              </div>
+
+              <div>
+                <Label htmlFor="businessEmail">
+                  {t("form.email")} (Business) *
+                </Label>
+                <Input
+                  id="businessEmail"
+                  type="email"
+                  value={formData.businessEmail}
+                  onChange={(e) => handleChange("businessEmail", e.target.value)}
+                  placeholder={t("form.enterEmail")}
+                  className={errors.businessEmail ? "border-red-300" : ""}
+                />
+                {errors.businessEmail && (
+                  <p className="text-red-600 text-xs mt-1">{errors.businessEmail}</p>
                 )}
               </div>
 

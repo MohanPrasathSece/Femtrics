@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Workshops from "./pages/Workshops";
 import Join from "./pages/Join";
 import Contact from "./pages/Contact";
+import WorkshopRegister from "./pages/WorkshopRegister";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/workshops" element={<Workshops />} />
+            <Route path="/workshop-register" element={<WorkshopRegister />} />
             <Route path="/join" element={<Join />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

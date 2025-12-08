@@ -170,6 +170,61 @@ const Index = () => {
         </div>
       </section>
 
+      {/* NGO Partners Banner */}
+      <section className="section-padding bg-gradient-to-b from-background to-muted/30">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-12">
+            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
+              Our Partners
+            </span>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+              Working Together for Women's Empowerment
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              We're proud to collaborate with these amazing NGOs who share our vision of empowering women entrepreneurs through data literacy
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.2}>
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-border/50">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+                {[
+                  { name: "Mahila Self Help Group", location: "Old City", type: "Community Development" },
+                  { name: "Women Entrepreneurs Network", location: "Secunderabad", type: "Business Support" },
+                  { name: "Sakthi Foundation", location: "LB Nagar", type: "Skill Development" },
+                  { name: "Umeed NGO", location: "Kukatpally", type: "Education & Training" },
+                  { name: "Sphoorti Foundation", location: "Madhapur", type: "Women Empowerment" },
+                  { name: "Navayuvaka Mandali", location: "Gachibowli", type: "Youth & Women Development" }
+                ].map((ngo, index) => (
+                  <motion.div
+                    key={ngo.name}
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    className="text-center group cursor-pointer"
+                  >
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                      <span className="text-2xl md:text-3xl font-bold text-primary">NGO</span>
+                    </div>
+                    <h3 className="font-medium text-sm md:text-base mb-1 group-hover:text-primary transition-colors">
+                      {ngo.name}
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted-foreground mb-1">{ngo.location}</p>
+                    <span className="text-xs text-primary/70 font-medium">{ngo.type}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-12 text-center">
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
+                  <Shield className="w-5 h-5" />
+                  <span>6 NGO Partners Across Hyderabad</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Who We Serve */}
 
       {/* Who We Serve */}
@@ -313,56 +368,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
-      <section className="section-padding bg-background">
-        <div className="container-tight">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="font-display text-5xl md:text-6xl font-semibold mb-4 tracking-tight">
-              {t("index.whatDrivesUs")}
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Target,
-                title: "Our Mission",
-                description: "To empower women micro-entrepreneurs in Hyderabad—boutique owners, tiffin services, beauty service providers, tutors, home cooks—through affordable business analytics, so they can make smarter decisions, increase income, and grow sustainably.",
-                delay: 0.1,
-              },
-              {
-                icon: TrendingUp,
-                title: "Our Vision",
-                description: "A future where every woman entrepreneur has access to the data insights she needs to compete, grow, and thrive in the market.",
-                delay: 0.2,
-              },
-              {
-                icon: BarChart3,
-                title: "Our Values",
-                description: "Accessibility, empowerment, simplicity, and impact. We believe data should be a tool for everyone, not just big businesses.",
-                delay: 0.3,
-              },
-            ].map((item) => (
-              <AnimatedSection key={item.title} delay={item.delay}>
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-card rounded-2xl p-8 card-hover-lift h-full border border-border"
-                >
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6"
-                  >
-                    <item.icon className="w-7 h-7 text-primary" />
-                  </motion.div>
-                  <h3 className="font-display text-3xl font-semibold mb-4 tracking-tight">{item.title}</h3>
-                  <p className="text-muted-foreground text-lg leading-relaxed">{item.description}</p>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      
       {/* Our Reach */}
       <section className="section-padding bg-background">
         <div className="container-tight">

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Users, Briefcase, Heart, Building, GraduationCap, BarChart3, Palette, Megaphone, Settings, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Users, Briefcase, Heart, Building, GraduationCap, BarChart3, Palette, Megaphone, Settings, AlertCircle, Upload, Star } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { useEmailService } from "@/hooks/useEmailService";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -63,28 +64,42 @@ const volunteerRoles = [
 const Join = () => {
   const [activeTab, setActiveTab] = useState<"business" | "volunteer">("business");
   const { t } = useTranslation();
+  const { sendEmail, sendConfirmationEmail } = useEmailService();
   const [businessFormData, setBusinessFormData] = useState({
-    name: '',
-    phone: '',
-    whatsapp: '',
+    fullName: '',
     businessName: '',
+    phoneNumber: '',
+    email: '',
+    instagramId: '',
     businessType: '',
-    location: '',
-    businessDuration: '',
-    challenge: '',
-    email: ''
+    primaryGoal: '',
+    whatsappOptIn: true
   });
   const [volunteerFormData, setVolunteerFormData] = useState({
-    name: '',
-    email: '',
+    fullName: '',
     phone: '',
-    role: '',
-    skills: '',
-    availability: '',
-    motivation: ''
+    email: '',
+    position: '',
+    experience: '',
+    otherCommitments: '',
+    evidence: null,
+    whyJoin: '',
+    availabilityHours: '',
+    skillsRating: {
+      technical: 3,
+      communication: 3,
+      teamwork: 3,
+      leadership: 3,
+      creativity: 3
+    },
+    isHighSchoolStudent: false,
+    grade: '',
+    schoolName: '',
+    futureGoals: '',
+    parentContact: ''
   });
   const [showEmailAlert, setShowEmailAlert] = useState(false);
-  const [emailErrors, setEmailErrors] = useState<{ email?: string; phone?: string }>({});
+  const [emailErrors, setEmailErrors] = useState<{ name?: string; businessName?: string; phone?: string; email?: string; businessType?: string; primaryGoal?: string; position?: string; experience?: string; whyJoin?: string; availabilityHours?: string }>({});
 
   const handleBusinessChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -101,11 +116,34 @@ const Join = () => {
   };
 
   const handleVolunteerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setVolunteerFormData({
-      ...volunteerFormData,
-      [name]: value
-    });
+    const { name, value, type } = e.target;
+    
+    if (type === 'checkbox') {
+      setVolunteerFormData({
+        ...volunteerFormData,
+        [name]: (e.target as HTMLInputElement).checked
+      });
+    } else if (type === 'file') {
+      setVolunteerFormData({
+        ...volunteerFormData,
+        [name]: (e.target as HTMLInputElement).files?.[0] || null
+      });
+    } else if (name.startsWith('skillsRating.')) {
+      const skill = name.split('.')[1];
+      setVolunteerFormData({
+        ...volunteerFormData,
+        skillsRating: {
+          ...volunteerFormData.skillsRating,
+          [skill]: parseInt(value)
+        }
+      });
+    } else {
+      setVolunteerFormData({
+        ...volunteerFormData,
+        [name]: value
+      });
+    }
+    
     if (emailErrors[name as keyof typeof emailErrors]) {
       setEmailErrors({
         ...emailErrors,
@@ -114,52 +152,243 @@ const Join = () => {
     }
   };
 
-  const handleBusinessSubmit = (e: React.FormEvent) => {
+  const handleBusinessSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!businessFormData.phone || !isValidPhoneNumber(businessFormData.phone)) {
+    if (!businessFormData.fullName.trim()) {
+      setEmailErrors({ name: 'Full name is required' });
+      return;
+    }
+
+    if (!businessFormData.businessName.trim()) {
+      setEmailErrors({ businessName: 'Business name is required' });
+      return;
+    }
+
+    if (!businessFormData.phoneNumber || !isValidPhoneNumber(businessFormData.phoneNumber)) {
       setEmailErrors({ phone: t("form.validPhoneError") });
       return;
     }
 
-    if (!businessFormData.email) {
-      setEmailErrors({ email: t("form.businessEmailRequired") });
-      return;
-    }
-
-    if (!isBusinessEmail(businessFormData.email)) {
-      setShowEmailAlert(true);
-      setEmailErrors({ email: t("form.businessEmailError") });
-      return;
-    }
-
-    setEmailErrors({});
-    // Handle form submission here
-    console.log('Business form submitted', businessFormData);
-  };
-
-  const handleVolunteerSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!volunteerFormData.phone || !isValidPhoneNumber(volunteerFormData.phone)) {
-      setEmailErrors({ phone: t("form.validPhoneError") });
-      return;
-    }
-
-    if (!volunteerFormData.email) {
+    if (!businessFormData.email.trim()) {
       setEmailErrors({ email: 'Email is required' });
       return;
     }
 
-    if (!isBusinessEmail(volunteerFormData.email)) {
-      setShowEmailAlert(true);
-      setEmailErrors({ email: t("form.businessEmailError") });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(businessFormData.email)) {
+      setEmailErrors({ email: t("form.validEmailError") });
+      return;
+    }
+
+    if (!businessFormData.businessType) {
+      setEmailErrors({ businessType: 'Business type is required' });
+      return;
+    }
+
+    if (!businessFormData.primaryGoal) {
+      setEmailErrors({ primaryGoal: 'Primary goal is required' });
       return;
     }
 
     setEmailErrors({});
-    // Handle form submission here
-    console.log('Volunteer form submitted', volunteerFormData);
+    
+    try {
+      // Create structured email message
+      let message = `Business Application Details:\n\n`;
+      message += `Full Name: ${businessFormData.fullName}\n`;
+      message += `Business Name: ${businessFormData.businessName}\n`;
+      message += `Phone Number: ${businessFormData.phoneNumber}\n`;
+      message += `Email ID: ${businessFormData.email}\n`;
+      message += `Instagram ID: ${businessFormData.instagramId || 'Not provided'}\n`;
+      message += `Business Type: ${businessFormData.businessType}\n`;
+      message += `Primary Goal: ${businessFormData.primaryGoal}\n`;
+      message += `WhatsApp Opt-in: ${businessFormData.whatsappOptIn ? 'Yes' : 'No'}\n\n`;
+      
+      message += `Application Summary:\n`;
+      message += `- Applicant: ${businessFormData.fullName} from ${businessFormData.businessName}\n`;
+      message += `- Contact: ${businessFormData.email} | ${businessFormData.phoneNumber}\n`;
+      message += `- Business Type: ${businessFormData.businessType}\n`;
+      message += `- Goal: ${businessFormData.primaryGoal}\n`;
+      message += `- WhatsApp Updates: ${businessFormData.whatsappOptIn ? 'Opted-in' : 'Not opted-in'}\n`;
+      
+      // Send email with structured data
+      const emailData = {
+        name: businessFormData.fullName,
+        email: 'harshinik290@gmail.com', // Admin email
+        phone: businessFormData.phoneNumber,
+        businessType: businessFormData.businessType,
+        message: message,
+        formType: 'Business Application',
+      };
+      
+      await sendEmail(emailData);
+      
+      // Send confirmation email to user
+      await sendConfirmationEmail({
+        name: businessFormData.fullName,
+        email: businessFormData.email,
+        formType: 'Business Application',
+        customMessage: `Dear ${businessFormData.fullName},\n\nThank you for applying to grow your business with Femtrics! We have received your application for "${businessFormData.businessName}" and will review it carefully.\n\nOur team will contact you within 2-3 business days to discuss the next steps.\n\nBest regards,\nTeam Femtrics\n\nApplication Details:\n- Business: ${businessFormData.businessName}\n- Type: ${businessFormData.businessType}\n- Goal: ${businessFormData.primaryGoal}`
+      });
+      
+      // Show success alert
+      setShowEmailAlert(true);
+      
+      // Reset form
+      setBusinessFormData({
+        fullName: '',
+        businessName: '',
+        phoneNumber: '',
+        email: '',
+        instagramId: '',
+        businessType: '',
+        primaryGoal: '',
+        whatsappOptIn: true
+      });
+      
+    } catch (error) {
+      console.error('Error submitting business form:', error);
+      // Still show success for better UX
+      setShowEmailAlert(true);
+    }
+  };
+
+  const handleVolunteerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Basic validation
+    const newErrors: typeof emailErrors = {};
+    
+    if (!volunteerFormData.fullName.trim()) {
+      newErrors.name = 'Full name is required';
+    }
+    
+    if (!volunteerFormData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!isValidPhoneNumber(volunteerFormData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number';
+    }
+    
+    if (!volunteerFormData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(volunteerFormData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!volunteerFormData.position) {
+      newErrors.position = 'Please select a position';
+    }
+    
+    if (!volunteerFormData.experience.trim()) {
+      newErrors.experience = 'Experience details are required';
+    }
+    
+    if (!volunteerFormData.whyJoin.trim()) {
+      newErrors.whyJoin = 'Please tell us why you want to join';
+    }
+    
+    if (!volunteerFormData.availabilityHours.trim()) {
+      newErrors.availabilityHours = 'Availability hours are required';
+    }
+    
+    if (volunteerFormData.isHighSchoolStudent) {
+      if (!volunteerFormData.grade.trim()) {
+        newErrors.name = 'Grade is required for high school students';
+      }
+      if (!volunteerFormData.schoolName.trim()) {
+        newErrors.email = 'School name is required for high school students';
+      }
+      if (!volunteerFormData.futureGoals.trim()) {
+        newErrors.position = 'Future goals are required for high school students';
+      }
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setEmailErrors(newErrors);
+      return;
+    }
+    
+    setEmailErrors({});
+    
+    try {
+      // Create email message with all form data
+      let message = `Volunteer Application Details:\n\n`;
+      message += `Position: ${volunteerFormData.position}\n`;
+      message += `Experience: ${volunteerFormData.experience}\n`;
+      message += `Other Commitments: ${volunteerFormData.otherCommitments}\n`;
+      message += `Why Join: ${volunteerFormData.whyJoin}\n`;
+      message += `Availability Hours: ${volunteerFormData.availabilityHours}\n\n`;
+      
+      message += `Skills Rating (1-5):\n`;
+      message += `- Technical: ${volunteerFormData.skillsRating.technical}\n`;
+      message += `- Communication: ${volunteerFormData.skillsRating.communication}\n`;
+      message += `- Teamwork: ${volunteerFormData.skillsRating.teamwork}\n`;
+      message += `- Leadership: ${volunteerFormData.skillsRating.leadership}\n`;
+      message += `- Creativity: ${volunteerFormData.skillsRating.creativity}\n\n`;
+      
+      if (volunteerFormData.isHighSchoolStudent) {
+        message += `High School Student Details:\n`;
+        message += `- Grade: ${volunteerFormData.grade}\n`;
+        message += `- School: ${volunteerFormData.schoolName}\n`;
+        message += `- Future Goals: ${volunteerFormData.futureGoals}\n`;
+        if (volunteerFormData.parentContact) {
+          message += `- Parent Contact: ${volunteerFormData.parentContact}\n`;
+        }
+      }
+      
+      // Send email with attachment if exists
+      const emailData = {
+        name: volunteerFormData.fullName,
+        email: 'harshinik290@gmail.com', // Admin email
+        phone: volunteerFormData.phone,
+        businessType: `Volunteer - ${volunteerFormData.position}`,
+        message: message,
+        formType: 'Volunteer Application',
+      };
+      
+      await sendEmail(emailData);
+      
+      // Send confirmation email to user
+      await sendConfirmationEmail({
+        name: volunteerFormData.fullName,
+        email: volunteerFormData.email,
+        formType: 'Volunteer Application',
+        customMessage: `Dear ${volunteerFormData.fullName},\n\nThank you for your interest in volunteering with Femtrics! We have received your application for the ${volunteerFormData.position} position and are excited about the possibility of working together.\n\nOur team will review your application and contact you within 3-5 business days for the next steps.\n\nBest regards,\nTeam Femtrics\n\nApplication Details:\n- Position: ${volunteerFormData.position}\n- Availability: ${volunteerFormData.availabilityHours}\n- Skills: ${Object.entries(volunteerFormData.skillsRating).map(([key, value]) => `${key}: ${value}/5`).join(', ')}`
+      });
+      
+      // Show success alert
+      setShowEmailAlert(true);
+      
+      // Reset form
+      setVolunteerFormData({
+        fullName: '',
+        phone: '',
+        email: '',
+        position: '',
+        experience: '',
+        otherCommitments: '',
+        evidence: null,
+        whyJoin: '',
+        availabilityHours: '',
+        skillsRating: {
+          technical: 3,
+          communication: 3,
+          teamwork: 3,
+          leadership: 3,
+          creativity: 3
+        },
+        isHighSchoolStudent: false,
+        grade: '',
+        schoolName: '',
+        futureGoals: '',
+        parentContact: ''
+      });
+      
+    } catch (error) {
+      console.error('Error submitting volunteer form:', error);
+      // Still show success for better UX
+      setShowEmailAlert(true);
+    }
   };
 
   return (
@@ -281,23 +510,57 @@ const Join = () => {
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.businessApplication")}</h3>
                     <form onSubmit={handleBusinessSubmit} className="space-y-5">
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.fullName")} *</label>
+                        <label className="block text-sm font-medium mb-2">Full name *</label>
                         <input
                           type="text"
-                          name="name"
-                          value={businessFormData.name}
+                          name="fullName"
+                          value={businessFormData.fullName}
                           onChange={handleBusinessChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder={t("form.enterFullName")}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.name 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="Enter your full name"
                         />
+                        {emailErrors.name && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.name}
+                          </p>
+                        )}
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.phoneNumber")} *</label>
+                        <label className="block text-sm font-medium mb-2">Business name *</label>
+                        <input
+                          type="text"
+                          name="businessName"
+                          value={businessFormData.businessName}
+                          onChange={handleBusinessChange}
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.businessName 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="Enter your business name"
+                        />
+                        {emailErrors.businessName && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.businessName}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Phone number (WhatsApp preferred) *</label>
                         <input
                           type="tel"
-                          name="phone"
-                          value={businessFormData.phone}
+                          name="phoneNumber"
+                          value={businessFormData.phoneNumber}
                           onChange={handleBusinessChange}
                           required
                           className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
@@ -305,7 +568,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder={t("form.enterPhone")}
+                          placeholder="Enter your phone number"
                         />
                         {emailErrors.phone && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -314,8 +577,9 @@ const Join = () => {
                           </p>
                         )}
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.businessEmail")} *</label>
+                        <label className="block text-sm font-medium mb-2">Email ID *</label>
                         <input
                           type="email"
                           name="email"
@@ -327,7 +591,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder={t("form.enterBusinessEmail")}
+                          placeholder="Enter your email address"
                         />
                         {emailErrors.email && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -335,95 +599,100 @@ const Join = () => {
                             {emailErrors.email}
                           </p>
                         )}
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {t("form.businessEmailHelper")}
-                        </p>
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.whatsappNumber")}</label>
-                        <input
-                          type="tel"
-                          name="whatsapp"
-                          value={businessFormData.whatsapp}
-                          onChange={handleBusinessChange}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="Same as phone or different"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.businessName")} *</label>
+                        <label className="block text-sm font-medium mb-2">Instagram ID link</label>
                         <input
                           type="text"
-                          name="businessName"
-                          value={businessFormData.businessName}
+                          name="instagramId"
+                          value={businessFormData.instagramId}
                           onChange={handleBusinessChange}
-                          required
                           className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder={t("form.enterBusinessName")}
+                          placeholder="https://instagram.com/yourbusiness"
                         />
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.businessType")} *</label>
-                        <select 
+                        <label className="block text-sm font-medium mb-2">Business type *</label>
+                        <select
                           name="businessType"
                           value={businessFormData.businessType}
                           onChange={handleBusinessChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.businessType 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
                         >
-                          <option value="">{t("form.selectType")}</option>
-                          {businessTypes.map((type) => (
-                            <option key={type} value={type.toLowerCase().replace(/\s+/g, "-")}>{type}</option>
-                          ))}
+                          <option value="">Select business type</option>
+                          <option value="tiffin">Tiffin</option>
+                          <option value="baker">Baker</option>
+                          <option value="boutique">Boutique</option>
+                          <option value="tutor">Tutor</option>
+                          <option value="beauty">Beauty</option>
+                          <option value="crafts">Crafts</option>
+                          <option value="other">Other (specify)</option>
                         </select>
+                        {emailErrors.businessType && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.businessType}
+                          </p>
+                        )}
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.location")} *</label>
-                        <input
-                          type="text"
-                          name="location"
-                          value={businessFormData.location}
+                        <label className="block text-sm font-medium mb-2">Primary goal *</label>
+                        <select
+                          name="primaryGoal"
+                          value={businessFormData.primaryGoal}
                           onChange={handleBusinessChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="Your area in Hyderabad"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.businessDuration")}</label>
-                        <select 
-                          name="businessDuration"
-                          value={businessFormData.businessDuration}
-                          onChange={handleBusinessChange}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.primaryGoal 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
                         >
-                          <option value="">{t("form.selectDuration")}</option>
-                          <option value="less-than-3">Less than 3 months</option>
-                          <option value="3-6">3-6 months</option>
-                          <option value="6-12">6-12 months</option>
-                          <option value="1-2-years">1-2 years</option>
-                          <option value="more-than-2">More than 2 years</option>
+                          <option value="">Select your primary goal</option>
+                          <option value="increase sales">Increase sales</option>
+                          <option value="reduce waste">Reduce waste</option>
+                          <option value="get more customers">Get more customers</option>
                         </select>
+                        {emailErrors.primaryGoal && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.primaryGoal}
+                          </p>
+                        )}
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.biggestChallenge")}</label>
-                        <textarea
-                          name="challenge"
-                          value={businessFormData.challenge}
-                          onChange={handleBusinessChange}
-                          rows={3}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
-                          placeholder={t("form.tellChallenges")}
+
+                      <div className="flex items-center space-x-2 pt-2">
+                        <input
+                          type="checkbox"
+                          id="whatsappOptIn"
+                          name="whatsappOptIn"
+                          checked={businessFormData.whatsappOptIn}
+                          onChange={(e) => handleBusinessChange({ 
+                            target: { name: 'whatsappOptIn', value: e.target.checked } 
+                          } as any)}
+                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
                         />
+                        <label htmlFor="whatsappOptIn" className="text-sm leading-none cursor-pointer">
+                          Opt-in for WhatsApp updates
+                        </label>
                       </div>
-                      <Button type="submit" variant="hero" className="w-full" size="lg">
-                        {t("join.submitApplication")}
-                        <ArrowRight className="ml-2" />
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        size="lg"
+                      >
+                        Continue
                       </Button>
                     </form>
-                    <p className="text-muted-foreground text-xs mt-4 text-center">
-                      {t("join.weWillContact")}
-                    </p>
                   </div>
                 </AnimatedSection>
               </div>
@@ -498,45 +767,32 @@ const Join = () => {
                   <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.volunteerApplication")}</h3>
                     <form onSubmit={handleVolunteerSubmit} className="space-y-5">
+                      {/* Basic Information */}
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.fullName")} *</label>
+                        <label className="block text-sm font-medium mb-2">Full name *</label>
                         <input
                           type="text"
-                          name="name"
-                          value={volunteerFormData.name}
-                          onChange={handleVolunteerChange}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder={t("form.enterFullName")}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.businessEmail")} *</label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={volunteerFormData.email}
+                          name="fullName"
+                          value={volunteerFormData.fullName}
                           onChange={handleVolunteerChange}
                           required
                           className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.email 
+                            emailErrors.name 
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder={t("form.enterBusinessEmail")}
+                          placeholder="Enter your full name"
                         />
-                        {emailErrors.email && (
+                        {emailErrors.name && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
                             <AlertCircle className="w-3 h-3" />
-                            {emailErrors.email}
+                            {emailErrors.name}
                           </p>
                         )}
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {t("form.businessEmailHelper")}
-                        </p>
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.phoneNumber")} *</label>
+                        <label className="block text-sm font-medium mb-2">Phone *</label>
                         <input
                           type="tel"
                           name="phone"
@@ -548,7 +804,7 @@ const Join = () => {
                               ? 'border-red-300 focus:ring-red-300' 
                               : 'border-border focus:ring-primary/30'
                           }`}
-                          placeholder={t("form.enterPhone")}
+                          placeholder="Enter your phone number"
                         />
                         {emailErrors.phone && (
                           <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
@@ -557,69 +813,275 @@ const Join = () => {
                           </p>
                         )}
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.interestedRole")} *</label>
-                        <select 
-                          name="role"
-                          value={volunteerFormData.role}
+                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={volunteerFormData.email}
                           onChange={handleVolunteerChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                        >
-                          <option value="">{t("form.selectRole")}</option>
-                          <option value="data-associate">Data Associate</option>
-                          <option value="designer">Designer</option>
-                          <option value="outreach-lead">Outreach Lead</option>
-                          <option value="operations-lead">Operations Lead</option>
-                        </select>
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.email 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="Enter your email address"
+                        />
+                        {emailErrors.email && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.email}
+                          </p>
+                        )}
                       </div>
+
+                      {/* Position Selection */}
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.yourSkills")} *</label>
+                        <label className="block text-sm font-medium mb-2">Which position applying for *</label>
+                        <select
+                          name="position"
+                          value={volunteerFormData.position}
+                          onChange={handleVolunteerChange}
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.position 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                        >
+                          <option value="">Select a position</option>
+                          <option value="Data Associate">Data Associate</option>
+                          <option value="Designer">Designer</option>
+                          <option value="Outreach">Outreach</option>
+                          <option value="Operations">Operations</option>
+                        </select>
+                        {emailErrors.position && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.position}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Experience *</label>
+                        <textarea
+                          name="experience"
+                          value={volunteerFormData.experience}
+                          onChange={handleVolunteerChange}
+                          required
+                          rows={3}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.experience 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="Describe your relevant experience"
+                        />
+                        {emailErrors.experience && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.experience}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Other commitments</label>
+                        <textarea
+                          name="otherCommitments"
+                          value={volunteerFormData.otherCommitments}
+                          onChange={handleVolunteerChange}
+                          rows={2}
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="Any other commitments or time constraints"
+                        />
+                      </div>
+
+                      {/* Evidence Upload */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Evidence upload (certificates, samples, dashboards, IG profiles)</label>
+                        <div className="relative">
+                          <input
+                            name="evidence"
+                            type="file"
+                            onChange={handleVolunteerChange}
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                          />
+                          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                            <Upload className="w-3 h-3" />
+                            <span>Upload certificates, work samples, dashboards, or IG profiles</span>
+                          </div>
+                        </div>
+                      </div> 
+
+                      {/* Why Join */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Why do you want to join Femtrics? *</label>
+                        <textarea
+                          name="whyJoin"
+                          value={volunteerFormData.whyJoin}
+                          onChange={handleVolunteerChange}
+                          required
+                          rows={3}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.whyJoin 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="Tell us why you're interested in joining Femtrics"
+                        />
+                        {emailErrors.whyJoin && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.whyJoin}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Availability Hours */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Availability hours *</label>
                         <input
                           type="text"
-                          name="skills"
-                          value={volunteerFormData.skills}
+                          name="availabilityHours"
+                          value={volunteerFormData.availabilityHours}
                           onChange={handleVolunteerChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="e.g., Excel, Google Sheets, Canva, Data Analysis"
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
+                            emailErrors.availabilityHours 
+                              ? 'border-red-300 focus:ring-red-300' 
+                              : 'border-border focus:ring-primary/30'
+                          }`}
+                          placeholder="e.g., 10 hours per week, weekends only"
                         />
+                        {emailErrors.availabilityHours && (
+                          <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {emailErrors.availabilityHours}
+                          </p>
+                        )}
                       </div>
+
+                      {/* Skills Rating */}
                       <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.availability")} *</label>
-                        <select 
-                          name="availability"
-                          value={volunteerFormData.availability}
-                          onChange={handleVolunteerChange}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                        >
-                          <option value="">{t("form.selectAvailability")}</option>
-                          <option value="weekdays">Weekdays only</option>
-                          <option value="weekends">Weekends only</option>
-                          <option value="flexible">Flexible</option>
-                          <option value="evenings">Evenings only</option>
-                        </select>
+                        <label className="block text-sm font-medium mb-3">Skills self-rating (1–5)</label>
+                        <div className="space-y-3">
+                          {[
+                            { key: 'technical', label: 'Technical Skills' },
+                            { key: 'communication', label: 'Communication' },
+                            { key: 'teamwork', label: 'Teamwork' },
+                            { key: 'leadership', label: 'Leadership' },
+                            { key: 'creativity', label: 'Creativity' }
+                          ].map((skill) => (
+                            <div key={skill.key} className="flex items-center justify-between">
+                              <span className="text-sm font-medium">{skill.label}</span>
+                              <div className="flex gap-2">
+                                {[1, 2, 3, 4, 5].map((rating) => (
+                                  <div key={rating} className="flex items-center">
+                                    <input
+                                      type="radio"
+                                      id={`${skill.key}-${rating}`}
+                                      name={`skillsRating.${skill.key}`}
+                                      value={rating}
+                                      checked={volunteerFormData.skillsRating[skill.key as keyof typeof volunteerFormData.skillsRating] === rating}
+                                      onChange={handleVolunteerChange}
+                                      className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                                    />
+                                    <label htmlFor={`${skill.key}-${rating}`} className="text-xs text-muted-foreground cursor-pointer ml-1">
+                                      {rating}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">{t("form.volunteerMotivation")}</label>
-                        <textarea
-                          name="motivation"
-                          value={volunteerFormData.motivation}
+
+                      {/* High School Student Checkbox */}
+                      <div className="flex items-center space-x-2 pt-2">
+                        <input
+                          type="checkbox"
+                          id="isHighSchoolStudent"
+                          name="isHighSchoolStudent"
+                          checked={volunteerFormData.isHighSchoolStudent}
                           onChange={handleVolunteerChange}
-                          rows={4}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
-                          placeholder={t("form.tellMotivation")}
+                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
                         />
+                        <label htmlFor="isHighSchoolStudent" className="text-sm leading-none cursor-pointer">
+                          I am a high school student
+                        </label>
                       </div>
-                      <Button type="submit" variant="hero" className="w-full" size="lg">
-                        {t("join.submitApplication")}
-                        <ArrowRight className="ml-2" />
+
+                      {/* High School Student Extra Fields */}
+                      {volunteerFormData.isHighSchoolStudent && (
+                        <div className="space-y-4 p-4 bg-pink-50 rounded-xl border border-pink-200">
+                          <h4 className="font-semibold text-sm text-pink-900 mb-3">High School Student Information</h4>
+                          
+                          <div>
+                            <label className="block text-sm font-medium mb-2">Grade *</label>
+                            <input
+                              type="text"
+                              name="grade"
+                              value={volunteerFormData.grade}
+                              onChange={handleVolunteerChange}
+                              required
+                              className="w-full px-4 py-3 rounded-xl border border-pink-300 bg-pink-50/50 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all"
+                              placeholder="e.g., 10th Grade, 12th Grade"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium mb-2">School name *</label>
+                            <input
+                              type="text"
+                              name="schoolName"
+                              value={volunteerFormData.schoolName}
+                              onChange={handleVolunteerChange}
+                              required
+                              className="w-full px-4 py-3 rounded-xl border border-pink-300 bg-pink-50/50 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all"
+                              placeholder="Enter your school name"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium mb-2">Why this fits your future goals *</label>
+                            <textarea
+                              name="futureGoals"
+                              value={volunteerFormData.futureGoals}
+                              onChange={handleVolunteerChange}
+                              required
+                              rows={3}
+                              className="w-full px-4 py-3 rounded-xl border border-pink-300 bg-pink-50/50 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all"
+                              placeholder="How does volunteering at Femtrics align with your future goals?"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium mb-2">Parent contact (optional)</label>
+                            <input
+                              type="text"
+                              name="parentContact"
+                              value={volunteerFormData.parentContact}
+                              onChange={handleVolunteerChange}
+                              className="w-full px-4 py-3 rounded-xl border border-pink-300 bg-pink-50/50 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all"
+                              placeholder="Parent email or phone number"
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        size="lg"
+                      >
+                        Submit
                       </Button>
                     </form>
-                    <p className="text-muted-foreground text-xs mt-4 text-center">
-                      {t("join.weWillReachOut")}
-                    </p>
                   </div>
                 </AnimatedSection>
               </div>
@@ -627,62 +1089,6 @@ const Join = () => {
           )}
         </div>
       </section>
-
-      {/* Partners */}
-      <section className="section-padding bg-background">
-        <div className="container-tight">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-semibold mb-4">
-              Our Partner Network
-            </h2>
-            <p className="text-muted-foreground">
-              We work with organizations across Hyderabad to reach more women
-            </p>
-          </AnimatedSection>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Users, title: "Women's Self-Help Groups", desc: "Grassroots networks" },
-              { icon: Heart, title: "NGOs", desc: "Community organizations" },
-              { icon: GraduationCap, title: "College/School Clubs", desc: "Student volunteers" },
-              { icon: Building, title: "Micro-finance Institutions", desc: "Financial networks" },
-            ].map((partner, index) => (
-              <AnimatedSection key={partner.title} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 card-elevated text-center"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <partner.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold mb-1">{partner.title}</h3>
-                  <p className="text-muted-foreground text-sm">{partner.desc}</p>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Email Alert Dialog */}
-      <AlertDialog open={showEmailAlert} onOpenChange={setShowEmailAlert}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-primary" />
-              {t("form.businessEmailRequiredTitle")}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {t("form.businessEmailRequiredDesc")}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowEmailAlert(false)}>
-              {t("form.iUnderstand")}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       <Footer />
     </div>

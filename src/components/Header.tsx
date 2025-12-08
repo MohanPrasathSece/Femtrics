@@ -42,16 +42,16 @@ export const Header = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full ${
           isScrolled ? "py-1 md:py-2" : "py-2 md:py-3"
         } overflow-hidden`}
       >
-        <div className={`${isScrolled ? "container-tight" : "container-tight"} px-4 sm:px-6`}>
+        <div className={`${isScrolled ? "container-tight" : "container-tight"} px-2 sm:px-4 max-w-full overflow-hidden`}>
           <motion.nav
             layout
-            className={`flex items-center justify-between transition-all duration-500 w-full max-w-full overflow-visible ${
+            className={`flex items-center justify-between transition-all duration-500 w-full overflow-hidden ${
               isScrolled
-                ? "glass-morphism border border-border/30 text-foreground px-2 sm:px-3 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
+                ? "glass-morphism border border-border/30 text-foreground px-1 sm:px-2 py-1.5 shadow-lg backdrop-blur-md md:px-4 md:py-2 md:rounded-2xl md:mx-auto md:max-w-fit rounded-b-2xl md:rounded-b-3xl"
                 : "bg-transparent md:bg-transparent"
             }`}
           >
@@ -64,22 +64,22 @@ export const Header = () => {
                 <img 
                   src={femtricsLogo} 
                   alt="Femtrics Logo" 
-                  className="h-7 w-auto sm:h-8 md:h-10"
+                  className="h-6 w-auto sm:h-7 md:h-10"
                 />
                 {!isScrolled && (
-                  <span className="font-display text-lg sm:text-xl font-semibold text-foreground hidden sm:block">
+                  <span className="font-display text-base sm:text-lg md:text-xl font-semibold text-foreground hidden sm:block">
                     Fem<span className="text-primary">trics</span>
                   </span>
                 )}
               </motion.div>
             </Link>
 
-            {/* Mobile Menu Button - Slightly Left of Logo */}
+            {/* Mobile Menu Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative -ml-12 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
+              className="md:hidden relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors z-[60] flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"

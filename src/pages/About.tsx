@@ -37,68 +37,160 @@ const About = () => {
       <Header />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 hero-bg">
-        <div className="container-tight">
-          <AnimatedSection className="max-w-4xl">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
-              About Femtrics
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
-              <img 
-                src={femtricsLogo} 
-                alt="Femtrics Logo" 
-                className="w-16 h-16 md:w-20 md:h-20"
-              />
-              <span>
-                A Business-Analytics Social Enterprise for{" "}
-                <span className="text-gradient italic">Women</span>
-              </span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Femtrics is a social enterprise that provides affordable, simple, and actionable 
-              business analytics to women micro-entrepreneurs so they can grow revenue, reduce waste, 
-              and make data-driven decisions.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="section-padding bg-background">
-        <div className="container-tight">
+      <section className="pt-32 pb-20 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+        <div className="absolute top-20 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+        
+        <div className="container-tight relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left">
-              <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-                Our Story
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
-                Born from a simple belief
-              </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  We started Femtrics because we saw a gap—women micro-entrepreneurs in Hyderabad 
-                  making critical business decisions based on intuition rather than data.
+            <AnimatedSection direction="left" className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                About Femtrics
+              </div>
+              
+              <div className="space-y-6">
+                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1]">
+                  <span className="block">Business Analytics</span>
+                  <span className="block text-gradient">For Women</span>
+                  <span className="block text-3xl md:text-4xl lg:text-5xl text-muted-foreground font-normal">By Women</span>
+                </h1>
+                
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+                  Empowering women micro-entrepreneurs with affordable, simple, and actionable business analytics to grow revenue, reduce waste, and make confident data-driven decisions.
                 </p>
-                <p>
-                  These women typically don't track expenses properly, don't know which product sells best, 
-                  guess inventory, underprice themselves, and don't understand how Instagram engagement leads to sales.
-                </p>
-                <p>
-                  We believe that data-driven decision making shouldn't be a privilege reserved 
-                  for large corporations. Every woman entrepreneur deserves access to insights 
-                  that can transform her business.
-                </p>
+                
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                    <Target className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">Social Enterprise</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                    <Heart className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">Women-Focused</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                    <BarChart3 className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">Data-Driven</span>
+                  </div>
+                </div>
               </div>
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <img 
-                src={hero2}
-                alt="Women entrepreneurs learning data analytics"
-                className="rounded-3xl shadow-2xl border border-pink-200"
-              />
+              <div className="relative">
+                {/* Main Image */}
+                <motion.div
+                  whileHover={{ scale: 1.02, rotate: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative"
+                >
+                  <img 
+                    src={hero2}
+                    alt="Women entrepreneurs learning data analytics"
+                    className="rounded-3xl shadow-2xl border border-pink-200 w-full"
+                  />
+                  
+                  {/* Floating Cards */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Users className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold">500+ Women</p>
+                        <p className="text-xs text-muted-foreground">Empowered</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                    className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                        <TrendingUp className="w-5 h-5 text-secondary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold">40% Growth</p>
+                        <p className="text-xs text-muted-foreground">Avg. Revenue</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Impact Banner */}
+      <section className="section-padding bg-gradient-to-b from-background to-muted/30">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-12">
+            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
+              Our Impact
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-semibold mb-4">
+              Empowering Women Through Data
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              We're transforming the lives of women micro-entrepreneurs across Hyderabad with data-driven insights and practical business solutions.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.2}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: Users,
+                  title: "500+ Women",
+                  description: "Empowered with business analytics",
+                  color: "bg-primary/10 text-primary"
+                },
+                {
+                  icon: TrendingUp,
+                  title: "40% Growth",
+                  description: "Average revenue increase",
+                  color: "bg-green-100 text-green-700"
+                },
+                {
+                  icon: Target,
+                  title: "6+ Business Types",
+                  description: "From boutiques to tiffin services",
+                  color: "bg-blue-100 text-blue-700"
+                },
+                {
+                  icon: Award,
+                  title: "15+ Workshops",
+                  description: "Training programs conducted",
+                  color: "bg-purple-100 text-purple-700"
+                }
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.title}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg border border-border/50 text-center"
+                >
+                  <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center mx-auto mb-4`}>
+                    <stat.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-display text-xl font-semibold mb-2">{stat.title}</h3>
+                  <p className="text-muted-foreground text-sm">{stat.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -176,6 +268,83 @@ const About = () => {
                         </div>
                       ))}
                     </div>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="section-padding bg-gradient-to-b from-background to-muted/30">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-12">
+            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
+              Meet Our Founder
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+              Founder & Chief Marketing + Analytics Strategist
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+            <AnimatedSection direction="left" delay={0.2}>
+              <div className="relative">
+                {/* Founder Image Container */}
+                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 card-elevated">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="text-center p-8">
+                      <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-4xl font-bold">
+                        F
+                      </div>
+                      <p className="text-muted-foreground">Founder's Photo</p>
+                      <p className="text-sm text-muted-foreground mt-2">Add your image here</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/10 rounded-full blur-2xl" />
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection direction="right" delay={0.4}>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-display text-3xl font-semibold mb-4 text-foreground">
+                    Your Name Here
+                  </h3>
+                  <p className="text-primary text-lg font-medium mb-6">
+                    Founder & Chief Marketing + Analytics Strategist
+                  </p>
+                </div>
+
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    As the founder of Femtrics, I am passionate about empowering women entrepreneurs through the power of data analytics and strategic marketing. With extensive experience in both marketing and analytics, I've dedicated my career to helping small businesses, particularly women-led enterprises, unlock their full potential.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    My journey began with a simple observation: many talented women entrepreneurs struggle with understanding their business data and making data-driven decisions. This insight led to the creation of Femtrics - a platform designed to democratize data analytics and provide accessible insights that drive real business growth.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Through our innovative workshops, personalized consulting, and community-driven approach, we're building a future where every woman entrepreneur has the tools, knowledge, and confidence to transform her business through data. Together, we're not just analyzing numbers - we're changing lives and building sustainable businesses.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-4 pt-6">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary">
+                    <Lightbulb className="w-4 h-4" />
+                    <span className="text-sm font-medium">Data Analytics</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary">
+                    <Target className="w-4 h-4" />
+                    <span className="text-sm font-medium">Marketing Strategy</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent">
+                    <Heart className="w-4 h-4" />
+                    <span className="text-sm font-medium">Women Empowerment</span>
                   </div>
                 </div>
               </div>
