@@ -485,7 +485,7 @@ const Workshops = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl w-full max-w-2xl h-[90vh] sm:h-[85vh] max-h-[90vh] sm:max-h-[85vh] flex flex-col mx-auto shadow-xl"
+                className="bg-white rounded-2xl w-[95%] max-w-lg md:max-w-2xl h-[90vh] sm:h-[85vh] max-h-[90vh] sm:max-h-[85vh] flex flex-col mx-auto shadow-xl"
               >
                 {/* Modal Header */}
                 <div className="p-3 sm:p-4 md:p-6 border-b border-border flex-shrink-0">
