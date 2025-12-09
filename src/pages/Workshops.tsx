@@ -130,12 +130,6 @@ const Workshops = () => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        parseParticipantFile(text, file.name);
-      };
-      reader.readAsText(file);
       setRegistrationData(prev => ({ ...prev, participantFile: file }));
     }
   };
@@ -179,9 +173,9 @@ const Workshops = () => {
         return registrationData.signupType !== '';
       case 2:
         return registrationData.workshop !== '';
-      case 3:
-        return registrationData.date !== '';
       case 4:
+        return registrationData.date !== '';
+      case 5:
         if (registrationData.signupType === 'self') {
           return registrationData.name !== '' && 
                  registrationData.email !== '' && 
@@ -193,7 +187,7 @@ const Workshops = () => {
                  registrationData.name !== '' && 
                  registrationData.email !== '' && 
                  registrationData.phone !== '' &&
-                 registrationData.participants.length >= 20;
+                 registrationData.participantFile;
         }
       default:
         return true;
@@ -763,7 +757,7 @@ const Workshops = () => {
                             <div className="flex items-center justify-between mb-4">
                               <label className="block text-sm font-medium">Participant List (20+ people)</label>
                               <span className="text-xs text-gray-500">
-                                {registrationData.participants.length} participants added
+                                {registrationData.participantFile ? 'File uploaded' : 'No file'}
                               </span>
                             </div>
                             
@@ -857,8 +851,7 @@ const Workshops = () => {
                               <div className="col-span-1 sm:col-span-2">
                                 <p className="text-xs text-gray-600">Participants Uploaded</p>
                                 <p className="font-medium text-sm">
-                                  {registrationData.participants.length} participants registered
-                                  {registrationData.participantFile && ` (${registrationData.participantFile.name})`}
+                                  {registrationData.participantFile ? `File: ${registrationData.participantFile.name}` : 'No file uploaded'}
                                 </p>
                               </div>
                             </>
