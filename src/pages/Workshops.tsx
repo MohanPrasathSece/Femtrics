@@ -547,7 +547,7 @@ const Workshops = () => {
 
                 {/* Modal Content */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden">
-                  <div className="p-3 sm:p-4 md:p-6" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
+                  <div className="p-3 sm:p-4 md:p-6 max-h-[calc(90vh-140px)] sm:max-h-[calc(85vh-140px)]" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
                   {/* Step 1: Who are you signing up? */}
                   {currentStep === 1 && (
                     <div>
@@ -878,11 +878,11 @@ const Workshops = () => {
                 </div>
 
                 {/* Modal Footer */}
-                <div className="p-3 sm:p-4 md:p-6 border-t border-border flex-shrink-0">
-                  <div className="flex flex-col sm:flex-row justify-between gap-4 max-w-full">
+                <div className="p-2 sm:p-3 md:p-4 border-t border-border flex-shrink-0">
+                  <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 max-w-full">
                     <button
                       onClick={() => currentStep > 1 ? setCurrentStep(currentStep - 1) : resetModal()}
-                      className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex-1 sm:flex-none"
+                      className="px-4 py-1.5 sm:px-6 sm:py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex-1 sm:flex-none text-sm"
                     >
                       {currentStep === 1 ? 'Cancel' : 'Back'}
                     </button>
@@ -891,7 +891,7 @@ const Workshops = () => {
                       <button
                         onClick={() => canProceedToNext && setCurrentStep(currentStep + 1)}
                         disabled={!canProceedToNext}
-                        className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-none"
+                        className="px-4 py-1.5 sm:px-6 sm:py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-none text-sm"
                       >
                         Next
                       </button>
@@ -900,7 +900,7 @@ const Workshops = () => {
                         onClick={() => {
                           sendRegistrationEmail(registrationData);
                         }}
-                        className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors flex-1 sm:flex-none"
+                        className="px-4 py-1.5 sm:px-6 sm:py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors flex-1 sm:flex-none text-sm"
                       >
                         Submit Registration
                       </button>
