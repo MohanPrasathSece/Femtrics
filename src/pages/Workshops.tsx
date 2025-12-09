@@ -768,7 +768,7 @@ const Workshops = () => {
                             </div>
                             
                             {/* File Upload Section */}
-                            <div className="mb-3">
+                            <div className="mb-2">
                               <input
                                 type="file"
                                 accept=".xlsx,.xls"
@@ -776,17 +776,19 @@ const Workshops = () => {
                                 className="hidden"
                                 id="file-upload"
                               />
-                              <label
-                                htmlFor="file-upload"
-                                className="inline-block px-2 py-1 text-xs bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer transition-colors"
-                              >
-                                Upload Excel File
-                              </label>
-                              {registrationData.participantFile && (
-                                <p className="text-xs text-green-600 mt-1">
-                                  {registrationData.participantFile.name}
-                                </p>
-                              )}
+                              <div className="flex items-center gap-2">
+                                <label
+                                  htmlFor="file-upload"
+                                  className="inline-block px-2 py-1 text-xs bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer transition-colors"
+                                >
+                                  Upload Excel File
+                                </label>
+                                {registrationData.participantFile && (
+                                  <span className="text-xs text-green-600 truncate max-w-[150px]">
+                                    {registrationData.participantFile.name}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
 
