@@ -32,8 +32,12 @@ export const sendConfirmationEmail = async (req: Request, res: Response) => {
   res.json({ success: true });
 };
 
-export const getEmailLogs = (req: Request, res: Response) => {
-  res.json({ logs: [] });
+export const getEmailLogs = (req?: Request, res?: Response) => {
+  if (res && res.json) {
+    res.json({ logs: [] });
+  } else {
+    return { logs: [] };
+  }
 };
 
 export const clearEmailLogs = (req: Request, res: Response) => {

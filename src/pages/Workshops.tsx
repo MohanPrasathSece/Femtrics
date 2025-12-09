@@ -273,15 +273,15 @@ const Workshops = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
       <Header />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 hero-bg relative overflow-hidden">
-        <div className="absolute top-20 right-0 w-96 h-96 opacity-30">
+      <section className="pt-32 pb-20 hero-bg relative overflow-hidden max-w-[100vw]">
+        <div className="absolute top-20 right-0 w-96 h-96 opacity-30 max-w-[100vw]">
           <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl" />
         </div>
-        <div className="container-tight relative z-10">
+        <div className="container-tight relative z-10 max-w-[100vw] overflow-x-hidden">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection className="max-w-xl">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">

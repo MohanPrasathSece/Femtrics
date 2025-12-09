@@ -619,6 +619,51 @@
   }
 }
 
+/* Global overflow fixes for mobile */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Prevent overflow on all common elements */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container fixes */
+.container, .container-tight, .container-fluid {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Grid and flex fixes */
+.grid, .flex {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Section fixes */
+section {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Card fixes */
+.card, .bg-card {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 /* NGO Scrolling Animation */
 @keyframes scroll {
   0% {
