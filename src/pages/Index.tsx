@@ -91,14 +91,16 @@ const Index = () => {
       <Header />
 
       {/* Landing Hero - Simplified & Clean */}
-      <section className="relative bg-white overflow-hidden pt-28 pb-20 md:pb-32">
+      <section className="relative bg-white overflow-hidden pt-32 pb-32 md:pt-40 md:pb-40 lg:pt-48 lg:pb-48 min-h-[80vh] lg:min-h-[90vh] flex items-center">
         {/* Simple Background Elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-pink-50 rounded-full blur-2xl" />
+          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-rose-50 rounded-full blur-2xl" />
         </div>
         
-        <div className="container-tight relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center">
             {/* Simplified Text Section */}
             <div className="space-y-8">
@@ -113,7 +115,7 @@ const Index = () => {
                 </div>
                 
                 <motion.h1 
-                  className="font-display text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground"
+                  className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-foreground"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
@@ -122,7 +124,7 @@ const Index = () => {
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
