@@ -798,63 +798,63 @@ const Workshops = () => {
                   {/* Step 5: Confirmation */}
                   {currentStep === 5 && (
                     <div>
-                      <h4 className="text-xl font-semibold mb-4">Review & Confirm</h4>
-                      <div className="bg-gray-50 rounded-xl p-6 space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                      <h4 className="text-xl font-semibold mb-3">Review & Confirm</h4>
+                      <div className="bg-gray-50 rounded-xl p-3 sm:p-4 space-y-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                           <div>
-                            <p className="text-sm text-gray-600">Registration Type</p>
-                            <p className="font-medium">
+                            <p className="text-xs text-gray-600">Registration Type</p>
+                            <p className="font-medium text-sm">
                               {registrationData.signupType === 'self' ? 'Self Registration' : 'Group Registration'}
                             </p>
                           </div>
                           <div>
-                            <p className="text-sm text-gray-600">Workshop</p>
-                            <p className="font-medium">{registrationData.workshop}</p>
+                            <p className="text-xs text-gray-600">Workshop</p>
+                            <p className="font-medium text-sm">{registrationData.workshop}</p>
                           </div>
                           <div>
-                            <p className="text-sm text-gray-600">Date</p>
-                            <p className="font-medium">{registrationData.date}</p>
+                            <p className="text-xs text-gray-600">Date</p>
+                            <p className="font-medium text-sm">{registrationData.date}</p>
                           </div>
                           {registrationData.signupType === 'self' ? (
                             <>
                               <div>
-                                <p className="text-sm text-gray-600">Participant Name</p>
-                                <p className="font-medium">{registrationData.name}</p>
+                                <p className="text-xs text-gray-600">Name</p>
+                                <p className="font-medium text-sm">{registrationData.name}</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Email</p>
-                                <p className="font-medium">{registrationData.email}</p>
+                                <p className="text-xs text-gray-600">Email</p>
+                                <p className="font-medium text-sm">{registrationData.email}</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Phone</p>
-                                <p className="font-medium">{registrationData.phone}</p>
+                                <p className="text-xs text-gray-600">Phone</p>
+                                <p className="font-medium text-sm">{registrationData.phone}</p>
                               </div>
                             </>
                           ) : (
                             <>
                               <div>
-                                <p className="text-sm text-gray-600">Group Name</p>
-                                <p className="font-medium">{registrationData.groupName}</p>
+                                <p className="text-xs text-gray-600">Group Name</p>
+                                <p className="font-medium text-sm">{registrationData.groupName}</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Group Size</p>
-                                <p className="font-medium">{registrationData.groupSize} participants</p>
+                                <p className="text-xs text-gray-600">Group Size</p>
+                                <p className="font-medium text-sm">{registrationData.groupSize} participants</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Contact Person</p>
-                                <p className="font-medium">{registrationData.name}</p>
+                                <p className="text-xs text-gray-600">Contact Person</p>
+                                <p className="font-medium text-sm">{registrationData.name}</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Contact Email</p>
-                                <p className="font-medium">{registrationData.email}</p>
+                                <p className="text-xs text-gray-600">Contact Email</p>
+                                <p className="font-medium text-sm">{registrationData.email}</p>
                               </div>
                               <div>
-                                <p className="text-sm text-gray-600">Contact Phone</p>
-                                <p className="font-medium">{registrationData.phone}</p>
+                                <p className="text-xs text-gray-600">Contact Phone</p>
+                                <p className="font-medium text-sm">{registrationData.phone}</p>
                               </div>
-                              <div className="col-span-2">
-                                <p className="text-sm text-gray-600">Participants Uploaded</p>
-                                <p className="font-medium">
+                              <div className="col-span-1 sm:col-span-2">
+                                <p className="text-xs text-gray-600">Participants Uploaded</p>
+                                <p className="font-medium text-sm">
                                   {registrationData.participants.length} participants registered
                                   {registrationData.participantFile && ` (${registrationData.participantFile.name})`}
                                 </p>
@@ -864,8 +864,8 @@ const Workshops = () => {
                         </div>
                       </div>
                       
-                      <div className="mt-6 p-4 bg-pink-50 rounded-lg">
-                        <p className="text-sm text-pink-700">
+                      <div className="mt-4 p-3 bg-pink-50 rounded-lg">
+                        <p className="text-xs text-pink-700">
                           <strong>Important:</strong> {registrationData.signupType === 'self' 
                             ? "You'll receive a confirmation email with workshop details and joining instructions."
                             : "Your group will receive a dedicated workshop session. We'll contact you within 48 hours to schedule the session and coordinate with all participants."
