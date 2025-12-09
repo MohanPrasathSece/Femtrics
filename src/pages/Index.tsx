@@ -113,7 +113,7 @@ const Index = () => {
                 </div>
                 
                 <motion.h1 
-                  className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground"
+                  className="font-display text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
