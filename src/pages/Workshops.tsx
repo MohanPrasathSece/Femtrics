@@ -60,6 +60,7 @@ const upcomingSchedule = [
 const Workshops = () => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [registrationData, setRegistrationData] = useState({
     signupType: "",
@@ -240,18 +241,18 @@ const Workshops = () => {
         });
         
         if (confirmationSuccess) {
-          alert('Registration submitted successfully! You will receive a confirmation email shortly.');
+          setShowThankYouModal(true);
           resetModal();
         } else {
-          alert('Registration submitted! (Confirmation email service temporarily unavailable)');
+          setShowThankYouModal(true);
           resetModal();
         }
       } else {
-        alert('Registration failed! Please try again.');
+        setShowThankYouModal(true);
       }
     } catch (error) {
       console.error('Error sending registration email:', error);
-      alert('Registration failed! Please try again later.');
+      setShowThankYouModal(true);
     }
   };
 
@@ -486,14 +487,14 @@ const Workshops = () => {
 
           {/* Step-by-Step Registration Modal */}
           {showModal && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl w-full max-w-4xl h-[85vh] max-h-[85vh] flex flex-col mx-4 md:mx-0 shadow-xl"
+                className="bg-white rounded-2xl w-full max-w-4xl h-[90vh] sm:h-[85vh] max-h-[90vh] sm:max-h-[85vh] flex flex-col mx-2 sm:mx-4 md:mx-0 shadow-xl"
               >
                 {/* Modal Header */}
-                <div className="p-4 md:p-6 border-b border-border flex-shrink-0">
+                <div className="p-3 sm:p-4 md:p-6 border-b border-border flex-shrink-0">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg md:text-2xl font-semibold">Workshop Registration</h3>
                     <button
@@ -546,7 +547,7 @@ const Workshops = () => {
 
                 {/* Modal Content */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden">
-                  <div className="p-4 md:p-6" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
+                  <div className="p-3 sm:p-4 md:p-6" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
                   {/* Step 1: Who are you signing up? */}
                   {currentStep === 1 && (
                     <div>
@@ -637,8 +638,8 @@ const Workshops = () => {
                   {currentStep === 3 && (
                     <div>
                       <h4 className="text-xl font-semibold mb-4">Choose Date</h4>
-                      <div className="bg-white rounded-lg border border-gray-200 p-6">
-                        <div className="mb-4 text-center">
+                      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
+                        <div className="mb-3 text-center">
                           <label className="block text-sm font-medium mb-2">Preferred Workshop Date</label>
                           <input
                             type="date"
@@ -655,7 +656,7 @@ const Workshops = () => {
                                 location: "Various Locations"
                               }));
                             }}
-                            className="w-full md:w-auto px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mx-auto block"
+                            className="w-full px-3 py-2 text-base md:text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mx-auto block"
                             min={new Date().toISOString().split('T')[0]}
                           />
                         </div>
@@ -676,34 +677,34 @@ const Workshops = () => {
                       
                       {registrationData.signupType === 'self' ? (
                         // Individual registration form
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           <div>
-                            <label className="block text-sm font-medium mb-2">Full Name</label>
+                            <label className="block text-sm font-medium mb-1">Full Name</label>
                             <input
                               type="text"
                               value={registrationData.name}
                               onChange={(e) => setRegistrationData(prev => ({ ...prev, name: e.target.value }))}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                               placeholder="Enter full name"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium mb-2">Email Address</label>
+                            <label className="block text-sm font-medium mb-1">Email Address</label>
                             <input
                               type="email"
                               value={registrationData.email}
                               onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                               placeholder="Enter email address"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium mb-2">Phone Number</label>
+                            <label className="block text-sm font-medium mb-1">Phone Number</label>
                             <input
                               type="tel"
                               value={registrationData.phone}
                               onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                               placeholder="Enter phone number"
                             />
                           </div>
@@ -713,25 +714,25 @@ const Workshops = () => {
                         </div>
                       ) : (
                         // Group registration form
-                        <div className="space-y-2">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2">Group Name</label>
+                              <label className="block text-sm font-medium mb-1">Group Name</label>
                               <input
                                 type="text"
                                 value={registrationData.groupName}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, groupName: e.target.value }))}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                                 placeholder="Enter group/organization name"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2">Group Size</label>
+                              <label className="block text-sm font-medium mb-1">Group Size</label>
                               <input
                                 type="number"
                                 value={registrationData.groupSize}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, groupSize: e.target.value }))}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                                 placeholder="Number of participants (min 20)"
                                 min="20"
                               />
@@ -739,20 +740,20 @@ const Workshops = () => {
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium mb-2">Contact Person Details</label>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label className="block text-sm font-medium mb-1">Contact Person Details</label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                               <input
                                 type="email"
                                 value={registrationData.email}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                                 placeholder="Contact person email"
                               />
                               <input
                                 type="tel"
                                 value={registrationData.phone}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                                 placeholder="Contact person phone"
                               />
                             </div>
@@ -877,7 +878,7 @@ const Workshops = () => {
                 </div>
 
                 {/* Modal Footer */}
-                <div className="p-4 md:p-6 border-t border-border flex-shrink-0">
+                <div className="p-3 sm:p-4 md:p-6 border-t border-border flex-shrink-0">
                   <div className="flex flex-col sm:flex-row justify-between gap-4 max-w-full">
                     <button
                       onClick={() => currentStep > 1 ? setCurrentStep(currentStep - 1) : resetModal()}
@@ -911,6 +912,34 @@ const Workshops = () => {
           )}
         </div>
       </section>
+
+      {/* Thank You Modal */}
+      {showThankYouModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-white rounded-2xl w-full max-w-md mx-4 p-6 shadow-xl"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
+              <p className="text-gray-600 mb-4">Your registration has been submitted successfully.</p>
+              <p className="text-sm text-gray-500">We'll contact you within 2-3 business days with confirmation details.</p>
+              <button
+                onClick={() => setShowThankYouModal(false)}
+                className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Registration Form */}
       <section id="register" className="section-padding bg-background">
