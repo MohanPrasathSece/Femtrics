@@ -859,15 +859,7 @@ const Workshops = () => {
                         </div>
                       </div>
                       
-                      <div className="mt-4 p-3 bg-pink-50 rounded-lg">
-                        <p className="text-xs text-pink-700">
-                          <strong>Important:</strong> {registrationData.signupType === 'self' 
-                            ? "You'll receive a confirmation email with workshop details and joining instructions."
-                            : "Your group will receive a dedicated workshop session. We'll contact you within 48 hours to schedule the session and coordinate with all participants."
-                          }
-                        </p>
-                      </div>
-                    </div>
+                                          </div>
                   )}
                   </div>
                 </div>
