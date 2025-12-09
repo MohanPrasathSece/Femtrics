@@ -173,9 +173,9 @@ const Workshops = () => {
         return registrationData.signupType !== '';
       case 2:
         return registrationData.workshop !== '';
-      case 4:
+      case 3:
         return registrationData.date !== '';
-      case 5:
+      case 4:
         if (registrationData.signupType === 'self') {
           return registrationData.name !== '' && 
                  registrationData.email !== '' && 
@@ -485,7 +485,7 @@ const Workshops = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl w-full max-w-4xl h-[90vh] sm:h-[85vh] max-h-[90vh] sm:max-h-[85vh] flex flex-col mx-2 sm:mx-4 md:mx-0 shadow-xl"
+                className="bg-white rounded-2xl w-full max-w-2xl h-[90vh] sm:h-[85vh] max-h-[90vh] sm:max-h-[85vh] flex flex-col mx-auto shadow-xl"
               >
                 {/* Modal Header */}
                 <div className="p-3 sm:p-4 md:p-6 border-b border-border flex-shrink-0">
@@ -501,7 +501,7 @@ const Workshops = () => {
                   
                   {/* Progress Steps */}
                   <div className="flex items-center justify-between mb-2">
-                    {[1, 2, 3, 4, 5].map((step) => (
+                    {[1, 2, 3, 4].map((step) => (
                       <div key={step} className="flex items-center">
                         <button
                           onClick={() => {
@@ -519,7 +519,7 @@ const Workshops = () => {
                         >
                           {step}
                         </button>
-                        {step < 5 && (
+                        {step < 4 && (
                           <div
                             className={`w-6 md:w-12 h-1 mx-1 md:mx-2 transition-colors ${
                               step < currentStep ? 'bg-pink-500' : 'bg-gray-200'
@@ -535,7 +535,6 @@ const Workshops = () => {
                     <span>Workshop</span>
                     <span>Date</span>
                     <span>Details</span>
-                    <span>Confirm</span>
                   </div>
                 </div>
 
@@ -786,81 +785,11 @@ const Workshops = () => {
                             </div>
                           </div>
 
-                                                  </div>
+                        </div>
                       )}
                     </div>
                   )}
 
-                  {/* Step 5: Confirmation */}
-                  {currentStep === 5 && (
-                    <div>
-                      <h4 className="text-xl font-semibold mb-3">Review & Confirm</h4>
-                      <div className="bg-gray-50 rounded-xl p-3 sm:p-4 space-y-2">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <p className="text-xs text-gray-600">Registration Type</p>
-                            <p className="font-medium text-sm">
-                              {registrationData.signupType === 'self' ? 'Self Registration' : 'Group Registration'}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-600">Workshop</p>
-                            <p className="font-medium text-sm">{registrationData.workshop}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-600">Date</p>
-                            <p className="font-medium text-sm">{registrationData.date}</p>
-                          </div>
-                          {registrationData.signupType === 'self' ? (
-                            <>
-                              <div>
-                                <p className="text-xs text-gray-600">Name</p>
-                                <p className="font-medium text-sm">{registrationData.name}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Email</p>
-                                <p className="font-medium text-sm">{registrationData.email}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Phone</p>
-                                <p className="font-medium text-sm">{registrationData.phone}</p>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div>
-                                <p className="text-xs text-gray-600">Group Name</p>
-                                <p className="font-medium text-sm">{registrationData.groupName}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Group Size</p>
-                                <p className="font-medium text-sm">{registrationData.groupSize} participants</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Contact Person</p>
-                                <p className="font-medium text-sm">{registrationData.name}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Contact Email</p>
-                                <p className="font-medium text-sm">{registrationData.email}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-600">Contact Phone</p>
-                                <p className="font-medium text-sm">{registrationData.phone}</p>
-                              </div>
-                              <div className="col-span-1 sm:col-span-2">
-                                <p className="text-xs text-gray-600">Participants Uploaded</p>
-                                <p className="font-medium text-sm">
-                                  {registrationData.participantFile ? `File: ${registrationData.participantFile.name}` : 'No file uploaded'}
-                                </p>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      
-                                          </div>
-                  )}
                   </div>
                 </div>
 
@@ -874,7 +803,7 @@ const Workshops = () => {
                       {currentStep === 1 ? 'Cancel' : 'Back'}
                     </button>
                     
-                    {currentStep < 5 ? (
+                    {currentStep < 4 ? (
                       <button
                         onClick={() => canProceedToNext && setCurrentStep(currentStep + 1)}
                         disabled={!canProceedToNext}
