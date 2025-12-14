@@ -226,7 +226,7 @@ const Index = () => {
                   >
                     <div className={`w-32 h-32 md:w-36 md:h-36 flex items-center justify-center p-3 rounded-xl shadow-sm border transition-all duration-300 ${
                       ngo.name === "SAFA NGO" 
-                        ? "bg-white border-gray-300 group-hover:shadow-lg" 
+                        ? "bg-gradient-to-br from-gray-900 to-black border-gray-700 group-hover:shadow-lg" 
                         : "bg-white border-gray-100 group-hover:shadow-md"
                     }`}>
                       {ngo.name === "SAFA NGO" ? (
@@ -234,7 +234,7 @@ const Index = () => {
                           <img
                             src={ngo.image}
                             alt={ngo.name}
-                            className="w-full h-full object-contain filter contrast-150"
+                            className="w-full h-full object-contain filter brightness-0 invert contrast-200"
                           />
                         </div>
                       ) : (
