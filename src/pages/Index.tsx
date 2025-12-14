@@ -79,13 +79,13 @@ const products = [
 const Index = () => {
   const { t } = useTranslation();
   const [showMicroConversion, setShowMicroConversion] = useState(false);
-  
+
   const handleMicroConversionSuccess = (data: MicroConversionData) => {
     console.log("Micro-conversion data:", data);
     // Here you would typically send to WhatsApp API or your backend
     // For now, the email service will handle the notification
   };
-  
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
@@ -99,12 +99,12 @@ const Index = () => {
           <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-pink-50 rounded-full blur-2xl" />
           <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-rose-50 rounded-full blur-2xl" />
         </div>
-        
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center">
             {/* Simplified Text Section */}
             <div className="space-y-8">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -113,8 +113,8 @@ const Index = () => {
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
                   {t("hero.tagline")}
                 </div>
-                
-                <motion.h1 
+
+                <motion.h1
                   className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-foreground"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -122,8 +122,8 @@ const Index = () => {
                 >
                   Femtrics: {t("hero.title")}
                 </motion.h1>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -133,7 +133,7 @@ const Index = () => {
                 </motion.p>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="flex flex-col sm:flex-row gap-4 md:gap-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ const Index = () => {
             </div>
 
             {/* Simplified Visual Section */}
-            <motion.div 
+            <motion.div
               className="relative"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -209,15 +209,15 @@ const Index = () => {
 
           <AnimatedSection delay={0.2}>
             <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-border/50">
-              <div className="grid grid-cols-5 gap-6 md:gap-8 items-center justify-items-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
                 {[
-                  { name: "Telangana Mahila Samakhya", initials: "TMS", color: "bg-pink-500" },
-                  { name: "Stree Nidhi Credit Cooperative", initials: "SNC", color: "bg-purple-500" },
-                  { name: "Chaitanya Mahila Sangham", initials: "CMS", color: "bg-blue-500" },
-                  { name: "Rubaroo", initials: "RB", color: "bg-green-500" },
-                  { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500" },
-                  { name: "Kriya Foundation", initials: "KF", color: "bg-red-500" },
-                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500" },
+                  { name: "Telangana Mahila Samakhya", initials: "TMS", color: "bg-pink-500", image: "/ngos/image.png" },
+                  { name: "Stree Nidhi Credit Cooperative", initials: "SNC", color: "bg-purple-500", image: "/ngos/image copy.png" },
+                  { name: "Chaitanya Mahila Sangham", initials: "CMS", color: "bg-blue-500", image: "/ngos/image copy 2.png" },
+                  { name: "Rubaroo", initials: "RB", color: "bg-green-500", image: "/ngos/image copy 3.png" },
+                  { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500", image: "/ngos/image copy 4.png" },
+                  { name: "Kriya Foundation", initials: "KF", color: "bg-red-500", image: "/ngos/image copy 5.png" },
+                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" },
                   { name: "ESAF Small Finance Bank", initials: "ESAF", color: "bg-indigo-500" },
                   { name: "Oakridge International", initials: "OI", color: "bg-cyan-500" },
                   { name: "Chirec International", initials: "CI", color: "bg-emerald-500" }
@@ -225,13 +225,26 @@ const Index = () => {
                   <motion.div
                     key={ngo.name}
                     whileHover={{ scale: 1.05, y: -4 }}
-                    className="text-center group cursor-pointer"
+                    className="text-center group cursor-pointer w-full flex flex-col items-center"
                   >
-                    <div className={`w-16 h-16 md:w-20 md:h-20 ${ngo.color} rounded-xl flex items-center justify-center mx-auto group-hover:shadow-xl transition-all duration-300`}>
-                      <span className="text-white font-bold text-lg md:text-xl">
-                        {ngo.initials}
-                      </span>
-                    </div>
+                    {ngo.image ? (
+                      <div className="w-24 h-24 md:w-28 md:h-28 flex items-center justify-center p-2 bg-white rounded-xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300">
+                        <img
+                          src={ngo.image}
+                          alt={ngo.name}
+                          className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div className={`w-20 h-20 ${ngo.color} rounded-xl flex items-center justify-center mx-auto group-hover:shadow-xl transition-all duration-300`}>
+                        <span className="text-white font-bold text-lg md:text-xl">
+                          {ngo.initials}
+                        </span>
+                      </div>
+                    )}
+                    <p className="mt-3 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      {ngo.name}
+                    </p>
                   </motion.div>
                 ))}
               </div>
@@ -268,9 +281,9 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection direction="left">
               <div className="mb-6">
-                <img 
-                  src={hero2} 
-                  alt="Women entrepreneurs" 
+                <img
+                  src={hero2}
+                  alt="Women entrepreneurs"
                   className="w-full h-auto rounded-2xl shadow-lg mb-6"
                 />
                 <h3 className="font-display text-2xl font-semibold">{t("common.businessTypes")}</h3>
@@ -314,9 +327,9 @@ const Index = () => {
                   );
                 })}
               </div>
-              <img 
-                src={hero3} 
-                alt="Business analytics" 
+              <img
+                src={hero3}
+                alt="Business analytics"
                 className="w-full h-auto rounded-2xl shadow-lg"
               />
               <p className="mt-6 text-lg font-semibold text-primary">
@@ -354,7 +367,7 @@ const Index = () => {
                   className="bg-card rounded-2xl p-8 h-full flex flex-col border border-border hover:shadow-lg card-hover-lift"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <motion.div 
+                    <motion.div
                       whileHover={{ rotate: 10 }}
                       className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"
                     >
@@ -391,7 +404,7 @@ const Index = () => {
         </div>
       </section>
 
-      
+
       {/* Our Reach */}
       <section className="section-padding bg-background">
         <div className="container-tight">
@@ -404,12 +417,12 @@ const Index = () => {
                 Serving Women Across Hyderabad
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                We're expanding our reach across Hyderabad to empower more women entrepreneurs 
+                We're expanding our reach across Hyderabad to empower more women entrepreneurs
                 with data-driven insights.
               </p>
-              <img 
-                src={hero2} 
-                alt="Women entrepreneurs across Hyderabad" 
+              <img
+                src={hero2}
+                alt="Women entrepreneurs across Hyderabad"
                 className="w-full h-auto rounded-2xl shadow-lg mb-8 lg:hidden"
               />
 
@@ -418,8 +431,8 @@ const Index = () => {
                   <h4 className="font-display text-lg font-semibold mb-4 line-decoration">Primary Areas</h4>
                   <ul className="space-y-3">
                     {["Jubilee Hills", "Banjara Hills", "Madhapur", "Kondapur", "Gachibowli", "HITEC City"].map((area) => (
-                      <motion.li 
-                        key={area} 
+                      <motion.li
+                        key={area}
                         whileHover={{ x: 4 }}
                         className="flex items-center gap-2 text-muted-foreground cursor-pointer"
                       >
@@ -433,8 +446,8 @@ const Index = () => {
                   <h4 className="font-display text-lg font-semibold mb-4 line-decoration">Partner Areas</h4>
                   <ul className="space-y-3">
                     {["Old City (via NGOs)", "Secunderabad", "LB Nagar", "Kukatpally"].map((area) => (
-                      <motion.li 
-                        key={area} 
+                      <motion.li
+                        key={area}
                         whileHover={{ x: 4 }}
                         className="flex items-center gap-2 text-muted-foreground cursor-pointer"
                       >
@@ -456,7 +469,7 @@ const Index = () => {
 
             <AnimatedSection direction="right" delay={0.2}>
               <div className="relative">
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="aspect-square rounded-3xl bg-card p-8 flex items-center justify-center border border-border"
                 >
@@ -475,7 +488,7 @@ const Index = () => {
         </div>
       </section>
 
-      
+
       {/* Goals / Impact Metrics */}
       <section className="section-padding bg-background">
         <div className="container-tight">
