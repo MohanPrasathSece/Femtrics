@@ -217,7 +217,9 @@ const Index = () => {
                   { name: "Rubaroo", initials: "RB", color: "bg-green-500", image: "/ngos/image copy 3.png" },
                   { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500", image: "/ngos/image copy 4.png" },
                   { name: "Kriya Foundation", initials: "KF", color: "bg-red-500", image: "/ngos/image copy 5.png" },
-                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" }
+                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" },
+                  { name: "New NGO Partner 1", initials: "NN1", color: "bg-indigo-500", image: "/ngos/image copy 7.png" },
+                  { name: "New NGO Partner 2", initials: "NN2", color: "bg-yellow-500", image: "/ngos/new.png" }
                 ].map((ngo, index) => (
                   <motion.div
                     key={ngo.name}
@@ -252,7 +254,7 @@ const Index = () => {
               <div className="mt-12 text-center">
                 <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
                   <Shield className="w-5 h-5" />
-                  <span>7 NGO Partners Across Hyderabad</span>
+                  <span>9 NGO Partners Across Hyderabad</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
