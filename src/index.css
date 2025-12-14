@@ -680,3 +680,9 @@ section {
 .animate-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Founder image rounded override */
+.founder-image-circular {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}

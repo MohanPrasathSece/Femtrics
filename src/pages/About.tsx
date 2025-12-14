@@ -319,16 +319,12 @@ const About = () => {
             <AnimatedSection direction="left" delay={0.2}>
               <div className="relative">
                 {/* Founder Image Container */}
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 card-elevated">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-4xl font-bold">
-                        F
-                      </div>
-                      <p className="text-muted-foreground">Founder's Photo</p>
-                      <p className="text-sm text-muted-foreground mt-2">Add your image here</p>
-                    </div>
-                  </div>
+                <div className="relative w-full max-w-md mx-auto">
+                  <img
+                    src="/founder.jpg"
+                    alt="Harshini Kalakuntla - Founder of Femtrics"
+                    className="w-full h-auto founder-image-circular shadow-2xl"
+                  />
                 </div>
 
                 {/* Decorative Elements */}
@@ -341,7 +337,7 @@ const About = () => {
               <div className="space-y-6">
                 <div>
                   <h3 className="font-display text-3xl font-semibold mb-4 text-foreground">
-                    Your Name Here
+                    Harshini Kalakuntla
                   </h3>
                   <p className="text-primary text-lg font-medium mb-6">
                     Founder & Chief Marketing + Analytics Strategist
@@ -356,7 +352,7 @@ const About = () => {
                     My journey started with a simple but powerful realization: many talented women entrepreneurs have access to data, yet feel overwhelmed by it or unsure how to turn numbers into meaningful action. This gap between information and understanding inspired the creation of Femtrics — a platform built to make data approachable, human, and genuinely useful.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Through workshops, simplified analytics frameworks, and hands-on marketing guidance, Femtrics focuses on breaking down complex concepts into clear, actionable insights. At its heart, Femtrics is more than analytics — it is about confidence, clarity, and belief. I envision a future where every woman entrepreneur, regardless of background or experience, has the tools and knowledge to trust her decisions and grow sustainably. Together, we’re not just learning how to read data — we’re helping women see their potential, make empowered choices, and build businesses that reflect their passion and purpose.
+                    Through workshops, simplified analytics frameworks, and hands-on marketing guidance, Femtrics focuses on breaking down complex concepts into clear, actionable insights. At its heart, Femtrics is more than analytics — it is about confidence, clarity, and belief. I envision a future where every woman entrepreneur, regardless of background or experience, has the tools and knowledge to trust her decisions and grow sustainably. Together, we're not just learning how to read data — we're helping women see their potential, make empowered choices, and build businesses that reflect their passion and purpose.
                   </p>
                 </div>
 
