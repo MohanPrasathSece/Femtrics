@@ -392,3 +392,69 @@ export const createJoinEmail = (formData: any) => {
     from: formData.email
   };
 };
+
+export const createPartnerEmail = (formData: any) => {
+  const emailContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+      <div style="background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 30px; text-align: center; color: white;">
+        <h1 style="margin: 0; font-size: 32px;">New Partner Application</h1>
+        <p style="margin: 10px 0 0; opacity: 0.9;">Femtrics Partnership Preliminary Questionnaire</p>
+      </div>
+      
+      <div style="background: #f9fafb; padding: 40px;">
+        <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <h2 style="color: #1f2937; border-bottom: 2px solid #ec4899; padding-bottom: 10px;">
+            Organization Details
+          </h2>
+          
+          <div style="margin-top: 20px;">
+            <div style="margin-bottom: 20px;">
+              <h3 style="color: #4b5563; margin: 0 0 5px;">Organization Name</h3>
+              <p style="color: #1f2937; font-weight: bold; margin: 0;">${formData.orgName}</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="color: #4b5563; margin: 0 0 5px;">Email Address</h3>
+              <p style="color: #1f2937; margin: 0;">${formData.email}</p>
+            </div>
+
+            <h3 style="color: #1f2937; margin-top: 30px; margin-bottom: 15px; text-decoration: underline;">Questionnaire Responses</h3>
+
+            <div style="margin-bottom: 15px;">
+              <p style="color: #4b5563; margin: 0 0 5px;"><strong>Is your organization a non-governmental organization (NGO)?</strong></p>
+              <p style="color: #1f2937; margin: 0;">${formData.isNGO === 'yes' ? '✅ Yes' : '❌ No'}</p>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="color: #4b5563; margin: 0 0 5px;"><strong>Does your organization have a focus on serving urgent humanitarian needs?</strong></p>
+              <p style="color: #6b7280; font-size: 12px; margin: 0 0 5px;">(i.e. those arising from natural and climate-related disasters, conflicts, complex crises, and/or health emergencies)</p>
+              <p style="color: #1f2937; margin: 0;">${formData.isHumanitarian === 'yes' ? '✅ Yes' : '❌ No'}</p>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="color: #4b5563; margin: 0 0 5px;"><strong>Do you need support from Femtrics?</strong></p>
+              <p style="color: #1f2937; margin: 0;">${formData.needsSupport === 'yes' ? '✅ Yes' : '❌ No'}</p>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="color: #4b5563; margin: 0 0 5px;"><strong>Does your organization have at least 2 years of operational experience?</strong></p>
+              <p style="color: #1f2937; margin: 0;">${formData.hasExperience === 'yes' ? '✅ Yes' : '❌ No'}</p>
+            </div>
+            
+             <div style="margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+              <h3 style="color: #4b5563; margin: 0 0 5px;">Submitted On</h3>
+              <p style="color: #1f2937; margin: 0;">${new Date().toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return {
+    to: 'harshinik290@gmail.com',
+    subject: `Partner Application - ${formData.orgName}`,
+    message: emailContent,
+    from: formData.email
+  };
+};

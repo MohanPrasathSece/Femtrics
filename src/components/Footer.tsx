@@ -159,7 +159,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/join" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="/join?tab=partner" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     Partner With Us
                   </a>
                 </li>

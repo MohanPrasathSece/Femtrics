@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Users, Briefcase, Heart, Building, GraduationCap, BarChart3, Palette, Megaphone, Settings, AlertCircle, Upload, Star } from "lucide-react";
 import { Header } from "@/components/Header";
@@ -6,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/TranslationContext";
-import { sendEmailWithGmailSMTP, sendConfirmationEmail, createJoinEmail } from "@/utils/emailService";
+import { sendEmailWithGmailSMTP, sendConfirmationEmail, createJoinEmail, createPartnerEmail } from "@/utils/emailService";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,10 +59,31 @@ const volunteerRoles = [
 ];
 
 const Join = () => {
-  const [activeTab, setActiveTab] = useState<"business" | "volunteer">("business");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState<"business" | "volunteer" | "partner">("business");
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab === "partner") {
+      setActiveTab("partner");
+    } else if (tab === "volunteer") {
+      setActiveTab("volunteer");
+    }
+  }, [location.search]);
   const { t } = useTranslation();
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [volunteerSubmitStatus, setVolunteerSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [partnerSubmitStatus, setPartnerSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [partnerFormData, setPartnerFormData] = useState({
+    orgName: '',
+    email: '',
+    isNGO: '',
+    isHumanitarian: '',
+    needsSupport: '',
+    hasExperience: '',
+    phone: '' // Kept for contact
+  });
   const [businessFormData, setBusinessFormData] = useState({
     fullName: '',
     businessName: '',
@@ -383,6 +405,78 @@ const Join = () => {
     }
   };
 
+  const handlePartnerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setPartnerFormData({
+      ...partnerFormData,
+      [name]: value
+    });
+    if (emailErrors[name as keyof typeof emailErrors]) {
+      setEmailErrors({
+        ...emailErrors,
+        [name]: undefined
+      });
+    }
+  };
+
+  const handlePartnerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic validation
+    const newErrors: typeof emailErrors = {};
+
+    if (!partnerFormData.orgName.trim()) newErrors.name = 'Organization name is required';
+    if (!partnerFormData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(partnerFormData.email)) newErrors.email = 'Invalid email';
+    if (!partnerFormData.isNGO) newErrors.businessType = 'Please answer if you are an NGO';
+    if (!partnerFormData.isHumanitarian) newErrors.primaryGoal = 'Please answer the humanitarian focus question';
+    if (!partnerFormData.needsSupport) newErrors.experience = 'Please answer the support question';
+    if (!partnerFormData.hasExperience) newErrors.availabilityHours = 'Please answer the experience question';
+
+    if (Object.keys(newErrors).length > 0) {
+      setEmailErrors(newErrors);
+      return;
+    }
+
+    try {
+      const emailData = createPartnerEmail(partnerFormData);
+      const success = await sendEmailWithGmailSMTP(emailData);
+
+      if (success) {
+        await sendConfirmationEmail({
+          name: partnerFormData.orgName,
+          email: partnerFormData.email,
+          formType: 'Partnership Preliminary Application',
+          customMessage: `
+            <p style="color: #374151; margin: 0 0 15px;">
+              Thank you for your interest! This brief questionnaire helps the Femtrics team understand whether your organization leads core partnership criteria.
+            </p>
+            <p style="color: #374151; margin: 15px 0 0;">
+              If your organization fits our mandate, you will receive a link to our full partnership application within 3-5 business days.
+            </p>
+          `
+        });
+
+        setPartnerSubmitStatus('success');
+        setShowEmailAlert(true);
+        setPartnerFormData({
+          orgName: '',
+          email: '',
+          isNGO: '',
+          isHumanitarian: '',
+          needsSupport: '',
+          hasExperience: '',
+          phone: ''
+        });
+      } else {
+        setPartnerSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting partner form:', error);
+      setPartnerSubmitStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
@@ -432,6 +526,18 @@ const Join = () => {
                   <span className="flex items-center gap-2">
                     <Heart className="w-5 h-5" />
                     {t("join.volunteerTab")}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveTab("partner")}
+                  className={`px-8 py-4 rounded-xl text-sm font-medium transition-all duration-300 ${activeTab === "partner"
+                    ? "bg-card shadow-lg text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Building className="w-5 h-5" />
+                    Partner With Us
                   </span>
                 </button>
               </div>
@@ -1065,6 +1171,182 @@ const Join = () => {
                       >
                         Submit
                       </Button>
+                    </form>
+                  </div>
+                </AnimatedSection>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Partner Application */}
+          {activeTab === "partner" && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="grid lg:grid-cols-2 gap-12">
+                <AnimatedSection direction="left">
+                  <h2 className="font-display text-3xl md:text-4xl font-semibold mb-6">
+                    Partner With Femtrics
+                  </h2>
+                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                    Collaborate with us to create sustainable impact. We work with NGOs, educational institutions, government bodies, and corporations to empower women entrepreneurs through data and design.
+                  </p>
+
+                  <div className="space-y-6 mb-8">
+                    <p className="font-medium text-lg">Why Partner With Us?</p>
+                    {[
+                      "Data-Driven Impact: Measure and visualize real outcomes.",
+                      "Grassroots Reach: Direct access to micro-entrepreneurs.",
+                      "Scalable Solutions: Technology-led interventions.",
+                      "Custom Workshops: Tailored training programs."
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div className="mt-1 bg-primary/10 p-1 rounded-full">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </AnimatedSection>
+
+                <AnimatedSection direction="right" delay={0.2}>
+                  <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl p-8 card-elevated">
+                    <h3 className="font-display text-2xl font-semibold mb-6">Partnership Inquiry</h3>
+                    <form onSubmit={handlePartnerSubmit} className="space-y-5">
+                      {partnerSubmitStatus === 'error' && (
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                          <div className="flex items-center gap-2 text-red-700">
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <span className="font-medium">Failed to submit inquiry. Please try again.</span>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Organization Name *</label>
+                          <input
+                            type="text"
+                            name="organizationName"
+                            value={partnerFormData.organizationName}
+                            onChange={handlePartnerChange}
+                            required
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                            placeholder="Org Name"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Contact Person *</label>
+                          <input
+                            type="text"
+                            name="contactName"
+                            value={partnerFormData.contactName}
+                            onChange={handlePartnerChange}
+                            required
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                            placeholder="Full Name"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={partnerFormData.email}
+                          onChange={handlePartnerChange}
+                          required
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="official@organization.org"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Phone *</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={partnerFormData.phone}
+                          onChange={handlePartnerChange}
+                          required
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="+91..."
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Website</label>
+                        <input
+                          type="url"
+                          name="website"
+                          value={partnerFormData.website}
+                          onChange={handlePartnerChange}
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="https://..."
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Org Type</label>
+                          <select
+                            name="orgType"
+                            value={partnerFormData.orgType}
+                            onChange={handlePartnerChange}
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          >
+                            <option value="">Select Type</option>
+                            <option value="NGO">NGO</option>
+                            <option value="Non-Profit">Non-Profit</option>
+                            <option value="Corporate">Corporate / CSR</option>
+                            <option value="Educational">Educational Inst.</option>
+                            <option value="Government">Government</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Focus Area</label>
+                          <select
+                            name="focusArea"
+                            value={partnerFormData.focusArea}
+                            onChange={handlePartnerChange}
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          >
+                            <option value="">Select Focus</option>
+                            <option value="Women Empowerment">Women Empowerment</option>
+                            <option value="Skill Development">Skill Development</option>
+                            <option value="Education">Education</option>
+                            <option value="Livelihoods">Livelihoods</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Message / Proposal</label>
+                        <textarea
+                          name="message"
+                          value={partnerFormData.message}
+                          onChange={handlePartnerChange}
+                          rows={3}
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="How would you like to partner with us?"
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        className="w-full bg-slate-800 hover:bg-slate-700"
+                        size="lg"
+                      >
+                        Submit Inquiry
+                      </Button>
+
                     </form>
                   </div>
                 </AnimatedSection>
