@@ -1078,7 +1078,7 @@ const Join = () => {
 
       {/* Success Alert */}
       <AlertDialog open={showEmailAlert} onOpenChange={setShowEmailAlert}>
-        <AlertDialogContent>
+        <AlertDialogContent className="!max-w-[425px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-green-600" />

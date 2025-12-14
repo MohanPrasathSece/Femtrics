@@ -321,8 +321,8 @@ export const Contact = () => {
                       onChange={handleChange}
                       required
                       className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.phone
-                          ? 'border-red-300 focus:ring-red-300'
-                          : 'border-border focus:ring-primary/30'
+                        ? 'border-red-300 focus:ring-red-300'
+                        : 'border-border focus:ring-primary/30'
                         }`}
                       placeholder={t("form.enterPhone")}
                     />
@@ -342,8 +342,8 @@ export const Contact = () => {
                       onChange={handleChange}
                       required
                       className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.email
-                          ? 'border-red-300 focus:ring-red-300'
-                          : 'border-border focus:ring-primary/30'
+                        ? 'border-red-300 focus:ring-red-300'
+                        : 'border-border focus:ring-primary/30'
                         }`}
                       placeholder="your@business.com"
                     />
@@ -403,7 +403,7 @@ export const Contact = () => {
 
       {/* Email Alert Dialog */}
       <AlertDialog open={showEmailAlert} onOpenChange={setShowEmailAlert}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-primary" />
@@ -460,7 +460,7 @@ export const Contact = () => {
       {/* Thank You Modal */}
       <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
         <DialogContent
-          className="sm:max-w-2xl max-h-[80vh] overflow-y-auto transition-all duration-500 ease-out"
+          className="sm:max-w-2xl !max-w-[500px] max-h-[80vh] overflow-y-auto transition-all duration-500 ease-out"
           style={{
             animation: 'modalFadeIn 0.3s ease-out'
           }}
