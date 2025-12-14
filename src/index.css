@@ -642,7 +642,6 @@ img, video, svg {
 
 /* Container fixes */
 .container, .container-tight, .container-fluid {
-  max-width: 100vw;
   overflow-x: hidden;
 }
 
