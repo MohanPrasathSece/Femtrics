@@ -81,8 +81,7 @@ const Join = () => {
     isNGO: '',
     isHumanitarian: '',
     needsSupport: '',
-    hasExperience: '',
-    phone: '' // Kept for contact
+    hasExperience: ''
   });
   const [businessFormData, setBusinessFormData] = useState({
     fullName: '',
@@ -465,8 +464,7 @@ const Join = () => {
           isNGO: '',
           isHumanitarian: '',
           needsSupport: '',
-          hasExperience: '',
-          phone: ''
+          hasExperience: ''
         });
       } else {
         setPartnerSubmitStatus('error');
@@ -1213,9 +1211,12 @@ const Join = () => {
                 </AnimatedSection>
 
                 <AnimatedSection direction="right" delay={0.2}>
-                  <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl p-8 card-elevated">
-                    <h3 className="font-display text-2xl font-semibold mb-6">Partnership Inquiry</h3>
-                    <form onSubmit={handlePartnerSubmit} className="space-y-5">
+                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
+                    <h3 className="font-display text-2xl font-semibold mb-6">Preliminary Application Questions</h3>
+                    <p className="text-sm text-muted-foreground mb-6">
+                      Thank you for your interest! This brief questionnaire helps the Femtrics team understand whether your organization meets core partnership criteria. If your organization fits our mandate, you will receive a link to our full partnership application.
+                    </p>
+                    <form onSubmit={handlePartnerSubmit} className="space-y-6">
                       {partnerSubmitStatus === 'error' && (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                           <div className="flex items-center gap-2 text-red-700">
@@ -1225,126 +1226,89 @@ const Join = () => {
                         </div>
                       )}
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">Organization Name *</label>
-                          <input
-                            type="text"
-                            name="organizationName"
-                            value={partnerFormData.organizationName}
-                            onChange={handlePartnerChange}
-                            required
-                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                            placeholder="Org Name"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">Contact Person *</label>
-                          <input
-                            type="text"
-                            name="contactName"
-                            value={partnerFormData.contactName}
-                            onChange={handlePartnerChange}
-                            required
-                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                            placeholder="Full Name"
-                          />
-                        </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">What is your organization's legally registered name? *</label>
+                        <input
+                          type="text"
+                          name="orgName"
+                          value={partnerFormData.orgName}
+                          onChange={handlePartnerChange}
+                          required
+                          maxLength={255}
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="Your answer"
+                        />
+                        <p className="text-xs text-muted-foreground mt-1 text-right">{partnerFormData.orgName.length}/255</p>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <label className="block text-sm font-medium mb-2">What's your email address? *</label>
                         <input
                           type="email"
                           name="email"
                           value={partnerFormData.email}
                           onChange={handlePartnerChange}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="official@organization.org"
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                          placeholder="Your answer"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Phone *</label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={partnerFormData.phone}
-                          onChange={handlePartnerChange}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="+91..."
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Website</label>
-                        <input
-                          type="url"
-                          name="website"
-                          value={partnerFormData.website}
-                          onChange={handlePartnerChange}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="https://..."
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">Org Type</label>
-                          <select
-                            name="orgType"
-                            value={partnerFormData.orgType}
-                            onChange={handlePartnerChange}
-                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          >
-                            <option value="">Select Type</option>
-                            <option value="NGO">NGO</option>
-                            <option value="Non-Profit">Non-Profit</option>
-                            <option value="Corporate">Corporate / CSR</option>
-                            <option value="Educational">Educational Inst.</option>
-                            <option value="Government">Government</option>
-                            <option value="Other">Other</option>
-                          </select>
+                      {[
+                        {
+                          key: 'isNGO',
+                          question: "Is your organization a non-governmental organization (NGO)? *"
+                        },
+                        {
+                          key: 'isHumanitarian',
+                          question: "Does your organization have a focus on serving urgent humanitarian needs? *",
+                          desc: "i.e. those arising from natural and climate-related disasters, conflicts, complex crises, and/or health emergencies (disease outbreaks, epidemics, pandemics)"
+                        },
+                        {
+                          key: 'needsSupport',
+                          question: "Do you need support from Femtrics for your programs? *"
+                        },
+                        {
+                          key: 'hasExperience',
+                          question: "Does your organization have at least 2 years of operational experience? *"
+                        }
+                      ].map((item) => (
+                        <div key={item.key}>
+                          <label className="block text-sm font-medium mb-2">{item.question}</label>
+                          {item.desc && <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{item.desc}</p>}
+                          <div className="space-y-2">
+                            <label className="flex items-center gap-3 p-3 rounded-lg border border-border bg-background cursor-pointer hover:bg-secondary/30 transition-colors">
+                              <input
+                                type="radio"
+                                name={item.key}
+                                value="no"
+                                checked={partnerFormData[item.key as keyof typeof partnerFormData] === 'no'}
+                                onChange={handlePartnerChange}
+                                className="w-4 h-4 text-primary focus:ring-primary"
+                              />
+                              <span className="text-sm">No</span>
+                            </label>
+                            <label className="flex items-center gap-3 p-3 rounded-lg border border-border bg-background cursor-pointer hover:bg-secondary/30 transition-colors">
+                              <input
+                                type="radio"
+                                name={item.key}
+                                value="yes"
+                                checked={partnerFormData[item.key as keyof typeof partnerFormData] === 'yes'}
+                                onChange={handlePartnerChange}
+                                className="w-4 h-4 text-primary focus:ring-primary"
+                              />
+                              <span className="text-sm">Yes</span>
+                            </label>
+                          </div>
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">Focus Area</label>
-                          <select
-                            name="focusArea"
-                            value={partnerFormData.focusArea}
-                            onChange={handlePartnerChange}
-                            className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          >
-                            <option value="">Select Focus</option>
-                            <option value="Women Empowerment">Women Empowerment</option>
-                            <option value="Skill Development">Skill Development</option>
-                            <option value="Education">Education</option>
-                            <option value="Livelihoods">Livelihoods</option>
-                            <option value="Technology">Technology</option>
-                            <option value="Other">Other</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Message / Proposal</label>
-                        <textarea
-                          name="message"
-                          value={partnerFormData.message}
-                          onChange={handlePartnerChange}
-                          rows={3}
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                          placeholder="How would you like to partner with us?"
-                        />
-                      </div>
+                      ))}
 
                       <Button
                         type="submit"
-                        className="w-full bg-slate-800 hover:bg-slate-700"
+                        className="w-full"
                         size="lg"
                       >
-                        Submit Inquiry
+                        Submit
                       </Button>
 
                     </form>
