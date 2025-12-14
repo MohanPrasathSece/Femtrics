@@ -218,8 +218,8 @@ const Index = () => {
                   { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500", image: "/ngos/image copy 4.png" },
                   { name: "Kriya Foundation", initials: "KF", color: "bg-red-500", image: "/ngos/image copy 5.png" },
                   { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" },
-                  { name: "New NGO Partner 1", initials: "NN1", color: "bg-indigo-500", image: "/ngos/image copy 7.png" },
-                  { name: "New NGO Partner 2", initials: "NN2", color: "bg-yellow-500", image: "/ngos/new.png" }
+                  { name: "Women's Development Network", initials: "WDN", color: "bg-indigo-500", image: "/ngos/image copy 7.png" },
+                  { name: "Self Help Group Initiative", initials: "SHG", color: "bg-yellow-500", image: "/ngos/new.png" }
                 ].map((ngo, index) => (
                   <motion.div
                     key={ngo.name}
