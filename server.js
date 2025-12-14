@@ -30,10 +30,10 @@ const transporter = nodemailer.createTransporter({
 app.post('/api/send-email', upload.single('file'), async (req, res) => {
   try {
     const { to, subject, message, from, cc, bcc, attachments } = req.body;
-    
+
     // Parse attachments if provided
     let emailAttachments = [];
-    
+
     // Handle uploaded file
     if (req.file) {
       emailAttachments.push({
@@ -42,7 +42,7 @@ app.post('/api/send-email', upload.single('file'), async (req, res) => {
         contentType: req.file.mimetype
       });
     }
-    
+
     // Handle additional attachments from form data
     if (attachments) {
       try {
@@ -59,24 +59,24 @@ app.post('/api/send-email', upload.single('file'), async (req, res) => {
       cc: cc || undefined,
       bcc: bcc || undefined,
       subject: subject,
-      html: message.replace(/\n/g, '<br>'),
+      html: message,
       attachments: emailAttachments.length > 0 ? emailAttachments : undefined
     };
 
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', info.messageId);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       messageId: info.messageId,
-      message: 'Email sent successfully' 
+      message: 'Email sent successfully'
     });
 
   } catch (error) {
     console.error('Error sending email:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      error: error.message
     });
   }
 });
@@ -90,31 +90,31 @@ app.post('/api/send-confirmation', async (req, res) => {
       from: from || process.env.EMAIL_USER,
       to: to,
       subject: subject,
-      html: message.replace(/\n/g, '<br>')
+      html: message
     };
 
     const info = await transporter.sendMail(mailOptions);
     console.log('Confirmation email sent:', info.messageId);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       messageId: info.messageId,
-      message: 'Confirmation email sent successfully' 
+      message: 'Confirmation email sent successfully'
     });
 
   } catch (error) {
     console.error('Error sending confirmation email:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      error: error.message
     });
   }
 });
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
     emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS)
   });
@@ -140,18 +140,18 @@ app.post('/api/test-email', async (req, res) => {
 
     const info = await transporter.sendMail(testMailOptions);
     console.log('Test email sent:', info.messageId);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       messageId: info.messageId,
-      message: 'Test email sent successfully' 
+      message: 'Test email sent successfully'
     });
 
   } catch (error) {
     console.error('Error sending test email:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      error: error.message
     });
   }
 });
