@@ -34,7 +34,7 @@ const Dashboard = () => {
       <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection>
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.01 }}
               className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-6 md:p-8 card-hover-glow border border-pink-200"
             >
@@ -82,7 +82,7 @@ const Dashboard = () => {
               {/* Charts Grid */}
               <div className="grid lg:grid-cols-2 gap-6 mb-8">
                 {/* Revenue Chart Placeholder */}
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="bg-background rounded-xl p-6"
                 >
@@ -110,7 +110,7 @@ const Dashboard = () => {
                 </motion.div>
 
                 {/* Category Breakdown */}
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="bg-background rounded-xl p-6"
                 >
@@ -125,7 +125,7 @@ const Dashboard = () => {
                       { name: "Accessories", value: 18, color: "bg-primary/50" },
                       { name: "Others", value: 12, color: "bg-primary/30" },
                     ].map((category) => (
-                      <motion.div 
+                      <motion.div
                         key={category.name}
                         whileHover={{ x: 4 }}
                         className="cursor-pointer"
@@ -149,12 +149,12 @@ const Dashboard = () => {
               </div>
 
               {/* Insights Section */}
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.01 }}
                 className="bg-gradient-to-r from-primary/10 to-transparent rounded-xl p-6"
               >
                 <div className="flex items-start gap-4">
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 10 }}
                     className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0"
                   >
@@ -172,6 +172,76 @@ const Dashboard = () => {
               </motion.div>
             </motion.div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Product Samples */}
+      <section className="section-padding bg-background/50">
+        <div className="container-tight">
+          <AnimatedSection className="text-center mb-16">
+            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
+              Our Products
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              Tools That Drive Growth
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Explore our suite of analytics products designed specifically for micro-entrepreneurs.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "MicroBiz Insight Dashboard",
+                tag: "Product A",
+                desc: "Complete business health at a glance. Track revenue, customers, and best-selling items.",
+                icon: PieChart,
+                features: ["Daily/Weekly Revenue", "Customer Retention", "Best Sellers"]
+              },
+              {
+                title: "Demand Forecasting Model",
+                tag: "Product B",
+                desc: "AI-powered predictions to help you plan inventory and reduce waste.",
+                icon: LineChart,
+                features: ["3-Month Prediction", "Trend Analysis", "Inventory Planning"]
+              },
+              {
+                title: "Instagram Growth Analyzer",
+                tag: "Product C",
+                desc: "Optimize your social media strategy to convert followers into customers.",
+                icon: Target,
+                features: ["Engagement Tracking", "ROI Analysis", "Content Strategy"]
+              }
+            ].map((product, index) => (
+              <AnimatedSection key={product.title} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="bg-card rounded-2xl p-6 h-full flex flex-col border border-border shadow-lg"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <product.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <span className="text-xs font-bold text-primary px-2 py-1 bg-primary/10 rounded-full">
+                      {product.tag}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-xl font-semibold mb-2">{product.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-4 flex-grow">{product.desc}</p>
+                  <div className="pt-4 border-t border-border">
+                    <ul className="space-y-2">
+                      {product.features.map(f => (
+                        <li key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="w-1 h-1 rounded-full bg-primary" /> {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -201,7 +271,7 @@ const Dashboard = () => {
                   whileHover={{ y: -8, scale: 1.02 }}
                   className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 card-hover-glow h-full border border-pink-200 gradient-border"
                 >
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 10, scale: 1.1 }}
                     className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4"
                   >

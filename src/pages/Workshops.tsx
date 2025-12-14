@@ -79,13 +79,13 @@ const Workshops = () => {
   // SEO metadata for Workshops page
   useEffect(() => {
     document.title = "Femtrics Workshops | Data Analytics Training for Women Entrepreneurs";
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
       metaDescription.content = "Join Femtrics workshops - Free data analytics training for women entrepreneurs in Hyderabad. Learn business insights, revenue tracking, and data-driven decisions.";
     }
-    
+
     // Update canonical URL
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonical) {
@@ -94,20 +94,20 @@ const Workshops = () => {
       document.head.appendChild(canonical);
     }
     canonical.href = 'https://femtrics.com/workshops';
-    
+
     // Update Open Graph tags
     updateMetaTag('og:title', 'Femtrics Workshops | Data Analytics Training');
     updateMetaTag('og:description', 'Free data analytics workshops for women entrepreneurs. Learn business insights and revenue tracking.');
     updateMetaTag('og:url', 'https://femtrics.com/workshops');
-    
+
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Femtrics Workshops | Data Analytics Training');
     updateMetaTag('twitter:description', 'Free data analytics workshops for women entrepreneurs in Hyderabad.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
-    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
-              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement ||
+      document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
     if (!tag) {
       tag = document.createElement('meta') as HTMLMetaElement;
       tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
@@ -137,14 +137,14 @@ const Workshops = () => {
   const parseParticipantFile = (text, fileName) => {
     const participants = [];
     const lines = text.split('\n');
-    
+
     // Skip header if exists
     const startIndex = lines[0].toLowerCase().includes('name') ? 1 : 0;
-    
+
     for (let i = startIndex; i < lines.length; i++) {
       const line = lines[i].trim();
       if (!line) continue;
-      
+
       // Handle CSV format
       if (fileName.endsWith('.csv')) {
         const [name, email] = line.split(',').map(item => item.trim().replace(/"/g, ''));
@@ -159,9 +159,9 @@ const Workshops = () => {
         }
       }
     }
-    
-    setRegistrationData(prev => ({ 
-      ...prev, 
+
+    setRegistrationData(prev => ({
+      ...prev,
       participants: participants.slice(0, 50), // Limit to 50 participants
       groupSize: participants.length.toString()
     }));
@@ -177,17 +177,17 @@ const Workshops = () => {
         return registrationData.date !== '';
       case 4:
         if (registrationData.signupType === 'self') {
-          return registrationData.name !== '' && 
-                 registrationData.email !== '' && 
-                 registrationData.phone !== '';
+          return registrationData.name !== '' &&
+            registrationData.email !== '' &&
+            registrationData.phone !== '';
         } else {
-          return registrationData.groupName !== '' && 
-                 registrationData.groupSize !== '' && 
-                 parseInt(registrationData.groupSize) >= 20 &&
-                 registrationData.name !== '' && 
-                 registrationData.email !== '' && 
-                 registrationData.phone !== '' &&
-                 registrationData.participantFile;
+          return registrationData.groupName !== '' &&
+            registrationData.groupSize !== '' &&
+            parseInt(registrationData.groupSize) >= 20 &&
+            registrationData.name !== '' &&
+            registrationData.email !== '' &&
+            registrationData.phone !== '' &&
+            registrationData.participantFile;
         }
       default:
         return true;
@@ -198,16 +198,11 @@ const Workshops = () => {
 
   const sendRegistrationEmail = async (formData) => {
     try {
-      const emailData = {
-        fromName: formData.signupType === 'self' ? formData.name : formData.groupName,
-        from: formData.email,
-        subject: `Workshop Registration: ${formData.workshop}`,
-        message: 'Workshop registration submitted'
-      };
-      
+      const emailData = createWorkshopRegistrationEmail(formData);
+
       // Send email to admin
       const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData);
-      
+
       if (adminEmailSuccess) {
         // Send confirmation email to user
         const confirmationSuccess = await sendConfirmationEmail({
@@ -233,7 +228,7 @@ const Workshops = () => {
             </p>
           `
         });
-        
+
         if (confirmationSuccess) {
           setShowThankYouModal(true);
           resetModal();
@@ -283,9 +278,9 @@ const Workshops = () => {
                 Educational Programs
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
-                <img 
-                  src={femtricsLogo} 
-                  alt="Femtrics Logo" 
+                <img
+                  src={femtricsLogo}
+                  alt="Femtrics Logo"
                   className="w-16 h-16 md:w-20 md:h-20"
                 />
                 <span>
@@ -293,11 +288,11 @@ const Workshops = () => {
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                Free, hands-on workshops designed for women entrepreneurs and students. 
+                Free, hands-on workshops designed for women entrepreneurs and students.
                 No prior experience needed—just a willingness to learn.
               </p>
             </AnimatedSection>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -305,8 +300,8 @@ const Workshops = () => {
               className="relative"
             >
               <div className="relative">
-                <motion.img 
-                  src={workshopsHero} 
+                <motion.img
+                  src={workshopsHero}
                   alt="Women in workshop learning data analytics"
                   className="rounded-3xl shadow-2xl w-full h-auto"
                   whileHover={{ scale: 1.02 }}
@@ -345,7 +340,7 @@ const Workshops = () => {
                   whileHover={{ y: -8, scale: 1.02 }}
                   className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 text-center card-hover-glow border border-pink-200"
                 >
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 10, scale: 1.1 }}
                     className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4"
                   >
@@ -381,11 +376,10 @@ const Workshops = () => {
                   className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 h-full flex flex-col card-elevated"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <span className={`px-4 py-1.5 rounded-full text-base font-medium ${
-                      workshop.color === "primary" 
-                        ? "bg-primary/10 text-primary" 
-                        : "bg-accent/10 text-accent"
-                    }`}>
+                    <span className={`px-4 py-1.5 rounded-full text-base font-medium ${workshop.color === "primary"
+                      ? "bg-primary/10 text-primary"
+                      : "bg-accent/10 text-accent"
+                      }`}>
                       {workshop.tagline}
                     </span>
                   </div>
@@ -394,19 +388,19 @@ const Workshops = () => {
                   <p className="text-muted-foreground text-lg mb-6 leading-relaxed">{workshop.description}</p>
 
                   <div className="flex flex-wrap gap-4 mb-6 text-base text-muted-foreground">
-                    <motion.span 
+                    <motion.span
                       whileHover={{ scale: 1.05 }}
                       className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
                       <Clock className="w-4 h-4" /> {workshop.duration}
                     </motion.span>
-                    <motion.span 
+                    <motion.span
                       whileHover={{ scale: 1.05 }}
                       className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
                       <Users className="w-4 h-4" /> {workshop.participants} participants
                     </motion.span>
-                    <motion.span 
+                    <motion.span
                       whileHover={{ scale: 1.05 }}
                       className="flex items-center gap-1.5 bg-background px-3 py-1.5 rounded-lg"
                     >
@@ -418,8 +412,8 @@ const Workshops = () => {
                     <h4 className="text-base font-semibold mb-4">{t("common.whatYouLearn")}</h4>
                     <div className="grid grid-cols-2 gap-3">
                       {workshop.topics.map((topic) => (
-                        <motion.div 
-                          key={topic} 
+                        <motion.div
+                          key={topic}
                           whileHover={{ x: 4 }}
                           transition={{ duration: 0.15 }}
                           className="flex items-start gap-2 text-base text-muted-foreground"
@@ -498,7 +492,7 @@ const Workshops = () => {
                       <X className="w-5 h-5" />
                     </button>
                   </div>
-                  
+
                   {/* Progress Steps */}
                   <div className="flex items-center justify-between mb-2">
                     {[1, 2, 3, 4].map((step) => (
@@ -509,27 +503,25 @@ const Workshops = () => {
                               setCurrentStep(step);
                             }
                           }}
-                          className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-colors ${
-                            step <= currentStep
-                              ? 'bg-pink-500 text-white cursor-pointer hover:bg-pink-600'
-                              : step === currentStep + 1 && canProceedToNext
+                          className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-colors ${step <= currentStep
+                            ? 'bg-pink-500 text-white cursor-pointer hover:bg-pink-600'
+                            : step === currentStep + 1 && canProceedToNext
                               ? 'bg-pink-500 text-white cursor-pointer hover:bg-pink-600'
                               : 'bg-gray-200 text-gray-600 cursor-not-allowed'
-                          }`}
+                            }`}
                         >
                           {step}
                         </button>
                         {step < 4 && (
                           <div
-                            className={`w-6 md:w-12 h-1 mx-1 md:mx-2 transition-colors ${
-                              step < currentStep ? 'bg-pink-500' : 'bg-gray-200'
-                            }`}
+                            className={`w-6 md:w-12 h-1 mx-1 md:mx-2 transition-colors ${step < currentStep ? 'bg-pink-500' : 'bg-gray-200'
+                              }`}
                           />
                         )}
                       </div>
                     ))}
                   </div>
-                  
+
                   <div className="flex justify-between mt-2 text-xs text-gray-600 hidden md:flex">
                     <span>Who</span>
                     <span>Workshop</span>
@@ -541,254 +533,252 @@ const Workshops = () => {
                 {/* Modal Content */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden">
                   <div className="p-3 sm:p-4 md:p-6 max-h-[calc(90vh-140px)] sm:max-h-[calc(85vh-140px)]" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                  {/* Step 1: Who are you signing up? */}
-                  {currentStep === 1 && (
-                    <div>
-                      <h4 className="text-xl font-semibold mb-4">Who are you signing up?</h4>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <button
-                          onClick={() => {
-                            setRegistrationData(prev => ({ ...prev, signupType: 'self' }));
-                          }}
-                          className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
-                            registrationData.signupType === 'self'
-                              ? 'border-pink-500 bg-pink-50'
-                              : 'border-gray-200 hover:border-pink-300'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
-                              <Users className="w-6 h-6 text-pink-600" />
-                            </div>
-                            <h5 className="font-semibold text-lg">Myself</h5>
-                          </div>
-                          <p className="text-muted-foreground">
-                            I want to register for a workshop to learn data analytics
-                          </p>
-                        </button>
-
-                        <button
-                          onClick={() => {
-                            setRegistrationData(prev => ({ ...prev, signupType: 'group' }));
-                          }}
-                          className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
-                            registrationData.signupType === 'group'
-                              ? 'border-pink-500 bg-pink-50'
-                              : 'border-gray-200 hover:border-pink-300'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
-                              <Users className="w-6 h-6 text-pink-600" />
-                            </div>
-                            <h5 className="font-semibold text-lg">Group Registration</h5>
-                          </div>
-                          <p className="text-muted-foreground">
-                            Register 20+ people for a dedicated workshop session
-                          </p>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 2: Choose Workshop */}
-                  {currentStep === 2 && (
-                    <div>
-                      <h4 className="text-xl font-semibold mb-4">Choose Workshop</h4>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        {workshops.map((workshop) => (
+                    {/* Step 1: Who are you signing up? */}
+                    {currentStep === 1 && (
+                      <div>
+                        <h4 className="text-xl font-semibold mb-4">Who are you signing up?</h4>
+                        <div className="grid md:grid-cols-2 gap-4">
                           <button
-                            key={workshop.title}
                             onClick={() => {
-                              setRegistrationData(prev => ({ ...prev, workshop: workshop.title }));
+                              setRegistrationData(prev => ({ ...prev, signupType: 'self' }));
                             }}
-                            className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${
-                              registrationData.workshop === workshop.title
+                            className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${registrationData.signupType === 'self'
+                              ? 'border-pink-500 bg-pink-50'
+                              : 'border-gray-200 hover:border-pink-300'
+                              }`}
+                          >
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                                <Users className="w-6 h-6 text-pink-600" />
+                              </div>
+                              <h5 className="font-semibold text-lg">Myself</h5>
+                            </div>
+                            <p className="text-muted-foreground">
+                              I want to register for a workshop to learn data analytics
+                            </p>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setRegistrationData(prev => ({ ...prev, signupType: 'group' }));
+                            }}
+                            className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${registrationData.signupType === 'group'
+                              ? 'border-pink-500 bg-pink-50'
+                              : 'border-gray-200 hover:border-pink-300'
+                              }`}
+                          >
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                                <Users className="w-6 h-6 text-pink-600" />
+                              </div>
+                              <h5 className="font-semibold text-lg">Group Registration</h5>
+                            </div>
+                            <p className="text-muted-foreground">
+                              Register 20+ people for a dedicated workshop session
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Step 2: Choose Workshop */}
+                    {currentStep === 2 && (
+                      <div>
+                        <h4 className="text-xl font-semibold mb-4">Choose Workshop</h4>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {workshops.map((workshop) => (
+                            <button
+                              key={workshop.title}
+                              onClick={() => {
+                                setRegistrationData(prev => ({ ...prev, workshop: workshop.title }));
+                              }}
+                              className={`p-6 rounded-xl border-2 transition-all duration-300 text-left ${registrationData.workshop === workshop.title
                                 ? 'border-pink-500 bg-pink-50'
                                 : 'border-gray-200 hover:border-pink-300'
-                            }`}
-                          >
-                            <h5 className="font-semibold text-lg mb-2">{workshop.title}</h5>
-                            <p className="text-sm text-muted-foreground mb-3">{workshop.tagline}</p>
-                            <div className="flex items-center gap-4 text-xs text-gray-600">
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" /> {workshop.duration}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Users className="w-3 h-3" /> {workshop.participants}
-                              </span>
-                              <span className="px-2 py-1 bg-gray-100 rounded-full">
-                                {workshop.level}
-                              </span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 3: Choose Date */}
-                  {currentStep === 3 && (
-                    <div>
-                      <h4 className="text-xl font-semibold mb-4">Choose Date</h4>
-                      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
-                        <div className="mb-3 text-center">
-                          <label className="block text-sm font-medium mb-2">Preferred Workshop Date</label>
-                          <input
-                            type="date"
-                            value={registrationData.date ? new Date(registrationData.date.split(' ')[1] + ' ' + registrationData.date.split(' ')[0] + ', ' + registrationData.date.split(' ')[2]).toISOString().split('T')[0] : ''}
-                            onChange={(e) => {
-                              const date = new Date(e.target.value);
-                              const day = date.getDate();
-                              const month = date.toLocaleDateString('en-US', { month: 'long' });
-                              const year = date.getFullYear();
-                              setRegistrationData(prev => ({ 
-                                ...prev, 
-                                date: `${day} ${month} ${year}`,
-                                time: "10:00 AM - 1:00 PM",
-                                location: "Various Locations"
-                              }));
-                            }}
-                            className="w-full px-3 py-2 text-base md:text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mx-auto block"
-                            min={new Date().toISOString().split('T')[0]}
-                          />
-                        </div>
-                        <div className="text-center text-xs text-gray-500">
-                          <p>Select your preferred workshop date</p>
-                          <p className="mt-1">We'll contact you to confirm the exact schedule</p>
+                                }`}
+                            >
+                              <h5 className="font-semibold text-lg mb-2">{workshop.title}</h5>
+                              <p className="text-sm text-muted-foreground mb-3">{workshop.tagline}</p>
+                              <div className="flex items-center gap-4 text-xs text-gray-600">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" /> {workshop.duration}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Users className="w-3 h-3" /> {workshop.participants}
+                                </span>
+                                <span className="px-2 py-1 bg-gray-100 rounded-full">
+                                  {workshop.level}
+                                </span>
+                              </div>
+                            </button>
+                          ))}
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Step 4: Personal/Group Details */}
-                  {currentStep === 4 && (
-                    <div>
-                      <h4 className="text-xl font-semibold mb-4">
-                        {registrationData.signupType === 'self' ? 'Your Details' : 'Group Registration Details'}
-                      </h4>
-                      
-                      {registrationData.signupType === 'self' ? (
-                        // Individual registration form
-                        <div className="space-y-3">
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Full Name</label>
+                    {/* Step 3: Choose Date */}
+                    {currentStep === 3 && (
+                      <div>
+                        <h4 className="text-xl font-semibold mb-4">Choose Date</h4>
+                        <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
+                          <div className="mb-3 text-center">
+                            <label className="block text-sm font-medium mb-2">Preferred Workshop Date</label>
                             <input
-                              type="text"
-                              value={registrationData.name}
-                              onChange={(e) => setRegistrationData(prev => ({ ...prev, name: e.target.value }))}
-                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                              placeholder="Enter full name"
+                              type="date"
+                              value={registrationData.date ? new Date(registrationData.date.split(' ')[1] + ' ' + registrationData.date.split(' ')[0] + ', ' + registrationData.date.split(' ')[2]).toISOString().split('T')[0] : ''}
+                              onChange={(e) => {
+                                const [yearStr, monthStr, dayStr] = e.target.value.split('-');
+                                const date = new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(dayStr));
+                                const day = date.getDate();
+                                const month = date.toLocaleDateString('en-US', { month: 'long' });
+                                const year = date.getFullYear();
+                                setRegistrationData(prev => ({
+                                  ...prev,
+                                  date: `${day} ${month} ${year}`,
+                                  time: "10:00 AM - 1:00 PM",
+                                  location: "Various Locations"
+                                }));
+                              }}
+                              className="w-full px-3 py-2 text-base md:text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mx-auto block"
+                              min={new Date().toISOString().split('T')[0]}
                             />
                           </div>
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Email Address</label>
-                            <input
-                              type="email"
-                              value={registrationData.email}
-                              onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
-                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                              placeholder="Enter email address"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Phone Number</label>
-                            <input
-                              type="tel"
-                              value={registrationData.phone}
-                              onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
-                              className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                              placeholder="Enter phone number"
-                            />
-                          </div>
-                          <div className="bg-pink-50 p-3 rounded-lg text-sm text-pink-700">
-                            <strong>Note:</strong> You can also bring a group of 20+ people for special arrangements.
+                          <div className="text-center text-xs text-gray-500">
+                            <p>Select your preferred workshop date</p>
+                            <p className="mt-1">We'll contact you to confirm the exact schedule</p>
                           </div>
                         </div>
-                      ) : (
-                        // Group registration form
-                        <div className="space-y-3">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                      </div>
+                    )}
+
+                    {/* Step 4: Personal/Group Details */}
+                    {currentStep === 4 && (
+                      <div>
+                        <h4 className="text-xl font-semibold mb-4">
+                          {registrationData.signupType === 'self' ? 'Your Details' : 'Group Registration Details'}
+                        </h4>
+
+                        {registrationData.signupType === 'self' ? (
+                          // Individual registration form
+                          <div className="space-y-3">
                             <div>
-                              <label className="block text-sm font-medium mb-1">Group Name</label>
+                              <label className="block text-sm font-medium mb-1">Full Name</label>
                               <input
                                 type="text"
-                                value={registrationData.groupName}
-                                onChange={(e) => setRegistrationData(prev => ({ ...prev, groupName: e.target.value }))}
+                                value={registrationData.name}
+                                onChange={(e) => setRegistrationData(prev => ({ ...prev, name: e.target.value }))}
                                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                placeholder="Enter group/organization name"
+                                placeholder="Enter full name"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-1">Group Size</label>
-                              <input
-                                type="number"
-                                value={registrationData.groupSize}
-                                onChange={(e) => setRegistrationData(prev => ({ ...prev, groupSize: e.target.value }))}
-                                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                placeholder="Number of participants (min 20)"
-                                min="20"
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Contact Person Details</label>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                              <label className="block text-sm font-medium mb-1">Email Address</label>
                               <input
                                 type="email"
                                 value={registrationData.email}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
                                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                placeholder="Contact person email"
+                                placeholder="Enter email address"
                               />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium mb-1">Phone Number</label>
                               <input
                                 type="tel"
                                 value={registrationData.phone}
                                 onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
                                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                placeholder="Contact person phone"
+                                placeholder="Enter phone number"
                               />
+                            </div>
+                            <div className="bg-pink-50 p-3 rounded-lg text-sm text-pink-700">
+                              <strong>Note:</strong> You can also bring a group of 20+ people for special arrangements.
                             </div>
                           </div>
-
-                          <div className="border-t pt-6">
-                            <div className="flex items-center justify-between mb-4">
-                              <label className="block text-sm font-medium">Participant List (20+ people)</label>
-                              <span className="text-xs text-gray-500">
-                                {registrationData.participantFile ? 'File uploaded' : 'No file'}
-                              </span>
-                            </div>
-                            
-                            {/* File Upload Section */}
-                            <div className="mb-2">
-                              <input
-                                type="file"
-                                accept=".xlsx,.xls"
-                                onChange={handleFileUpload}
-                                className="hidden"
-                                id="file-upload"
-                              />
-                              <div className="flex items-center gap-2">
-                                <label
-                                  htmlFor="file-upload"
-                                  className="inline-block px-2 py-1 text-xs bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer transition-colors"
-                                >
-                                  Upload Excel File
-                                </label>
-                                {registrationData.participantFile && (
-                                  <span className="text-xs text-green-600 truncate max-w-[150px]">
-                                    {registrationData.participantFile.name}
-                                  </span>
-                                )}
+                        ) : (
+                          // Group registration form
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                              <div>
+                                <label className="block text-sm font-medium mb-1">Group Name</label>
+                                <input
+                                  type="text"
+                                  value={registrationData.groupName}
+                                  onChange={(e) => setRegistrationData(prev => ({ ...prev, groupName: e.target.value }))}
+                                  className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                  placeholder="Enter group/organization name"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium mb-1">Group Size</label>
+                                <input
+                                  type="number"
+                                  value={registrationData.groupSize}
+                                  onChange={(e) => setRegistrationData(prev => ({ ...prev, groupSize: e.target.value }))}
+                                  className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                  placeholder="Number of participants (min 20)"
+                                  min="20"
+                                />
                               </div>
                             </div>
-                          </div>
 
-                        </div>
-                      )}
-                    </div>
-                  )}
+                            <div>
+                              <label className="block text-sm font-medium mb-1">Contact Person Details</label>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                                <input
+                                  type="email"
+                                  value={registrationData.email}
+                                  onChange={(e) => setRegistrationData(prev => ({ ...prev, email: e.target.value }))}
+                                  className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                  placeholder="Contact person email"
+                                />
+                                <input
+                                  type="tel"
+                                  value={registrationData.phone}
+                                  onChange={(e) => setRegistrationData(prev => ({ ...prev, phone: e.target.value }))}
+                                  className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                  placeholder="Contact person phone"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="border-t pt-6">
+                              <div className="flex items-center justify-between mb-4">
+                                <label className="block text-sm font-medium">Participant List (20+ people)</label>
+                                <span className="text-xs text-gray-500">
+                                  {registrationData.participantFile ? 'File uploaded' : 'No file'}
+                                </span>
+                              </div>
+
+                              {/* File Upload Section */}
+                              <div className="mb-2">
+                                <input
+                                  type="file"
+                                  accept=".xlsx,.xls"
+                                  onChange={handleFileUpload}
+                                  className="hidden"
+                                  id="file-upload"
+                                />
+                                <div className="flex items-center gap-2">
+                                  <label
+                                    htmlFor="file-upload"
+                                    className="inline-block px-2 py-1 text-xs bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer transition-colors"
+                                  >
+                                    Upload Excel File
+                                  </label>
+                                  {registrationData.participantFile && (
+                                    <span className="text-xs text-green-600 truncate max-w-[150px]">
+                                      {registrationData.participantFile.name}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    )}
 
                   </div>
                 </div>
@@ -802,7 +792,7 @@ const Workshops = () => {
                     >
                       {currentStep === 1 ? 'Cancel' : 'Back'}
                     </button>
-                    
+
                     {currentStep < 4 ? (
                       <button
                         onClick={() => canProceedToNext && setCurrentStep(currentStep + 1)}
@@ -869,7 +859,7 @@ const Workshops = () => {
                 Join Our Next Workshop
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                Fill out the registration form and we'll get back to you with all the details. 
+                Fill out the registration form and we'll get back to you with all the details.
                 All workshops are completely free!
               </p>
               <ul className="space-y-4">
@@ -880,8 +870,8 @@ const Workshops = () => {
                   "Follow-up support included",
                   "Networking opportunities",
                 ].map((item) => (
-                  <motion.li 
-                    key={item} 
+                  <motion.li
+                    key={item}
                     whileHover={{ x: 4 }}
                     className="flex items-center gap-3"
                   >
@@ -893,7 +883,7 @@ const Workshops = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <img 
+              <img
                 src={hero3}
                 alt="Workshop resources and materials"
                 className="rounded-3xl shadow-2xl border border-pink-200"
@@ -915,7 +905,7 @@ const Workshops = () => {
                 Take learning home
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                Access our collection of free templates, guides, and checklists designed 
+                Access our collection of free templates, guides, and checklists designed
                 to help you implement what you learn.
               </p>
               <ul className="space-y-4">
@@ -926,8 +916,8 @@ const Workshops = () => {
                   "Inventory management checklist",
                   "Business health scorecard",
                 ].map((resource) => (
-                  <motion.li 
-                    key={resource} 
+                  <motion.li
+                    key={resource}
                     whileHover={{ x: 4 }}
                     className="flex items-center gap-3"
                   >
@@ -939,7 +929,7 @@ const Workshops = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="bg-gradient-to-br from-primary/10 via-pink-medium to-accent/5 rounded-3xl p-8 md:p-12 border border-border/50"
               >
@@ -950,7 +940,7 @@ const Workshops = () => {
                   Download Our Starter Kit
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Get everything you need to start tracking your business data today. 
+                  Get everything you need to start tracking your business data today.
                   Includes templates, guides, and video tutorials.
                 </p>
                 <Button asChild variant="hero" className="btn-shimmer">

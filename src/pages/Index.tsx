@@ -480,9 +480,7 @@ const Index = () => {
       <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
-            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-              {t("common.ourGoals")}
-            </span>
+
             <h2 className="font-display text-2xl md:text-3xl font-semibold mb-4">
               {t("common.impactTargets")}
             </h2>

@@ -72,13 +72,13 @@ export const Contact = () => {
   // SEO metadata for Contact page
   useEffect(() => {
     document.title = "Contact Femtrics | Get in Touch for Data Analytics Solutions";
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
       metaDescription.content = "Contact Femtrics for data analytics solutions, workshops, and partnerships. Reach out to empower women entrepreneurs in Hyderabad with business insights.";
     }
-    
+
     // Update canonical URL
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonical) {
@@ -87,20 +87,20 @@ export const Contact = () => {
       document.head.appendChild(canonical);
     }
     canonical.href = 'https://femtrics.com/contact';
-    
+
     // Update Open Graph tags
     updateMetaTag('og:title', 'Contact Femtrics | Get in Touch');
     updateMetaTag('og:description', 'Contact Femtrics for data analytics solutions and workshops for women entrepreneurs.');
     updateMetaTag('og:url', 'https://femtrics.com/contact');
-    
+
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Contact Femtrics | Get in Touch');
     updateMetaTag('twitter:description', 'Reach out to Femtrics for data analytics solutions and workshops in Hyderabad.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
-    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
-              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement ||
+      document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
     if (!tag) {
       tag = document.createElement('meta') as HTMLMetaElement;
       tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
@@ -126,7 +126,7 @@ export const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     // Validate phone number
     if (!formData.phone || !isValidPhoneNumber(formData.phone)) {
       setEmailErrors({ phone: t("form.validPhoneError") });
@@ -162,18 +162,20 @@ export const Contact = () => {
 
     // Clear any previous errors
     setEmailErrors({});
-    
+
     try {
       // Send email using new service
-      const emailData = {
-        fromName: formData.name,
-        from: formData.email,
-        subject: formData.subject,
+      // Send email using new service
+      const emailData = createContactEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        businessType: 'Contact Enquiry',
         message: formData.message
-      };
-      
+      });
+
       const adminEmailSuccess = await sendEmailWithGmailSMTP(emailData);
-      
+
       if (adminEmailSuccess) {
         setSubmitStatus('success');
         setShowThankYouModal(true);
@@ -274,7 +276,7 @@ export const Contact = () => {
                   {t("contact.preferWhatsapp")}
                 </h3>
                 <p className="text-muted-foreground text-sm mb-4">
-                  Connect with us instantly on WhatsApp for quick queries and support. 
+                  Connect with us instantly on WhatsApp for quick queries and support.
                   We prioritize phone-first communication!
                 </p>
                 <Button variant="outline" size="sm" asChild>
@@ -318,11 +320,10 @@ export const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                        emailErrors.phone 
-                          ? 'border-red-300 focus:ring-red-300' 
+                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.phone
+                          ? 'border-red-300 focus:ring-red-300'
                           : 'border-border focus:ring-primary/30'
-                      }`}
+                        }`}
                       placeholder={t("form.enterPhone")}
                     />
                     {emailErrors.phone && (
@@ -340,11 +341,10 @@ export const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                        emailErrors.email 
-                          ? 'border-red-300 focus:ring-red-300' 
+                      className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.email
+                          ? 'border-red-300 focus:ring-red-300'
                           : 'border-border focus:ring-primary/30'
-                      }`}
+                        }`}
                       placeholder="your@business.com"
                     />
                     {emailErrors.email && (
@@ -359,7 +359,7 @@ export const Contact = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">{t("form.subject")} *</label>
-                    <select 
+                    <select
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
@@ -459,14 +459,14 @@ export const Contact = () => {
 
       {/* Thank You Modal */}
       <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
-        <DialogContent 
+        <DialogContent
           className="sm:max-w-2xl max-h-[80vh] overflow-y-auto transition-all duration-500 ease-out"
           style={{
             animation: 'modalFadeIn 0.3s ease-out'
           }}
         >
           <DialogHeader>
-            <DialogTitle 
+            <DialogTitle
               className="flex items-center gap-2 text-2xl"
               style={{
                 animation: 'titleFadeIn 0.3s ease-out'
@@ -476,27 +476,27 @@ export const Contact = () => {
               Thank You!
             </DialogTitle>
             <DialogDescription className="text-base">
-              Your message has been sent successfully, {formData.name || 'there'}! 
+              Your message has been sent successfully, {formData.name || 'there'}!
             </DialogDescription>
           </DialogHeader>
-          <div 
+          <div
             className="space-y-4"
             style={{
               animation: 'contentSlideUp 0.5s ease-out 0.2s both'
             }}
           >
-            <div 
+            <div
               className="bg-green-50 border border-green-200 rounded-lg p-4 transform transition-all duration-500 hover:scale-105"
               style={{
                 animation: 'boxScale 0.5s ease-out 0.3s both'
               }}
             >
               <p className="text-green-700 text-sm">
-                We've received your inquiry and will get back to you within 24-48 hours. 
+                We've received your inquiry and will get back to you within 24-48 hours.
                 Our team is excited to connect with you and discuss how we can support your journey.
               </p>
             </div>
-            <div 
+            <div
               className="space-y-2"
               style={{
                 opacity: 0,
@@ -513,7 +513,7 @@ export const Contact = () => {
             </div>
           </div>
           <div className="flex justify-center pt-4">
-            <Button 
+            <Button
               onClick={() => setShowThankYouModal(false)}
               className="w-full"
             >

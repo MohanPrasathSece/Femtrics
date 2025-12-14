@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { useEmailService } from "@/hooks/useEmailService";
+import { sendEmailWithGmailSMTP, sendConfirmationEmail, createWorkshopRegistrationEmail } from "@/utils/emailService";
 
 interface WorkshopRegistrationData {
   fullName: string;
@@ -21,8 +21,8 @@ interface WorkshopRegistrationData {
 
 const WorkshopRegister = () => {
   const [searchParams] = useSearchParams();
-  const { sendEmail, sendConfirmationEmail } = useEmailService();
-  
+
+
   const workshopTitle = searchParams.get('workshop') || '';
   const workshopDate = searchParams.get('date') || '';
   const workshopLocation = searchParams.get('location') || '';
@@ -66,7 +66,7 @@ const WorkshopRegister = () => {
   const validate = (): boolean => {
     const newErrors: typeof errors = {};
 
-    console.log('Validating form data:', formData);
+
 
     if (!formData.fullName.trim()) {
       newErrors.name = 'Full name is required';
@@ -85,7 +85,7 @@ const WorkshopRegister = () => {
     }
 
     setErrors(newErrors);
-    console.log('Validation errors:', newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -94,32 +94,43 @@ const WorkshopRegister = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    
+
     try {
-      // Send email notification
-      await sendEmail({
-        name: formData.fullName,
-        email: 'harshinik290@gmail.com', // Admin email
-        phone: formData.phoneNumber,
-        businessType: 'Workshop Registration',
-        message: `Workshop Registration Details:\n\nWorkshop: ${formData.workshopTitle}\nType: ${formData.workshopType}\nDate: ${formData.workshopDate}\nTime: ${formData.workshopTime}\nLocation: ${formData.workshopLocation}\n\nParticipant Details:\nName: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phoneNumber}`,
-        formType: `${formData.workshopTitle} - ${formData.workshopType}`,
-      });
-      
-      // Send confirmation email to user
-      await sendConfirmationEmail({
+      // Send email notification using the utility function
+      const emailData = createWorkshopRegistrationEmail({
+        signupType: 'individual', // This form is individual only
         name: formData.fullName,
         email: formData.email,
-        formType: 'Workshop Registration',
-        customMessage: `Dear ${formData.fullName},\n\nThank you for registering for "${formData.workshopTitle}"! We are excited to have you join us.\n\nWorkshop Details:\n- Date: ${formData.workshopDate}\n- Time: ${formData.workshopTime}\n- Location: ${formData.workshopLocation}\n- Type: ${formData.workshopType}\n\nYou will receive a reminder email with all the details 2 days before the workshop. If you have any questions, feel free to reach out to us.\n\nBest regards,\nTeam Femtrics`
+        phone: formData.phoneNumber,
+        workshop: formData.workshopTitle,
+        date: formData.workshopDate,
+        time: formData.workshopTime,
+        location: formData.workshopLocation,
+        participantFile: null,
+        participants: []
       });
-      
-      setIsSubmitting(false);
-      setShowSuccess(true);
-      
+
+      // Send email to admin
+      const adminSuccess = await sendEmailWithGmailSMTP(emailData);
+
+      if (adminSuccess) {
+        // Send confirmation email to user
+        await sendConfirmationEmail({
+          name: formData.fullName,
+          email: formData.email,
+          formType: 'Workshop Registration',
+          customMessage: `Dear ${formData.fullName},\n\nThank you for registering for "${formData.workshopTitle}"! We are excited to have you join us.\n\nWorkshop Details:\n- Date: ${formData.workshopDate}\n- Time: ${formData.workshopTime}\n- Location: ${formData.workshopLocation}\n- Type: ${formData.workshopType}\n\nYou will receive a reminder email with all the details 2 days before the workshop. If you have any questions, feel free to reach out to us.\n\nBest regards,\nTeam Femtrics`
+        });
+
+        setIsSubmitting(false);
+        setShowSuccess(true);
+      } else {
+        throw new Error("Failed to send admin email");
+      }
+
       // Log successful registration
-      console.log('Workshop registration successful:', formData);
-      
+
+
       // Auto close after 5 seconds
       setTimeout(() => {
         setShowSuccess(false);
@@ -135,10 +146,11 @@ const WorkshopRegister = () => {
           workshopTime,
         });
       }, 5000);
+
     } catch (error) {
       setIsSubmitting(false);
       console.error("Error submitting workshop registration:", error);
-      
+
       // Still show success even if email fails (for better UX)
       setShowSuccess(true);
       setTimeout(() => {
@@ -178,7 +190,7 @@ const WorkshopRegister = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="pt-32 pb-20 hero-bg">
         <div className="container-tight">
@@ -189,7 +201,7 @@ const WorkshopRegister = () => {
                 Back to Workshops
               </Link>
             </Button>
-            
+
             <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
               Register for Workshop
             </h1>
@@ -206,12 +218,12 @@ const WorkshopRegister = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Workshop Info */}
             <AnimatedSection direction="left">
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated"
               >
                 <h2 className="font-display text-2xl font-semibold mb-6">{workshopTitle}</h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -222,7 +234,7 @@ const WorkshopRegister = () => {
                       <p className="text-muted-foreground">{workshopDate} at {workshopTime}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                       <MapPin className="w-5 h-5 text-primary" />
@@ -232,7 +244,7 @@ const WorkshopRegister = () => {
                       <p className="text-muted-foreground">{workshopLocation}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                       <Users className="w-5 h-5 text-primary" />
@@ -272,7 +284,7 @@ const WorkshopRegister = () => {
             <AnimatedSection direction="right" delay={0.2}>
               <div className="bg-white rounded-3xl p-8 shadow-lg border border-border/50">
                 <h3 className="font-display text-2xl font-semibold mb-6">Register Now</h3>
-                
+
                 {showSuccess ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -300,11 +312,10 @@ const WorkshopRegister = () => {
                         type="text"
                         value={formData.fullName}
                         onChange={(e) => handleChange('fullName', e.target.value)}
-                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                          errors.name 
-                            ? 'border-red-300 focus:ring-red-300' 
-                            : 'border-border focus:ring-primary/30'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${errors.name
+                          ? 'border-red-300 focus:ring-red-300'
+                          : 'border-border focus:ring-primary/30'
+                          }`}
                         placeholder="Enter your full name"
                       />
                       {errors.name && (
@@ -318,11 +329,10 @@ const WorkshopRegister = () => {
                         type="email"
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
-                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                          errors.email 
-                            ? 'border-red-300 focus:ring-red-300' 
-                            : 'border-border focus:ring-primary/30'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${errors.email
+                          ? 'border-red-300 focus:ring-red-300'
+                          : 'border-border focus:ring-primary/30'
+                          }`}
                         placeholder="Enter your email address"
                       />
                       {errors.email && (
@@ -336,11 +346,10 @@ const WorkshopRegister = () => {
                         type="tel"
                         value={formData.phoneNumber}
                         onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                          errors.phone 
-                            ? 'border-red-300 focus:ring-red-300' 
-                            : 'border-border focus:ring-primary/30'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${errors.phone
+                          ? 'border-red-300 focus:ring-red-300'
+                          : 'border-border focus:ring-primary/30'
+                          }`}
                         placeholder="Enter your 10-digit phone number"
                       />
                       {errors.phone && (

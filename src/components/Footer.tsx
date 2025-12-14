@@ -9,7 +9,7 @@ export const Footer = () => {
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  
+
   const navItems = [
     { key: "nav.home", path: "/" },
     { key: "nav.about", path: "/about" },
@@ -18,7 +18,7 @@ export const Footer = () => {
     { key: "nav.join", path: "/join" },
     { key: "nav.contact", path: "/contact" },
   ];
-  
+
   return (
     <footer className="relative mt-20 w-full max-w-[100vw] overflow-x-hidden px-2 md:px-4">
       <div className="bg-black text-white rounded-t-[2.5rem] px-4 md:px-6 py-8 w-full max-w-[100vw] overflow-x-hidden">
@@ -26,18 +26,18 @@ export const Footer = () => {
           <div className="grid md:grid-cols-4 gap-12 mb-12 overflow-x-hidden">
             {/* Branding */}
             <div className="flex flex-col">
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-3 mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <img 
-                  src={femtricsLogo} 
-                  alt="Femtrics Logo" 
+                <img
+                  src={femtricsLogo}
+                  alt="Femtrics Logo"
                   className="w-10 h-10"
                 />
-                <motion.h3 
+                <motion.h3
                   className="text-xl font-bold text-white"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export const Footer = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-white/70 text-sm">+91 82478 90920</span>
+                  <span className="text-white/70 text-sm">+91 98765 43210</span>
                 </li>
               </ul>
             </div>

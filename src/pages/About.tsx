@@ -23,13 +23,13 @@ const About = () => {
   // SEO metadata for About page
   useEffect(() => {
     document.title = "About Femtrics | Empowering Women Entrepreneurs with Data Analytics";
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
       metaDescription.content = "Learn about Femtrics - Our mission to empower women micro-entrepreneurs in Hyderabad with affordable data analytics solutions and business insights.";
     }
-    
+
     // Update canonical URL
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonical) {
@@ -38,20 +38,20 @@ const About = () => {
       document.head.appendChild(canonical);
     }
     canonical.href = 'https://femtrics.com/about';
-    
+
     // Update Open Graph tags
     updateMetaTag('og:title', 'About Femtrics | Empowering Women Entrepreneurs');
     updateMetaTag('og:description', 'Learn about Femtrics mission to empower women entrepreneurs with data analytics solutions.');
     updateMetaTag('og:url', 'https://femtrics.com/about');
-    
+
     // Update Twitter tags
     updateMetaTag('twitter:title', 'About Femtrics | Empowering Women Entrepreneurs');
     updateMetaTag('twitter:description', 'Femtrics mission: Empowering women micro-entrepreneurs with data analytics in Hyderabad.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
-    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement || 
-              document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
+    let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement ||
+      document.querySelector(`meta[name="${property}"]`) as HTMLMetaElement;
     if (!tag) {
       tag = document.createElement('meta') as HTMLMetaElement;
       tag.setAttribute(property.includes(':') ? 'property' : 'name', property);
@@ -69,7 +69,7 @@ const About = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 max-w-[100vw]" />
         <div className="absolute top-20 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
-        
+
         <div className="container-tight relative max-w-[100vw] overflow-x-hidden">
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-[100vw] overflow-x-hidden">
             <AnimatedSection direction="left" className="max-w-2xl">
@@ -77,18 +77,18 @@ const About = () => {
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 About Femtrics
               </div>
-              
+
               <div className="space-y-6">
                 <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1]">
                   <span className="block">Femtrics: Business Analytics</span>
                   <span className="block text-gradient">For Women</span>
                   <span className="block text-3xl md:text-4xl lg:text-5xl text-muted-foreground font-normal">By Women</span>
                 </h1>
-                
+
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
                   Empowering women micro-entrepreneurs with affordable, simple, and actionable business analytics to grow revenue, reduce waste, and make confident data-driven decisions.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4 pt-4">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
                     <Target className="w-4 h-4 text-primary" />
@@ -114,12 +114,12 @@ const About = () => {
                   transition={{ duration: 0.3 }}
                   className="relative"
                 >
-                  <img 
+                  <img
                     src={hero2}
                     alt="Women entrepreneurs learning data analytics"
                     className="rounded-3xl shadow-2xl border border-pink-200 w-full"
                   />
-                  
+
                   {/* Floating Cards */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -137,7 +137,7 @@ const About = () => {
                       </div>
                     </div>
                   </motion.div>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -226,9 +226,9 @@ const About = () => {
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
             <div className="mb-8">
-              <img 
-                src={hero3} 
-                alt="Femtrics team and mission" 
+              <img
+                src={hero3}
+                alt="Femtrics team and mission"
                 className="w-full max-w-2xl mx-auto h-auto rounded-3xl shadow-2xl"
               />
             </div>
@@ -247,8 +247,8 @@ const About = () => {
                   <div>
                     <h3 className="font-display text-2xl md:text-3xl font-semibold mb-4">Our Mission</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                      To empower women micro-entrepreneurs in Hyderabad—boutique owners, tiffin services, 
-                      beauty service providers, tutors, home cooks—through affordable business analytics, 
+                      To empower women micro-entrepreneurs in Hyderabad—boutique owners, tiffin services,
+                      beauty service providers, tutors, home cooks—through affordable business analytics,
                       so they can make smarter decisions, increase income, and grow sustainably.
                     </p>
                   </div>
@@ -265,8 +265,8 @@ const About = () => {
                   <div>
                     <h3 className="font-display text-2xl md:text-3xl font-semibold mb-4">Our Vision</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                      A future where every woman entrepreneur has access to the data insights she needs 
-                      to compete, grow, and thrive in the market. We envision a world where gender is 
+                      A future where every woman entrepreneur has access to the data insights she needs
+                      to compete, grow, and thrive in the market. We envision a world where gender is
                       no barrier to business success, and data literacy is universal.
                     </p>
                   </div>
@@ -330,7 +330,7 @@ const About = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Decorative Elements */}
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
                 <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/10 rounded-full blur-2xl" />
@@ -350,13 +350,13 @@ const About = () => {
 
                 <div className="prose prose-lg max-w-none">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    As the founder of Femtrics, I am passionate about empowering women entrepreneurs through the power of data analytics and strategic marketing. With extensive experience in both marketing and analytics, I've dedicated my career to helping small businesses, particularly women-led enterprises, unlock their full potential.
+                    As a high school student and the founder of Femtrics, I am deeply passionate about empowering women entrepreneurs through the power of data, insight, and strategic marketing. What began as curiosity and a love for understanding how businesses grow has evolved into a mission to help women feel confident, informed, and in control of their decisions.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    My journey began with a simple observation: many talented women entrepreneurs struggle with understanding their business data and making data-driven decisions. This insight led to the creation of Femtrics - a platform designed to democratize data analytics and provide accessible insights that drive real business growth.
+                    My journey started with a simple but powerful realization: many talented women entrepreneurs have access to data, yet feel overwhelmed by it or unsure how to turn numbers into meaningful action. This gap between information and understanding inspired the creation of Femtrics — a platform built to make data approachable, human, and genuinely useful.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Through our innovative workshops, personalized consulting, and community-driven approach, we're building a future where every woman entrepreneur has the tools, knowledge, and confidence to transform her business through data. Together, we're not just analyzing numbers - we're changing lives and building sustainable businesses.
+                    Through workshops, simplified analytics frameworks, and hands-on marketing guidance, Femtrics focuses on breaking down complex concepts into clear, actionable insights. At its heart, Femtrics is more than analytics — it is about confidence, clarity, and belief. I envision a future where every woman entrepreneur, regardless of background or experience, has the tools and knowledge to trust her decisions and grow sustainably. Together, we’re not just learning how to read data — we’re helping women see their potential, make empowered choices, and build businesses that reflect their passion and purpose.
                   </p>
                 </div>
 
@@ -411,80 +411,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="section-padding bg-background">
-        <div className="container-tight">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
-              Our Roadmap
-            </span>
-            <h2 className="font-display text-5xl md:text-6xl font-semibold mb-4">
-              {t("common.journeyAhead")}
-            </h2>
-          </AnimatedSection>
 
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
-
-            <div className="space-y-12">
-              {[
-                {
-                  phase: "Phase 1",
-                  title: "Build Foundation",
-                  period: "Month 1-2",
-                  description: "Recruit volunteers, create dashboards and templates, train team, partner with first NGO, onboard first 10 businesses",
-                  align: "right",
-                },
-                {
-                  phase: "Phase 2",
-                  title: "Scale Operations",
-                  period: "Month 3-6",
-                  description: "Reach 50+ clients, release forecasting model v1, start school workshops, build more NGO partnerships, publish case studies",
-                  align: "left",
-                },
-                {
-                  phase: "Phase 3",
-                  title: "Maximize Impact",
-                  period: "Month 6-12",
-                  description: "Serve 120+ businesses, deploy full analytics suite, secure sponsorships and funding, expand to Warangal and Vijayawada, launch ambassador program",
-                  align: "right",
-                },
-              ].map((item, index) => (
-                <AnimatedSection key={item.phase} delay={index * 0.2} direction={item.align === "left" ? "right" : "left"}>
-                  <div className={`relative flex items-center ${item.align === "left" ? "md:flex-row-reverse" : ""}`}>
-                    <motion.div 
-                      className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-primary -translate-x-1/2 z-10 shadow-lg shadow-primary/50"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.3, type: "spring", stiffness: 200 }}
-                    />
-                    
-                    <div className={`ml-12 md:ml-0 md:w-1/2 ${item.align === "left" ? "md:pr-16" : "md:pl-16"}`}>
-                      <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.2 + 0.4, duration: 0.5 }}
-                        whileHover={{ y: -6, scale: 1.02 }}
-                        className="bg-card rounded-2xl p-8 card-elevated hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300"
-                      >
-                        <div className="flex items-center gap-3 mb-4">
-                          <Calendar className="w-6 h-6 text-primary" />
-                          <span className="text-primary text-base font-semibold">{item.period}</span>
-                        </div>
-                        <span className="text-base text-muted-foreground uppercase tracking-wider font-medium">{item.phase}</span>
-                        <h3 className="font-display text-3xl font-semibold mt-2 mb-4">{item.title}</h3>
-                        <p className="text-muted-foreground text-lg leading-relaxed">{item.description}</p>
-                      </motion.div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>

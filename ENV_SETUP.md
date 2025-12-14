@@ -14,7 +14,7 @@ ADMIN_EMAIL=zyradigitalsofficial@gmail.com
 PORT=3001
 ```
 
-**Note:** The `EMAIL_PASS` should be your Google App Password without spaces. If you have it with spaces (like "nmcu gwmc ikux ifur"), remove the spaces when adding it to the `.env` file (it becomes "nmcugwmikuxifur").
+**Note:** The `EMAIL_PASS` MUST be your 16-character Google App Password without spaces. The example above is just a placeholder. An App Password is exactly 16 characters long.
 
 ## Important Notes
 

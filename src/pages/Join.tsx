@@ -36,34 +36,32 @@ const volunteerRoles = [
     desc: "Help create dashboards and analyze business data for clients",
     icon: BarChart3,
     skills: "Excel, Google Sheets, Basic analytics",
-    count: "12 positions",
   },
   {
     title: "Designer",
     desc: "Create visual reports, infographics, and presentation materials",
     icon: Palette,
     skills: "Canva, Figma, Visual design",
-    count: "3 positions",
   },
   {
     title: "Outreach Lead",
     desc: "Connect with NGOs, SHGs, and potential clients in the community",
     icon: Megaphone,
     skills: "Communication, Networking, Telugu/Hindi",
-    count: "1 position",
   },
   {
     title: "Operations Lead",
     desc: "Manage volunteer coordination, scheduling, and quality assurance",
     icon: Settings,
     skills: "Project management, Organization",
-    count: "1 position",
   },
 ];
 
 const Join = () => {
   const [activeTab, setActiveTab] = useState<"business" | "volunteer">("business");
   const { t } = useTranslation();
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [volunteerSubmitStatus, setVolunteerSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [businessFormData, setBusinessFormData] = useState({
     fullName: '',
     businessName: '',
@@ -116,7 +114,7 @@ const Join = () => {
 
   const handleVolunteerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
+
     if (type === 'checkbox') {
       setVolunteerFormData({
         ...volunteerFormData,
@@ -142,7 +140,7 @@ const Join = () => {
         [name]: value
       });
     }
-    
+
     if (emailErrors[name as keyof typeof emailErrors]) {
       setEmailErrors({
         ...emailErrors,
@@ -153,7 +151,7 @@ const Join = () => {
 
   const handleBusinessSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!businessFormData.fullName.trim()) {
       setEmailErrors({ name: 'Full name is required' });
       return;
@@ -190,7 +188,7 @@ const Join = () => {
     }
 
     setEmailErrors({});
-    
+
     try {
       const emailData = createJoinEmail({
         name: businessFormData.fullName,
@@ -200,92 +198,97 @@ const Join = () => {
         businessName: businessFormData.businessName,
         message: 'Business application submitted'
       });
-      
-      await sendEmailWithGmailSMTP(emailData);
-      
-      // Send confirmation email to user
-      await sendConfirmationEmail({
-        name: businessFormData.fullName,
-        email: businessFormData.email,
-        formType: 'Business Application',
-        customMessage: `
-          <p style="color: #374151; margin: 0 0 15px;">
-            Thank you for applying to grow your business with Femtrics! We have received your application for <strong>${businessFormData.businessName}</strong>.
-          </p>
-          <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
-            <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
-            <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
-              <li style="margin-bottom: 5px;">Business: ${businessFormData.businessName}</li>
-              <li style="margin-bottom: 5px;">Type: ${businessFormData.businessType}</li>
-              <li style="margin-bottom: 5px;">Goal: ${businessFormData.primaryGoal}</li>
-            </ul>
-          </div>
-          <p style="color: #374151; margin: 15px 0 0;">
-            Our team will contact you within 2-3 business days to discuss the next steps.
-          </p>
-        `
-      });
-      
-      // Show success alert
-      setShowEmailAlert(true);
-      
-      // Reset form
-      setBusinessFormData({
-        fullName: '',
-        businessName: '',
-        phoneNumber: '',
-        email: '',
-        instagramId: '',
-        businessType: '',
-        primaryGoal: '',
-        whatsappOptIn: true
-      });
-      
+
+      const success = await sendEmailWithGmailSMTP(emailData);
+
+      if (success) {
+        // Send confirmation email to user
+        await sendConfirmationEmail({
+          name: businessFormData.fullName,
+          email: businessFormData.email,
+          formType: 'Business Application',
+          customMessage: `
+            <p style="color: #374151; margin: 0 0 15px;">
+              Thank you for applying to grow your business with Femtrics! We have received your application for <strong>${businessFormData.businessName}</strong>.
+            </p>
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+              <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
+              <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 5px;">Business: ${businessFormData.businessName}</li>
+                <li style="margin-bottom: 5px;">Type: ${businessFormData.businessType}</li>
+                <li style="margin-bottom: 5px;">Goal: ${businessFormData.primaryGoal}</li>
+              </ul>
+            </div>
+            <p style="color: #374151; margin: 15px 0 0;">
+              Our team will contact you within 2-3 business days to discuss the next steps.
+            </p>
+          `
+        });
+
+        // Show success alert
+        setShowEmailAlert(true);
+        setSubmitStatus('success');
+
+        // Reset form
+        setBusinessFormData({
+          fullName: '',
+          businessName: '',
+          phoneNumber: '',
+          email: '',
+          instagramId: '',
+          businessType: '',
+          primaryGoal: '',
+          whatsappOptIn: true
+        });
+      } else {
+        console.error('Failed to send business form');
+        setSubmitStatus('error');
+      }
+
     } catch (error) {
       console.error('Error submitting business form:', error);
-      // Still show success for better UX
-      setShowEmailAlert(true);
+      setSubmitStatus('error');
     }
   };
 
   const handleVolunteerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     const newErrors: typeof emailErrors = {};
-    
+
     if (!volunteerFormData.fullName.trim()) {
       newErrors.name = 'Full name is required';
     }
-    
+
     if (!volunteerFormData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!isValidPhoneNumber(volunteerFormData.phone)) {
       newErrors.phone = 'Please enter a valid phone number';
     }
-    
+
     if (!volunteerFormData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(volunteerFormData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
+
     if (!volunteerFormData.position) {
       newErrors.position = 'Please select a position';
     }
-    
+
     if (!volunteerFormData.experience.trim()) {
       newErrors.experience = 'Experience details are required';
     }
-    
+
     if (!volunteerFormData.whyJoin.trim()) {
       newErrors.whyJoin = 'Please tell us why you want to join';
     }
-    
+
     if (!volunteerFormData.availabilityHours.trim()) {
       newErrors.availabilityHours = 'Availability hours are required';
     }
-    
+
     if (volunteerFormData.isHighSchoolStudent) {
       if (!volunteerFormData.grade.trim()) {
         newErrors.name = 'Grade is required for high school students';
@@ -297,14 +300,14 @@ const Join = () => {
         newErrors.position = 'Future goals are required for high school students';
       }
     }
-    
+
     if (Object.keys(newErrors).length > 0) {
       setEmailErrors(newErrors);
       return;
     }
-    
+
     setEmailErrors({});
-    
+
     try {
       const emailData = createJoinEmail({
         name: volunteerFormData.fullName,
@@ -314,64 +317,69 @@ const Join = () => {
         businessName: '',
         message: 'Volunteer application submitted'
       });
-      
-      await sendEmailWithGmailSMTP(emailData);
-      
-      // Send confirmation email to user
-      await sendConfirmationEmail({
-        name: volunteerFormData.fullName,
-        email: volunteerFormData.email,
-        formType: 'Volunteer Application',
-        customMessage: `
-          <p style="color: #374151; margin: 0 0 15px;">
-            Thank you for your interest in volunteering with Femtrics! We have received your application for the <strong>${volunteerFormData.position}</strong> position.
-          </p>
-          <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
-            <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
-            <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
-              <li style="margin-bottom: 5px;">Position: ${volunteerFormData.position}</li>
-              <li style="margin-bottom: 5px;">Availability: ${volunteerFormData.availabilityHours}</li>
-              <li style="margin-bottom: 5px;">Skills: ${Object.entries(volunteerFormData.skillsRating).map(([key, value]) => `${key}: ${value}/5`).join(', ')}</li>
-            </ul>
-          </div>
-          <p style="color: #374151; margin: 15px 0 0;">
-            Our team will review your application and contact you within 3-5 business days for the next steps.
-          </p>
-        `
-      });
-      
-      // Show success alert
-      setShowEmailAlert(true);
-      
-      // Reset form
-      setVolunteerFormData({
-        fullName: '',
-        phone: '',
-        email: '',
-        position: '',
-        experience: '',
-        otherCommitments: '',
-        evidence: null,
-        whyJoin: '',
-        availabilityHours: '',
-        skillsRating: {
-          technical: 3,
-          communication: 3,
-          teamwork: 3,
-          leadership: 3,
-          creativity: 3
-        },
-        isHighSchoolStudent: false,
-        grade: '',
-        schoolName: '',
-        futureGoals: '',
-        parentContact: ''
-      });
-      
+
+      const success = await sendEmailWithGmailSMTP(emailData);
+
+      if (success) {
+        // Send confirmation email to user
+        await sendConfirmationEmail({
+          name: volunteerFormData.fullName,
+          email: volunteerFormData.email,
+          formType: 'Volunteer Application',
+          customMessage: `
+            <p style="color: #374151; margin: 0 0 15px;">
+              Thank you for your interest in volunteering with Femtrics! We have received your application for the <strong>${volunteerFormData.position}</strong> position.
+            </p>
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+              <h4 style="color: #0369a1; margin: 0 0 10px;">Application Details:</h4>
+              <ul style="color: #0369a1; margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 5px;">Position: ${volunteerFormData.position}</li>
+                <li style="margin-bottom: 5px;">Availability: ${volunteerFormData.availabilityHours}</li>
+                <li style="margin-bottom: 5px;">Skills: ${Object.entries(volunteerFormData.skillsRating).map(([key, value]) => `${key}: ${value}/5`).join(', ')}</li>
+              </ul>
+            </div>
+            <p style="color: #374151; margin: 15px 0 0;">
+              Our team will review your application and contact you within 3-5 business days for the next steps.
+            </p>
+          `
+        });
+
+        // Show success alert
+        setShowEmailAlert(true);
+        setVolunteerSubmitStatus('success');
+
+        // Reset form
+        setVolunteerFormData({
+          fullName: '',
+          phone: '',
+          email: '',
+          position: '',
+          experience: '',
+          otherCommitments: '',
+          evidence: null,
+          whyJoin: '',
+          availabilityHours: '',
+          skillsRating: {
+            technical: 3,
+            communication: 3,
+            teamwork: 3,
+            leadership: 3,
+            creativity: 3
+          },
+          isHighSchoolStudent: false,
+          grade: '',
+          schoolName: '',
+          futureGoals: '',
+          parentContact: ''
+        });
+      } else {
+        console.error('Failed to send volunteer form');
+        setVolunteerSubmitStatus('error');
+      }
+
     } catch (error) {
       console.error('Error submitting volunteer form:', error);
-      // Still show success for better UX
-      setShowEmailAlert(true);
+      setVolunteerSubmitStatus('error');
     }
   };
 
@@ -404,11 +412,10 @@ const Join = () => {
               <div className="bg-secondary rounded-2xl p-2 inline-flex">
                 <button
                   onClick={() => setActiveTab("business")}
-                  className={`px-8 py-4 rounded-xl text-sm font-medium transition-all duration-300 ${
-                    activeTab === "business"
-                      ? "bg-card shadow-lg text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`px-8 py-4 rounded-xl text-sm font-medium transition-all duration-300 ${activeTab === "business"
+                    ? "bg-card shadow-lg text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   <span className="flex items-center gap-2">
                     <Briefcase className="w-5 h-5" />
@@ -417,11 +424,10 @@ const Join = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab("volunteer")}
-                  className={`px-8 py-4 rounded-xl text-sm font-medium transition-all duration-300 ${
-                    activeTab === "volunteer"
-                      ? "bg-card shadow-lg text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`px-8 py-4 rounded-xl text-sm font-medium transition-all duration-300 ${activeTab === "volunteer"
+                    ? "bg-card shadow-lg text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   <span className="flex items-center gap-2">
                     <Heart className="w-5 h-5" />
@@ -501,11 +507,10 @@ const Join = () => {
                           value={businessFormData.fullName}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.name 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.name
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your full name"
                         />
                         {emailErrors.name && (
@@ -524,11 +529,10 @@ const Join = () => {
                           value={businessFormData.businessName}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.businessName 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.businessName
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your business name"
                         />
                         {emailErrors.businessName && (
@@ -547,11 +551,10 @@ const Join = () => {
                           value={businessFormData.phoneNumber}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.phone 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.phone
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your phone number"
                         />
                         {emailErrors.phone && (
@@ -570,11 +573,10 @@ const Join = () => {
                           value={businessFormData.email}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.email 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.email
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your email address"
                         />
                         {emailErrors.email && (
@@ -604,11 +606,10 @@ const Join = () => {
                           value={businessFormData.businessType}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.businessType 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.businessType
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                         >
                           <option value="">Select business type</option>
                           <option value="tiffin">Tiffin</option>
@@ -634,11 +635,10 @@ const Join = () => {
                           value={businessFormData.primaryGoal}
                           onChange={handleBusinessChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.primaryGoal 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.primaryGoal
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                         >
                           <option value="">Select your primary goal</option>
                           <option value="increase sales">Increase sales</option>
@@ -659,8 +659,8 @@ const Join = () => {
                           id="whatsappOptIn"
                           name="whatsappOptIn"
                           checked={businessFormData.whatsappOptIn}
-                          onChange={(e) => handleBusinessChange({ 
-                            target: { name: 'whatsappOptIn', value: e.target.checked } 
+                          onChange={(e) => handleBusinessChange({
+                            target: { name: 'whatsappOptIn', value: e.target.checked }
                           } as any)}
                           className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
                         />
@@ -703,8 +703,8 @@ const Join = () => {
                   <div className="space-y-6 mb-8">
                     <h3 className="font-semibold text-lg">{t("join.volunteerRoles")}</h3>
                     {volunteerRoles.map((role) => (
-                      <motion.div 
-                        key={role.title} 
+                      <motion.div
+                        key={role.title}
                         whileHover={{ x: 4 }}
                         className="flex items-start gap-4 bg-gradient-to-br from-pink-50 to-rose-50 p-5 rounded-2xl card-elevated"
                       >
@@ -714,7 +714,6 @@ const Join = () => {
                         <div className="flex-grow">
                           <div className="flex items-center justify-between mb-1">
                             <h4 className="font-semibold">{role.title}</h4>
-                            <span className="text-xs text-primary font-medium">{role.count}</span>
                           </div>
                           <p className="text-muted-foreground text-sm mb-2">{role.desc}</p>
                           <p className="text-xs text-muted-foreground">
@@ -751,6 +750,14 @@ const Join = () => {
                   <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 card-elevated">
                     <h3 className="font-display text-2xl font-semibold mb-6">{t("join.volunteerApplication")}</h3>
                     <form onSubmit={handleVolunteerSubmit} className="space-y-5">
+                      {volunteerSubmitStatus === 'error' && (
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                          <div className="flex items-center gap-2 text-red-700">
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <span className="font-medium">Failed to submit application. Please check your connection or try again later.</span>
+                          </div>
+                        </div>
+                      )}
                       {/* Basic Information */}
                       <div>
                         <label className="block text-sm font-medium mb-2">Full name *</label>
@@ -760,11 +767,10 @@ const Join = () => {
                           value={volunteerFormData.fullName}
                           onChange={handleVolunteerChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.name 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.name
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your full name"
                         />
                         {emailErrors.name && (
@@ -783,11 +789,10 @@ const Join = () => {
                           value={volunteerFormData.phone}
                           onChange={handleVolunteerChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.phone 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.phone
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your phone number"
                         />
                         {emailErrors.phone && (
@@ -806,11 +811,10 @@ const Join = () => {
                           value={volunteerFormData.email}
                           onChange={handleVolunteerChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.email 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.email
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Enter your email address"
                         />
                         {emailErrors.email && (
@@ -829,11 +833,10 @@ const Join = () => {
                           value={volunteerFormData.position}
                           onChange={handleVolunteerChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.position 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.position
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                         >
                           <option value="">Select a position</option>
                           <option value="Data Associate">Data Associate</option>
@@ -857,11 +860,10 @@ const Join = () => {
                           onChange={handleVolunteerChange}
                           required
                           rows={3}
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.experience 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.experience
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Describe your relevant experience"
                         />
                         {emailErrors.experience && (
@@ -899,7 +901,7 @@ const Join = () => {
                             <span>Upload certificates, work samples, dashboards, or IG profiles</span>
                           </div>
                         </div>
-                      </div> 
+                      </div>
 
                       {/* Why Join */}
                       <div>
@@ -910,11 +912,10 @@ const Join = () => {
                           onChange={handleVolunteerChange}
                           required
                           rows={3}
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.whyJoin 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.whyJoin
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="Tell us why you're interested in joining Femtrics"
                         />
                         {emailErrors.whyJoin && (
@@ -934,11 +935,10 @@ const Join = () => {
                           value={volunteerFormData.availabilityHours}
                           onChange={handleVolunteerChange}
                           required
-                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${
-                            emailErrors.availabilityHours 
-                              ? 'border-red-300 focus:ring-red-300' 
-                              : 'border-border focus:ring-primary/30'
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border bg-background focus:outline-none focus:ring-2 transition-all ${emailErrors.availabilityHours
+                            ? 'border-red-300 focus:ring-red-300'
+                            : 'border-border focus:ring-primary/30'
+                            }`}
                           placeholder="e.g., 10 hours per week, weekends only"
                         />
                         {emailErrors.availabilityHours && (
@@ -1004,7 +1004,7 @@ const Join = () => {
                       {volunteerFormData.isHighSchoolStudent && (
                         <div className="space-y-4 p-4 bg-pink-50 rounded-xl border border-pink-200">
                           <h4 className="font-semibold text-sm text-pink-900 mb-3">High School Student Information</h4>
-                          
+
                           <div>
                             <label className="block text-sm font-medium mb-2">Grade *</label>
                             <input
