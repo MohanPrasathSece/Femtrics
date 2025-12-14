@@ -53,6 +53,11 @@ export const sendConfirmationEmail = async (req: Request, res: Response) => {
   try {
     const { to, subject, message, from } = req.body;
 
+    // Log for debugging
+    if (!to) {
+      console.error('SERVER ERROR: Missing "to" field in confirmation email. Body:', req.body);
+    }
+
     await transporter.sendMail({
       from: from || process.env.EMAIL_USER,
       to: to,

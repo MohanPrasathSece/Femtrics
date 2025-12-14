@@ -462,6 +462,8 @@ export const Contact = () => {
         <DialogContent
           className="sm:max-w-2xl !max-w-[500px] max-h-[80vh] overflow-y-auto transition-all duration-500 ease-out"
           style={{
+            maxWidth: '500px',
+            width: '100%',
             animation: 'modalFadeIn 0.3s ease-out'
           }}
         >

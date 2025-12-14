@@ -109,6 +109,11 @@ export const sendConfirmationEmail = async (userData: {
       </div>
     `;
 
+    if (!userData.email) {
+      console.error('Confirmation email failed: No recipient email provided');
+      return false;
+    }
+
     // Use the same server that serves the frontend
     const response = await fetch('/api/send-confirmation', {
       method: 'POST',
@@ -139,7 +144,7 @@ export const sendConfirmationEmail = async (userData: {
 // Helper functions for different form types
 export const createWorkshopRegistrationEmail = (formData: any) => {
   const isGroup = formData.signupType === 'group';
-  
+
   const emailContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 30px; text-align: center; color: white;">
@@ -316,7 +321,7 @@ export const createContactEmail = (formData: any) => {
 
 export const createJoinEmail = (formData: any) => {
   const isVolunteer = formData.businessType?.includes('Volunteer');
-  
+
   const emailContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 30px; text-align: center; color: white;">
