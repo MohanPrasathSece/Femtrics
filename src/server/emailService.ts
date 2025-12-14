@@ -36,7 +36,7 @@ export const sendEmail = async (req: Request, res: Response) => {
       from: `${name} <${process.env.EMAIL_USER}>`,
       to: process.env.ADMIN_EMAIL,
       subject: subject,
-      text: message
+      html: message
     });
 
     res.json({ success: true });
@@ -50,7 +50,22 @@ export const sendEmail = async (req: Request, res: Response) => {
 };
 
 export const sendConfirmationEmail = async (req: Request, res: Response) => {
-  res.json({ success: true });
+  try {
+    const { to, subject, message, from } = req.body;
+
+    await transporter.sendMail({
+      from: from || process.env.EMAIL_USER,
+      to: to,
+      subject: subject,
+      html: message // Send as HTML
+    });
+
+    console.log(`✅ Confirmation email sent to ${to}`);
+    res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error sending confirmation email:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
 };
 
 export const getEmailLogs = (req?: Request, res?: Response) => {
