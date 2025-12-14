@@ -6,9 +6,52 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import {
+  LineChart as ReLineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart as ReBarChart,
+  Bar,
+  AreaChart,
+  Area,
+  Legend
+} from "recharts";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+const forecastData = [
+  { month: 'Jan', actual: 4000, forecast: 4200 },
+  { month: 'Feb', actual: 3000, forecast: 3100 },
+  { month: 'Mar', actual: 2000, forecast: 2300 },
+  { month: 'Apr', actual: 2780, forecast: 2900 },
+  { month: 'May', actual: 1890, forecast: 2100 },
+  { month: 'Jun', actual: 2390, forecast: 2500 },
+  { month: 'Jul', forecast: 3600 },
+  { month: 'Aug', forecast: 3800 },
+];
+
+const instagramData = [
+  { day: 'Mon', followers: 1205, engagement: 4.5 },
+  { day: 'Tue', followers: 1215, engagement: 4.8 },
+  { day: 'Wed', followers: 1222, engagement: 4.2 },
+  { day: 'Thu', followers: 1238, engagement: 5.1 },
+  { day: 'Fri', followers: 1255, engagement: 6.5 },
+  { day: 'Sat', followers: 1289, engagement: 7.2 },
+  { day: 'Sun', followers: 1310, engagement: 6.8 },
+];
 
 const Dashboard = () => {
   const { t } = useTranslation();
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
@@ -237,6 +280,16 @@ const Dashboard = () => {
                         </li>
                       ))}
                     </ul>
+                    <div className="mt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => setSelectedProduct(product.tag)}
+                      >
+                        View Sample
+                      </Button>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatedSection>
@@ -304,6 +357,101 @@ const Dashboard = () => {
       </section>
 
       <Footer />
+
+      <Dialog open={!!selectedProduct} onOpenChange={(open) => !open && setSelectedProduct(null)}>
+        <DialogContent className="max-w-4xl w-full">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedProduct === "Product A" && "MicroBiz Insight Dashboard Sample"}
+              {selectedProduct === "Product B" && "Demand Forecasting Model Sample"}
+              {selectedProduct === "Product C" && "Instagram Growth Analyzer Sample"}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            {selectedProduct === "Product A" && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+                    <div className="text-sm text-green-600 font-medium">Monthly Revenue</div>
+                    <div className="text-2xl font-bold text-green-700">₹45,200</div>
+                    <div className="text-xs text-green-600 mt-1">+12.5% vs last month</div>
+                  </div>
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+                    <div className="text-sm text-blue-600 font-medium">New Customers</div>
+                    <div className="text-2xl font-bold text-blue-700">128</div>
+                    <div className="text-xs text-blue-600 mt-1">+5.2% vs last month</div>
+                  </div>
+                  <div className="p-4 bg-purple-50 rounded-lg border border-purple-100">
+                    <div className="text-sm text-purple-600 font-medium">Avg Order Value</div>
+                    <div className="text-2xl font-bold text-purple-700">₹850</div>
+                    <div className="text-xs text-purple-600 mt-1">+2.1% vs last month</div>
+                  </div>
+                </div>
+                <div className="h-[300px] border rounded-lg p-4 bg-white">
+                  <h4 className="mb-4 font-semibold text-sm text-gray-500">Revenue Trend</h4>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ReBarChart data={forecastData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="month" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="actual" fill="#ec4899" name="Revenue" />
+                    </ReBarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            )}
+
+            {selectedProduct === "Product B" && (
+              <div className="h-[400px] w-full border rounded-lg p-4 bg-white">
+                <h4 className="mb-4 font-semibold text-sm text-gray-500">Sales Forecast vs Actual</h4>
+                <ResponsiveContainer width="100%" height="100%">
+                  <ReLineChart data={forecastData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="actual" stroke="#8884d8" name="Actual Sales" strokeWidth={2} />
+                    <Line type="monotone" dataKey="forecast" stroke="#82ca9d" name="Forecasted Sales" strokeDasharray="5 5" strokeWidth={2} />
+                  </ReLineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+
+            {selectedProduct === "Product C" && (
+              <div className="space-y-6">
+                <div className="h-[300px] w-full border rounded-lg p-4 bg-white">
+                  <h4 className="mb-4 font-semibold text-sm text-gray-500">Follower Growth</h4>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={instagramData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="day" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Area type="monotone" dataKey="followers" stroke="#E1306C" fill="#E1306C" fillOpacity={0.1} name="Total Followers" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="h-[200px] w-full border rounded-lg p-4 bg-white">
+                  <h4 className="mb-4 font-semibold text-sm text-gray-500">Engagement Rate (%)</h4>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ReLineChart data={instagramData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="day" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="engagement" stroke="#833AB4" strokeWidth={2} dot={{ r: 4 }} />
+                    </ReLineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

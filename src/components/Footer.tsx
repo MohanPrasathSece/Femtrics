@@ -1,23 +1,49 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Instagram, Linkedin, Mail, MapPin, Phone, Menu, X } from "lucide-react";
+import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import femtricsLogo from "/logo.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [newsletterOpen, setNewsletterOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const location = useLocation();
 
-  const navItems = [
-    { key: "nav.home", path: "/" },
-    { key: "nav.about", path: "/about" },
-    { key: "nav.dashboard", path: "/dashboard" },
-    { key: "nav.workshops", path: "/workshops" },
-    { key: "nav.join", path: "/join" },
-    { key: "nav.contact", path: "/contact" },
-  ];
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus("loading");
+    // Simulate API call
+    setTimeout(() => {
+      setStatus("success");
+      toast.success("Thank you for signing up! We will get back to you soon.");
+      setTimeout(() => {
+        setNewsletterOpen(false);
+        setStatus("idle");
+        setEmail("");
+      }, 2000);
+    }, 1000);
+  };
+
+  const openNewsletter = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setNewsletterOpen(true);
+  };
 
   return (
     <footer className="relative mt-20 w-full max-w-[100vw] overflow-x-hidden px-2 md:px-4">
@@ -118,7 +144,7 @@ export const Footer = () => {
               <h4 className="text-base font-semibold text-white mb-3">{t("footer.resources")}</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="/dashboard" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="#" onClick={openNewsletter} className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     Success Stories
                   </a>
                 </li>
@@ -128,7 +154,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/about" className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
+                  <a href="#" onClick={openNewsletter} className="text-white/70 hover:text-primary text-sm transition-colors duration-200">
                     Our Impact
                   </a>
                 </li>
@@ -149,6 +175,42 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={newsletterOpen} onOpenChange={setNewsletterOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Stay Updated</DialogTitle>
+            <DialogDescription>
+              Sign up for our newsletter to receive the latest success stories and impact reports.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4 py-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium">
+                Email Address
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="col-span-3"
+              />
+            </div>
+            {status === "success" ? (
+              <div className="p-3 bg-green-50 text-green-700 rounded-md text-sm text-center">
+                We will get back to you soon!
+              </div>
+            ) : (
+              <Button type="submit" disabled={status === "loading"}>
+                {status === "loading" ? "Subscribing..." : "Subscribe"}
+              </Button>
+            )}
+          </form>
+        </DialogContent>
+      </Dialog>
     </footer>
   );
 };

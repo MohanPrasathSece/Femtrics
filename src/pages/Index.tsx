@@ -209,7 +209,7 @@ const Index = () => {
 
           <AnimatedSection delay={0.2}>
             <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-border/50">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+              <div className="flex flex-wrap gap-8 md:gap-12 items-center justify-center">
                 {[
                   { name: "Telangana Mahila Samakhya", initials: "TMS", color: "bg-pink-500", image: "/ngos/image.png" },
                   { name: "Stree Nidhi Credit Cooperative", initials: "SNC", color: "bg-purple-500", image: "/ngos/image copy.png" },
@@ -217,34 +217,34 @@ const Index = () => {
                   { name: "Rubaroo", initials: "RB", color: "bg-green-500", image: "/ngos/image copy 3.png" },
                   { name: "SAFA NGO", initials: "SAFA", color: "bg-orange-500", image: "/ngos/image copy 4.png" },
                   { name: "Kriya Foundation", initials: "KF", color: "bg-red-500", image: "/ngos/image copy 5.png" },
-                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" },
-                  { name: "ESAF Small Finance Bank", initials: "ESAF", color: "bg-indigo-500" },
-                  { name: "Oakridge International", initials: "OI", color: "bg-cyan-500" },
-                  { name: "Chirec International", initials: "CI", color: "bg-emerald-500" }
+                  { name: "Annapurna Finance", initials: "AF", color: "bg-teal-500", image: "/ngos/image copy 6.png" }
                 ].map((ngo, index) => (
                   <motion.div
                     key={ngo.name}
                     whileHover={{ scale: 1.05, y: -4 }}
-                    className="text-center group cursor-pointer w-full flex flex-col items-center"
+                    className="text-center group cursor-pointer"
                   >
-                    {ngo.image ? (
-                      <div className="w-24 h-24 md:w-28 md:h-28 flex items-center justify-center p-2 bg-white rounded-xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300">
+                    <div className={`w-32 h-32 md:w-36 md:h-36 flex items-center justify-center p-3 rounded-xl shadow-sm border transition-all duration-300 ${
+                      ngo.name === "SAFA NGO" 
+                        ? "bg-white border-gray-300 group-hover:shadow-lg" 
+                        : "bg-white border-gray-100 group-hover:shadow-md"
+                    }`}>
+                      {ngo.name === "SAFA NGO" ? (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <img
+                            src={ngo.image}
+                            alt={ngo.name}
+                            className="w-full h-full object-contain filter contrast-150"
+                          />
+                        </div>
+                      ) : (
                         <img
                           src={ngo.image}
                           alt={ngo.name}
-                          className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="w-full h-full object-contain transition-all duration-300"
                         />
-                      </div>
-                    ) : (
-                      <div className={`w-20 h-20 ${ngo.color} rounded-xl flex items-center justify-center mx-auto group-hover:shadow-xl transition-all duration-300`}>
-                        <span className="text-white font-bold text-lg md:text-xl">
-                          {ngo.initials}
-                        </span>
-                      </div>
-                    )}
-                    <p className="mt-3 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors line-clamp-2">
-                      {ngo.name}
-                    </p>
+                      )}
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -252,7 +252,7 @@ const Index = () => {
               <div className="mt-12 text-center">
                 <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
                   <Shield className="w-5 h-5" />
-                  <span>10 NGO Partners Across Hyderabad</span>
+                  <span>7 NGO Partners Across Hyderabad</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
