@@ -226,11 +226,10 @@ const Index = () => {
                     whileHover={{ scale: 1.05, y: -4 }}
                     className="text-center group cursor-pointer"
                   >
-                    <div className={`w-32 h-32 md:w-36 md:h-36 flex items-center justify-center p-3 rounded-xl shadow-sm border transition-all duration-300 ${
-                      ngo.name === "SAFA NGO" 
-                        ? "bg-gradient-to-br from-gray-900 to-black border-gray-700 group-hover:shadow-lg" 
+                    <div className={`w-32 h-32 md:w-36 md:h-36 flex items-center justify-center p-3 rounded-xl shadow-sm border transition-all duration-300 ${ngo.name === "SAFA NGO"
+                        ? "bg-gradient-to-br from-gray-900 to-black border-gray-700 group-hover:shadow-lg"
                         : "bg-white border-gray-100 group-hover:shadow-md"
-                    }`}>
+                      }`}>
                       {ngo.name === "SAFA NGO" ? (
                         <div className="w-full h-full flex items-center justify-center">
                           <img
@@ -254,7 +253,7 @@ const Index = () => {
               <div className="mt-12 text-center">
                 <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
                   <Shield className="w-5 h-5" />
-                  <span>9 NGO Partners Across Hyderabad</span>
+                  <span>Partnered with over 9 NGOs</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -416,10 +415,10 @@ const Index = () => {
                 {t("common.ourReach")}
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
-                Serving Women Across Hyderabad
+                Serving Women Across Hyderabad, Delhi, Mumbai
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                We're expanding our reach across Hyderabad to empower more women entrepreneurs
+                We're expanding our reach across India to empower more women entrepreneurs
                 with data-driven insights.
               </p>
               <img
@@ -477,9 +476,9 @@ const Index = () => {
                 >
                   <div className="text-center">
                     <div className="text-7xl md:text-8xl font-bold text-primary mb-4">
-                      <CounterAnimation end={10} suffix="+" />
+                      <CounterAnimation end={15} suffix="+" />
                     </div>
-                    <p className="text-xl text-muted-foreground">Areas Covered</p>
+                    <p className="text-xl text-muted-foreground">Cities Covered</p>
                   </div>
                 </motion.div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft" />

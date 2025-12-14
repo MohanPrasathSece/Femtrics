@@ -227,8 +227,8 @@ export const Contact = () => {
                   {
                     icon: Phone,
                     label: t("contact.phone"),
-                    value: "+91 98765 43210",
-                    href: "tel:+919876543210",
+                    value: "+91 82478 90920",
+                    href: "tel:+918247890920",
                   },
                   {
                     icon: Mail,
@@ -280,7 +280,7 @@ export const Contact = () => {
                   We prioritize phone-first communication!
                 </p>
                 <Button variant="outline" size="sm" asChild>
-                  <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/918247890920" target="_blank" rel="noopener noreferrer">
                     {t("contact.chatOnWhatsapp")}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </a>
