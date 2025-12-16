@@ -525,7 +525,7 @@ const Index = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { display: "12-15", label: t("common.forecastingModels") },
-              { display: "300+", label: t("common.participantsTrained") },
+              { display: "60+", label: t("common.participantsTrained") },
               { display: "3", label: t("common.ngoPartnerships") },
               { display: "1-2", label: t("common.newspaperFeatures") },
             ].map((metric, index) => (

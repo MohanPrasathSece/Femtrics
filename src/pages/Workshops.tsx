@@ -331,7 +331,7 @@ const Workshops = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: Users, value: "300+", label: "Participants Trained" },
+              { icon: Users, value: "60+", label: "Participants Trained" },
               { icon: GraduationCap, value: "50+", label: "Workshops Conducted" },
               { icon: Award, value: "95%", label: "Satisfaction Rate" },
             ].map((stat, index) => (
