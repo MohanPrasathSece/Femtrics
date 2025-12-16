@@ -142,121 +142,101 @@ const Index = () => {
         <Breadcrumb items={[]} />
       </div>
 
-      {/* Landing Hero - Simplified & Clean */}
-      <section className="relative bg-white overflow-hidden pt-32 pb-32 md:pt-40 md:pb-40 lg:pt-48 lg:pb-48 min-h-[80vh] lg:min-h-[90vh] flex items-center">
-        {/* Simple Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-pink-50 rounded-full blur-2xl" />
-          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-rose-50 rounded-full blur-2xl" />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center">
-            {/* Simplified Text Section */}
-            <div className="space-y-8">
+      {/* Simple Hero Section with Image */}
+      <section className="relative bg-gradient-to-br from-primary/5 to-background pt-20 pb-16 md:pt-32 md:pb-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Text Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-                  {t("hero.tagline")}
-                </div>
-
-                <motion.h1
-                  className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-foreground"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  <span className="text-primary">Data Analytics</span> for Women Entrepreneurs in Hyderabad - #1 Business Intelligence Solution for Female Business Growth
-                </motion.h1>
-
-                <motion.h2
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-primary leading-tight"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  Transform Your Small Business with Data-Driven Insights - Trusted by 60+ Women Entrepreneurs Across Telangana
-                </motion.h2>
-
-                <motion.h3
-                  className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-muted-foreground leading-tight"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  Complete Business Intelligence, Revenue Analytics & Customer Insights for Women-Led Businesses in Hyderabad
-                </motion.h3>
-
-                <motion.p
-                  className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  {t("hero.description")} Get comprehensive business analytics, revenue tracking, customer insights, and growth strategies specifically designed for women micro-entrepreneurs in Hyderabad, Telangana. Our data-driven solutions include business intelligence, predictive analytics, KPI tracking, and performance metrics to help female founders scale their businesses. Join 60+ successful women entrepreneurs using data visualization and analytics reporting to achieve business growth in Hyderabad's competitive market.
-                </motion.p>
+                {t("hero.tagline")}
               </motion.div>
 
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 md:gap-6"
+              <motion.h1
+                className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span className="text-primary">Data Analytics</span> for Women Entrepreneurs
+              </motion.h1>
+
+              <motion.p
+                className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                Empowering women micro-entrepreneurs in Hyderabad with actionable business insights and growth strategies.
+              </motion.p>
+
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <Button
                   onClick={() => setShowMicroConversion(true)}
                   size="lg"
-                  className="px-8 py-4 bg-primary text-white hover:bg-primary/90 shadow-lg hover:shadow-xl font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300"
+                  className="px-8 py-3 bg-primary text-white hover:bg-primary/90 shadow-lg font-semibold rounded-lg"
                 >
                   <span className="flex items-center gap-2">
                     {t("hero.apply")}
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4" />
                   </span>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
                   size="lg"
-                  className="px-8 py-4 border-2 border-primary text-primary hover:bg-primary/5 font-semibold rounded-xl text-base md:text-lg transform hover:scale-105 transition-all duration-300"
+                  className="px-8 py-3 border-2 border-primary text-primary hover:bg-primary/5 font-semibold rounded-lg"
                 >
                   <Link to="/about">
-                    <span className="flex items-center gap-2">
-                      {t("hero.learnMore")}
-                      <Target className="w-4 h-4" />
-                    </span>
+                    {t("hero.learnMore")}
                   </Link>
                 </Button>
               </motion.div>
-            </div>
+            </motion.div>
 
-            {/* Simplified Visual Section */}
+            {/* Image Section */}
             <motion.div
-              className="relative"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative"
             >
-              <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-xl">
-                <div className="grid gap-6">
-                  <div className="rounded-2xl overflow-hidden">
-                    <img src={hero1} alt="Femtrics analytics dashboard showing business insights for women entrepreneurs" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="rounded-2xl overflow-hidden">
-                      <img src={hero2} alt="Women entrepreneurs in Hyderabad using data analytics for business growth" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="rounded-2xl overflow-hidden">
-                      <img src={hero3} alt="Business growth insights and revenue analytics for women-led businesses" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src={hero1} 
+                  alt="Women entrepreneurs using data analytics for business growth" 
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
+              
+              {/* Floating Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100"
+              >
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">60+</div>
+                  <div className="text-sm text-muted-foreground">Women Businesses</div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -561,21 +541,7 @@ const Index = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              <div className="relative">
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="aspect-square rounded-3xl bg-card p-8 flex items-center justify-center border border-border"
-                >
-                  <div className="text-center">
-                    <div className="text-7xl md:text-8xl font-bold text-primary mb-4">
-                      <CounterAnimation end={15} suffix="+" />
-                    </div>
-                    <p className="text-xl text-muted-foreground">Cities Covered</p>
-                  </div>
-                </motion.div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft" />
-                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10" />
-              </div>
+              {/* Cities Covered section removed as requested */}
             </AnimatedSection>
           </div>
         </div>
@@ -586,18 +552,15 @@ const Index = () => {
       <section className="section-padding bg-background">
         <div className="container-tight">
           <AnimatedSection className="text-center mb-16">
-
-            <h2 className="font-display text-2xl md:text-3xl font-semibold mb-4">
-              {t("common.impactTargets")}
-            </h2>
+            {/* Title removed as requested */}
           </AnimatedSection>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {[
-              { display: "80-120+", label: t("common.womenOnboarded") },
-              { display: "30-35%", label: t("common.revenueImprovement") },
-              { display: "20%", label: t("common.inventoryWasteReduction") },
-              { display: "100+", label: t("common.dashboardsDeployed") },
+              { display: "60+", label: "women business onboarded" },
+              { display: "30-35%", label: "Revenue improvement" },
+              { display: "20%", label: "Inventory waste reduction" },
+              { display: "100+", label: "Dashboards deployed" },
             ].map((metric, index) => (
               <AnimatedSection key={metric.label} delay={index * 0.1}>
                 <motion.div
@@ -616,10 +579,8 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { display: "12-15", label: t("common.forecastingModels") },
-              { display: "60+", label: t("common.participantsTrained") },
-              { display: "3", label: t("common.ngoPartnerships") },
-              { display: "1-2", label: t("common.newspaperFeatures") },
+              { display: "12-15", label: "Forecasting models used monthly" },
+              { display: "50+", label: "participants trained" },
             ].map((metric, index) => (
               <AnimatedSection key={metric.label} delay={(index + 4) * 0.1}>
                 <motion.div
@@ -638,94 +599,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Enhanced FAQ Section - Advanced SEO */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-tight">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-primary text-base font-semibold tracking-wider uppercase mb-4 block">
-              Expert Answers to Your Questions
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4 tracking-tight">
-              Everything You Need to Know About Data Analytics for Women Entrepreneurs
-            </h2>
-            <h3 className="font-display text-2xl md:text-3xl font-medium text-primary mb-6">
-              Comprehensive Guide to Business Intelligence for Female Business Owners in Hyderabad
-            </h3>
-            <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
-              Get expert answers about data analytics, business intelligence, revenue tracking, and growth strategies specifically designed for women micro-entrepreneurs in Hyderabad and Telangana.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <AnimatedSection direction="left" delay={0.1}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  What makes Femtrics the #1 choice for women entrepreneurs in Hyderabad?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Femtrics is Hyderabad's leading data analytics platform specifically designed for women micro-entrepreneurs. We provide comprehensive business intelligence solutions including revenue tracking, customer analytics, predictive modeling, and performance metrics. Our affordable pricing, local expertise, and proven track record with 60+ successful women entrepreneurs make us the preferred choice for data-driven business growth in Telangana.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" delay={0.2}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  How does your analytics dashboard help small businesses grow revenue?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Our MicroBiz Insight Dashboard provides real-time business intelligence through advanced data visualization, KPI tracking, and predictive analytics. Women entrepreneurs can track revenue patterns, understand customer behavior, optimize inventory management, and identify growth opportunities. Our data-driven approach has helped businesses increase revenue by up to 200% within 6 months.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="left" delay={0.3}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  Which types of businesses benefit most from your analytics solutions?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  We specialize in helping women micro-entrepreneurs including home-based bakers, boutique and saree store owners, tiffin services, mehndi artists, tutors, homemade craft businesses, and Instagram-based entrepreneurs across Hyderabad, Secunderabad, and Telangana. Our solutions are customized for each business type with industry-specific metrics and growth strategies.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" delay={0.4}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  What is the investment required for business analytics solutions?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Our analytics solutions start from just ₹999/month, making professional business intelligence accessible to all women entrepreneurs. We offer flexible pricing plans based on business size and requirements, with customized solutions for startups and established businesses. Get a free consultation to understand how data analytics can transform your business ROI.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="left" delay={0.5}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  How quickly can I see results from data-driven business decisions?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Most women entrepreneurs see measurable improvements within 30-60 days of implementing our analytics insights. Our clients typically report 20-50% revenue growth in the first quarter, with continued optimization leading to sustainable business expansion. We provide ongoing support to ensure you maximize the value of your business data.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" delay={0.6}>
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
-                  Do you provide training and support for analytics implementation?
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Yes! We offer comprehensive training, workshops, and ongoing support for women entrepreneurs in Hyderabad. Our "Data for Didi" workshops provide hands-on analytics training, while our expert team ensures smooth implementation and continuous optimization. We're committed to empowering women with data literacy and business intelligence skills.
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
+      
       {/* CTA Section */}
       <section className="section-padding bg-background">
         <div className="container-tight">
