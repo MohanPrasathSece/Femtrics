@@ -7,6 +7,8 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
+import Breadcrumb from "@/components/Breadcrumb";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createWorkshopRegistrationEmail } from "@/utils/emailService";
 import { useTranslation } from "@/contexts/TranslationContext";
 import workshopsHero from "@/assets/workshops-hero.png";
@@ -264,7 +266,44 @@ const Workshops = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
+      <SEO 
+        title="Data Analytics Workshops for Women Entrepreneurs in Hyderabad | Femtrics"
+        description="Join Femtrics' hands-on data analytics workshops designed for women entrepreneurs in Hyderabad. Learn to track business metrics, analyze data, and make data-driven decisions for business growth."
+        keywords="data analytics workshops Hyderabad, women entrepreneur training, business analytics courses, data literacy for women, Hyderabad workshops, small business analytics, Femtrics workshops, data-driven business training"
+        canonical="/workshops"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "@id": "https://femtrics.com/#workshop-event",
+            "name": "Data Analytics Workshops for Women Entrepreneurs",
+            "description": "Hands-on data analytics workshops designed specifically for women micro-entrepreneurs to learn data-driven business decision making.",
+            "organizer": {
+              "@type": "Organization",
+              "@id": "https://femtrics.com/#organization",
+              "name": "Femtrics"
+            },
+            "location": {
+              "@type": "Place",
+              "name": "Hyderabad, Telangana",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Hyderabad",
+                "addressRegion": "Telangana",
+                "addressCountry": "IN"
+              }
+            },
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled"
+          }
+        ]}
+      />
       <Header />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container-tight pt-6">
+        <Breadcrumb items={[{ name: "Workshops", url: "/workshops" }]} />
+      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg relative overflow-hidden max-w-[100vw]">

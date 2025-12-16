@@ -5,6 +5,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CounterAnimation } from "@/components/CounterAnimation";
+import SEO from "@/components/SEO";
+import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import hero2 from "@/assets/hero-2.png";
 import hero3 from "@/assets/hero-3.png";
@@ -61,7 +63,33 @@ const About = () => {
   }
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
+      <SEO 
+        title="About Femtrics - Empowering Women Entrepreneurs with Data Analytics in Hyderabad"
+        description="Learn about Femtrics' mission to empower women micro-entrepreneurs in Hyderabad through affordable data analytics solutions. Our story, team, and commitment to women's economic empowerment."
+        keywords="about Femtrics, women empowerment Hyderabad, data analytics mission, women entrepreneurs support, Femtrics story, social impact Hyderabad, women-led businesses, economic empowerment"
+        canonical="/about"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "@id": "https://femtrics.com/#about-page",
+            "name": "About Femtrics",
+            "description": "Learn about Femtrics' mission to empower women micro-entrepreneurs through data analytics solutions.",
+            "url": "https://femtrics.com/about",
+            "mainEntity": {
+              "@type": "Organization",
+              "@id": "https://femtrics.com/#organization",
+              "name": "Femtrics"
+            }
+          }
+        ]}
+      />
       <Header />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container-tight pt-6">
+        <Breadcrumb items={[{ name: "About", url: "/about" }]} />
+      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 relative overflow-hidden max-w-[100vw]">

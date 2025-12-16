@@ -6,6 +6,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
+import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createJoinEmail, createPartnerEmail } from "@/utils/emailService";
 import {
@@ -477,7 +479,33 @@ const Join = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <SEO 
+        title="Join Femtrics - Partner with Us for Women Entrepreneur Empowerment in Hyderabad"
+        description="Join Femtrics as a volunteer, partner, or supporter. Help us empower women entrepreneurs in Hyderabad through data analytics and business insights. Multiple ways to contribute."
+        keywords="join Femtrics, women empowerment volunteer, partner with Femtrics, support women entrepreneurs Hyderabad, social impact Hyderabad, NGO partnerships, volunteer opportunities"
+        canonical="/join"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "JoinPage",
+            "@id": "https://femtrics.com/#join-page",
+            "name": "Join Femtrics",
+            "description": "Join Femtrics to support women entrepreneurs through data analytics and business insights.",
+            "url": "https://femtrics.com/join",
+            "mainEntity": {
+              "@type": "Organization",
+              "@id": "https://femtrics.com/#organization",
+              "name": "Femtrics"
+            }
+          }
+        ]}
+      />
       <Header />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container-tight pt-6">
+        <Breadcrumb items={[{ name: "Join", url: "/join" }]} />
+      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">

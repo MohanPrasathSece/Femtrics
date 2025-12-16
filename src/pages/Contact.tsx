@@ -6,6 +6,8 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { EmailTerminal } from "@/components/EmailTerminal";
+import SEO from "@/components/SEO";
+import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createContactEmail } from "@/utils/emailService";
 import {
@@ -193,7 +195,39 @@ export const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <SEO 
+        title="Contact Femtrics - Get in Touch for Data Analytics Solutions in Hyderabad"
+        description="Contact Femtrics for data analytics solutions for women entrepreneurs in Hyderabad. Get in touch for workshops, consulting, and business analytics support. Call or email us today."
+        keywords="contact Femtrics, data analytics Hyderabad, women entrepreneurs contact, business analytics consulting, Femtrics phone, email support, Hyderabad data workshops"
+        canonical="/contact"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "@id": "https://femtrics.com/#contact-page",
+            "name": "Contact Femtrics",
+            "description": "Get in touch with Femtrics for data analytics solutions and workshops for women entrepreneurs.",
+            "url": "https://femtrics.com/contact",
+            "mainEntity": {
+              "@type": "Organization",
+              "@id": "https://femtrics.com/#organization",
+              "name": "Femtrics",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-XXXXXXXXXX",
+                "contactType": "customer service",
+                "availableLanguage": ["English", "Hindi", "Telugu"]
+              }
+            }
+          }
+        ]}
+      />
       <Header />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container-tight pt-6">
+        <Breadcrumb items={[{ name: "Contact", url: "/contact" }]} />
+      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">
