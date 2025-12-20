@@ -306,7 +306,8 @@ const Workshops = () => {
           <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl" />
         </div>
         <div className="container-tight relative z-10 max-w-[100vw] overflow-x-hidden">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-border/50 shadow-xl p-8 md:p-12 lg:p-16 max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection className="max-w-xl">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
                 Educational Programs
@@ -346,7 +347,8 @@ const Workshops = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Educational Impact Section */}
       <section className="section-padding bg-background">
