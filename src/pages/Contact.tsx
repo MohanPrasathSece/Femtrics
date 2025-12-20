@@ -7,7 +7,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { EmailTerminal } from "@/components/EmailTerminal";
 import SEO from "@/components/SEO";
-import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createContactEmail } from "@/utils/emailService";
 import {
@@ -224,10 +223,6 @@ export const Contact = () => {
       />
       <Header />
       
-      {/* Breadcrumb Navigation */}
-      <div className="container-tight pt-6">
-        <Breadcrumb items={[{ name: "Contact", url: "/contact" }]} />
-      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">

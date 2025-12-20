@@ -7,7 +7,6 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
-import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createJoinEmail, createPartnerEmail } from "@/utils/emailService";
 import {
@@ -502,10 +501,6 @@ const Join = () => {
       />
       <Header />
       
-      {/* Breadcrumb Navigation */}
-      <div className="container-tight pt-6">
-        <Breadcrumb items={[{ name: "Join", url: "/join" }]} />
-      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg">

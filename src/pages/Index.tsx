@@ -8,7 +8,6 @@ import { CounterAnimation } from "@/components/CounterAnimation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import SEO from "@/components/SEO";
-import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { MicroConversionModal, MicroConversionData } from "@/components/MicroConversionModal";
 import analyticsBg from "@/assets/analytics-bg.png";
@@ -137,10 +136,6 @@ const Index = () => {
       />
       <Header />
       
-      {/* Breadcrumb Navigation */}
-      <div className="container-tight pt-6">
-        <Breadcrumb items={[]} />
-      </div>
 
       {/* Simple Hero Section with Image */}
       <section className="relative bg-gradient-to-br from-primary/5 to-background pt-20 pb-16 md:pt-32 md:pb-24">
@@ -557,10 +552,10 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {[
-              { display: "60+", label: "women business onboarded" },
+              { display: "40+", label: "woman business onboarded" },
               { display: "30-35%", label: "Revenue improvement" },
               { display: "20%", label: "Inventory waste reduction" },
-              { display: "100+", label: "Dashboards deployed" },
+              { display: "70+", label: "dashboards deployed" },
             ].map((metric, index) => (
               <AnimatedSection key={metric.label} delay={index * 0.1}>
                 <motion.div

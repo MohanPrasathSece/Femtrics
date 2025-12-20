@@ -6,7 +6,6 @@ import { Footer } from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CounterAnimation } from "@/components/CounterAnimation";
 import SEO from "@/components/SEO";
-import Breadcrumb from "@/components/Breadcrumb";
 import { useTranslation } from "@/contexts/TranslationContext";
 import hero2 from "@/assets/hero-2.png";
 import hero3 from "@/assets/hero-3.png";
@@ -86,10 +85,6 @@ const About = () => {
       />
       <Header />
       
-      {/* Breadcrumb Navigation */}
-      <div className="container-tight pt-6">
-        <Breadcrumb items={[{ name: "About", url: "/about" }]} />
-      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 relative overflow-hidden max-w-[100vw]">

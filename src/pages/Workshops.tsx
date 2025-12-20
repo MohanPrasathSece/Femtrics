@@ -8,7 +8,6 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
-import Breadcrumb from "@/components/Breadcrumb";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createWorkshopRegistrationEmail } from "@/utils/emailService";
 import { useTranslation } from "@/contexts/TranslationContext";
 import workshopsHero from "@/assets/workshops-hero.png";
@@ -300,10 +299,6 @@ const Workshops = () => {
       />
       <Header />
       
-      {/* Breadcrumb Navigation */}
-      <div className="container-tight pt-6">
-        <Breadcrumb items={[{ name: "Workshops", url: "/workshops" }]} />
-      </div>
 
       {/* Hero */}
       <section className="pt-32 pb-20 hero-bg relative overflow-hidden max-w-[100vw]">
