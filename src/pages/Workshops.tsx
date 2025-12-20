@@ -301,7 +301,7 @@ const Workshops = () => {
       
 
       {/* Hero */}
-      <section className="pt-32 pb-20 hero-bg relative overflow-hidden max-w-[100vw]">
+      <section className="pt-40 pb-24 hero-bg relative overflow-hidden max-w-[100vw]">
         <div className="absolute top-20 right-0 w-96 h-96 opacity-30 max-w-[100vw]">
           <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl" />
         </div>

@@ -87,7 +87,7 @@ const About = () => {
       
 
       {/* Hero */}
-      <section className="pt-32 pb-20 relative overflow-hidden max-w-[100vw]">
+      <section className="pt-40 pb-24 relative overflow-hidden max-w-[100vw]">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 max-w-[100vw]" />
         <div className="absolute top-20 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />

@@ -57,7 +57,7 @@ const Dashboard = () => {
       <Header />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 hero-bg">
+      <section className="pt-40 pb-24 hero-bg">
         <div className="container-tight">
           <AnimatedSection className="max-w-4xl">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">

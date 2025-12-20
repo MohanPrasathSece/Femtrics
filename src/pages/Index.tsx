@@ -138,7 +138,7 @@ const Index = () => {
       
 
       {/* Simple Hero Section with Image */}
-      <section className="relative bg-gradient-to-br from-primary/5 to-background pt-20 pb-16 md:pt-32 md:pb-24">
+      <section className="relative bg-gradient-to-br from-primary/5 to-background pt-36 pb-24 md:pt-48 md:pb-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
