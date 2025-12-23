@@ -536,7 +536,74 @@ const Index = () => {
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.2}>
-              {/* Cities Covered section removed as requested */}
+              <div className="relative">
+                <img
+                  src={hero3}
+                  alt="Women entrepreneurs across India using Femtrics analytics"
+                  className="w-full h-auto rounded-2xl shadow-lg mb-8"
+                />
+                
+                {/* Stats Overlay */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-gray-100"
+                >
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">3</div>
+                    <div className="text-sm text-muted-foreground font-medium">Major Cities</div>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="bg-gradient-to-br from-primary/5 to-background rounded-2xl p-8 border border-border/50">
+                <h3 className="font-display text-2xl font-semibold mb-6">Expanding Our Impact</h3>
+                <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                  From our Hyderabad headquarters, we're rapidly expanding to serve women entrepreneurs across India's major business hubs.
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                      <Target className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Strategic Expansion</h4>
+                      <p className="text-muted-foreground">Targeting high-potential markets with strong women entrepreneur communities</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                      <Users className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Local Partnerships</h4>
+                      <p className="text-muted-foreground">Collaborating with regional NGOs and women's organizations</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                      <TrendingUp className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-1">Growth Trajectory</h4>
+                      <p className="text-muted-foreground">Planning to reach 10+ cities by 2025</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 p-4 bg-primary/10 rounded-xl border border-primary/20">
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="w-5 h-5 text-primary flex-shrink-0" />
+                    <p className="text-primary font-medium">
+                      Coming soon: Bangalore, Chennai, and Pune!
+                    </p>
+                  </div>
+                </div>
+              </div>
             </AnimatedSection>
           </div>
         </div>
