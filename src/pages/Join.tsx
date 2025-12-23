@@ -478,10 +478,10 @@ const Join = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <SEO 
-        title="Join Femtrics - Partner with Us for Women Entrepreneur Empowerment in Hyderabad"
-        description="Join Femtrics as a volunteer, partner, or supporter. Help us empower women entrepreneurs in Hyderabad through data analytics and business insights. Multiple ways to contribute."
-        keywords="join Femtrics, women empowerment volunteer, partner with Femtrics, support women entrepreneurs Hyderabad, social impact Hyderabad, NGO partnerships, volunteer opportunities"
+      <SEO
+        title="Join Femtrics - Partner with Us for Women Entrepreneur Empowerment"
+        description="Join Femtrics as a volunteer, partner, or supporter. Help us empower women entrepreneurs across India through data analytics and business insights. Multiple ways to contribute."
+        keywords="join Femtrics, women empowerment volunteer, partner with Femtrics, support women entrepreneurs India, social impact India, NGO partnerships, volunteer opportunities"
         canonical="/join"
         jsonLd={[
           {
@@ -500,7 +500,7 @@ const Join = () => {
         ]}
       />
       <Header />
-      
+
 
       {/* Hero */}
       <section className="pt-40 pb-24 hero-bg">
@@ -608,7 +608,7 @@ const Join = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />
-                        Based in Hyderabad or partner areas
+                        Based in our service cities (Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune)
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />

@@ -4,11 +4,12 @@
 export const advancedSEOStrategy = {
   // Primary Keywords with High Commercial Intent
   primaryKeywords: [
-    "data analytics for women entrepreneurs Hyderabad",
+    "data analytics for women entrepreneurs India",
     "business analytics solutions for women in business",
     "women entrepreneur data insights India",
-    "small business analytics Hyderabad Telangana",
-    "female business owner data solutions"
+    "small business analytics India",
+    "female business owner data solutions",
+    "data analytics Hyderabad Delhi Mumbai"
   ],
 
   // LSI (Latent Semantic Indexing) Keywords - Google's Understanding
@@ -39,15 +40,15 @@ export const advancedSEOStrategy = {
     ],
     hyderabadBusiness: [
       "Hyderabad startups",
-      "Telangana business",
-      "Secunderabad business",
-      "Hyderabad market",
-      "local business Hyderabad",
-      "Hyderabad entrepreneurs",
-      "business in Hyderabad",
-      "Hyderabad economy",
-      "startup ecosystem Hyderabad",
-      "business growth Hyderabad"
+      "Delhi business",
+      "Mumbai business",
+      "Bangalore startups",
+      "Chennai business",
+      "Pune entrepreneurs",
+      "business in India",
+      "Indian economy",
+      "startup ecosystem India",
+      "business growth India"
     ]
   },
 
@@ -61,11 +62,11 @@ export const advancedSEOStrategy = {
       "NASSCOM Women in Tech"
     ],
     locations: [
-      "Hyderabad, Telangana, India",
-      "HITEC City Hyderabad",
-      "Banjara Hills",
-      "Jubilee Hills",
-      "Gachibowli"
+      "Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune",
+      "Hyderabad",
+      "Delhi",
+      "Mumbai",
+      "Bangalore"
     ],
     concepts: [
       "Micro entrepreneurship",
@@ -80,12 +81,12 @@ export const advancedSEOStrategy = {
   // Advanced Content Structure for SEO
   contentStructure: {
     homepage: {
-      h1: "Data Analytics for Women Entrepreneurs in Hyderabad - #1 Business Intelligence Solution",
+      h1: "Data Analytics for Women Entrepreneurs in India - #1 Business Intelligence Solution",
       h2: "Transform Your Small Business with Data-Driven Insights - Trusted by 60+ Women Entrepreneurs",
       h3: [
         "Affordable Analytics Solutions for Women-Led Businesses",
         "Complete Business Intelligence for Micro Entrepreneurs",
-        "Expert Data Analytics Consulting in Hyderabad"
+        "Expert Data Analytics Consulting in India"
       ],
       wordCount: "2000+ words",
       keywordDensity: "2-3%",
@@ -137,7 +138,7 @@ export const advancedSEOStrategy = {
         name: "Femtrics"
       },
       serviceType: "Business Analytics Consulting",
-      areaServed: "Hyderabad, Telangana, India",
+      areaServed: ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Analytics Services",
@@ -150,7 +151,7 @@ export const advancedSEOStrategy = {
             }
           },
           {
-            "@type": "Offer", 
+            "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name: "Revenue Tracking Solutions"
@@ -169,7 +170,7 @@ export const advancedSEOStrategy = {
           name: "What is Femtrics and how does it help women entrepreneurs?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Femtrics is a comprehensive data analytics platform designed specifically for women micro-entrepreneurs in Hyderabad. We provide affordable business intelligence solutions including revenue tracking, customer analytics, inventory management, and growth strategies to help women-led businesses make data-driven decisions and scale their operations."
+            text: "Femtrics is a comprehensive data analytics platform designed specifically for women micro-entrepreneurs across India. We provide affordable business intelligence solutions including revenue tracking, customer analytics, inventory management, and growth strategies to help women-led businesses make data-driven decisions and scale their operations."
           }
         },
         {
@@ -196,7 +197,7 @@ export const advancedSEOStrategy = {
 
   // Competitive Analysis Keywords
   competitiveKeywords: [
-    "business analytics Hyderabad",
+    "business analytics India",
     "data consulting for small businesses",
     "women business support India",
     "startup analytics solutions",
@@ -205,7 +206,7 @@ export const advancedSEOStrategy = {
 
   // Long-Tail Keywords for High Intent Traffic
   longTailKeywords: [
-    "how to track business revenue for home bakery in Hyderabad",
+    "how to track business revenue for home bakery in India",
     "best data analytics tools for boutique owners in India",
     "affordable business intelligence for women entrepreneurs",
     "customer analytics for tiffin service business",
@@ -237,8 +238,8 @@ export const advancedSEOStrategy = {
     googleMyBusiness: "Optimized GMB profile",
     localCitations: "50+ local business directories",
     reviews: "100+ positive reviews",
-    localBacklinks: "Hyderabad business associations",
-    geoTargeting: "Hyderabad + 50km radius"
+    localBacklinks: "Indian business associations",
+    geoTargeting: "India (Hyderabad, Delhi, Mumbai...)"
   },
 
   // Technical SEO Optimization

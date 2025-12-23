@@ -14,7 +14,7 @@ import analyticsBg from "@/assets/analytics-bg.png";
 import hero1 from "@/assets/hero-1.png";
 import hero2 from "@/assets/hero-2.png";
 import hero3 from "@/assets/hero-3.png";
-import femtricsLogo from "/logo.png";
+import workshopsHero from "@/assets/workshops-hero.png";
 
 const businessTypes = [
   "Home bakers",
@@ -89,10 +89,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <SEO 
-        title="Data Analytics for Women Entrepreneurs in Hyderabad | Business Insights & Growth"
-        description="Femtrics empowers women micro-entrepreneurs in Hyderabad with affordable data analytics solutions. Get actionable business insights, revenue tracking, inventory management, and marketing ROI analysis to grow your business."
-        keywords="Femtrics, women entrepreneurs Hyderabad, data analytics for women, business insights Hyderabad, micro-entrepreneurs India, female business owners, data-driven decisions, small business analytics, revenue tracking, inventory management, marketing ROI, business dashboard, women-led businesses, Hyderabad startups, business growth analytics"
+      <SEO
+        title="Data Analytics for Women Entrepreneurs | Business Insights & Growth"
+        description="Femtrics empowers women micro-entrepreneurs across India with affordable data analytics solutions. Get actionable business insights, revenue tracking, inventory management, and marketing ROI analysis to grow your business."
+        keywords="Femtrics, women entrepreneurs India, data analytics for women, business insights, micro-entrepreneurs India, female business owners, data-driven decisions, small business analytics, revenue tracking, inventory management, marketing ROI, business dashboard, women-led businesses, startups India, business growth analytics"
         canonical="/"
         jsonLd={[
           {
@@ -107,7 +107,7 @@ const Index = () => {
               "name": "Femtrics"
             },
             "serviceType": "Business Analytics Consulting",
-            "areaServed": "Hyderabad, Telangana, India"
+            "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"]
           },
           {
             "@context": "https://schema.org",
@@ -119,7 +119,7 @@ const Index = () => {
                 "name": "What is Femtrics?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Femtrics is a data analytics platform designed specifically for women micro-entrepreneurs in Hyderabad, providing affordable business insights and analytics solutions."
+                  "text": "Femtrics is a data analytics platform designed specifically for women micro-entrepreneurs in India, providing affordable business insights and analytics solutions."
                 }
               },
               {
@@ -135,7 +135,7 @@ const Index = () => {
         ]}
       />
       <Header />
-      
+
 
       {/* Simple Hero Section with Image */}
       <section className="relative bg-gradient-to-br from-primary/5 to-background pt-36 pb-24 md:pt-48 md:pb-32">
@@ -172,7 +172,7 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                Empowering women micro-entrepreneurs in Hyderabad with actionable business insights and growth strategies.
+                Empowering women micro-entrepreneurs across India with actionable business insights and growth strategies.
               </motion.p>
 
               <motion.div
@@ -212,14 +212,14 @@ const Index = () => {
               className="relative"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src={hero1} 
-                  alt="Women entrepreneurs using data analytics for business growth" 
+                <img
+                  src={hero1}
+                  alt="Women entrepreneurs using data analytics for business growth"
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
-              
+
               {/* Floating Stats */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -228,8 +228,8 @@ const Index = () => {
                 className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100"
               >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">60+</div>
-                  <div className="text-sm text-muted-foreground">Women Businesses</div>
+                  <div className="text-2xl font-bold text-primary">500+</div>
+                  <div className="text-sm text-muted-foreground">Women Empowered</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -248,7 +248,7 @@ const Index = () => {
               Empowering Women Entrepreneurs Through Data Analytics
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We collaborate with leading NGOs and organizations in Hyderabad to provide data analytics training and business insights for women micro-entrepreneurs across Telangana
+              We collaborate with leading NGOs and organizations to provide data analytics training and business insights for women micro-entrepreneurs across India
             </p>
           </AnimatedSection>
 
@@ -272,8 +272,8 @@ const Index = () => {
                     className="text-center group cursor-pointer"
                   >
                     <div className={`w-32 h-32 md:w-36 md:h-36 flex items-center justify-center p-3 rounded-xl shadow-sm border transition-all duration-300 ${ngo.name === "SAFA NGO"
-                        ? "bg-gradient-to-br from-gray-900 to-black border-gray-700 group-hover:shadow-lg"
-                        : "bg-white border-gray-100 group-hover:shadow-md"
+                      ? "bg-gradient-to-br from-gray-900 to-black border-gray-700 group-hover:shadow-lg"
+                      : "bg-white border-gray-100 group-hover:shadow-md"
                       }`}>
                       {ngo.name === "SAFA NGO" ? (
                         <div className="w-full h-full flex items-center justify-center">
@@ -403,18 +403,18 @@ const Index = () => {
               Advanced Analytics Solutions That Drive Business Growth
             </h2>
             <h3 className="font-display text-2xl md:text-3xl font-medium text-primary mb-6">
-              Professional Business Intelligence for Women Entrepreneurs in Hyderabad
+              Professional Business Intelligence for Women Entrepreneurs in India
             </h3>
             <p className="text-muted-foreground text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
-              Transform your business data into actionable insights with our comprehensive analytics platform. Designed specifically for women micro-entrepreneurs, our solutions include revenue tracking, customer analytics, predictive modeling, and performance metrics to help you make data-driven decisions and achieve sustainable business growth in Hyderabad's competitive market.
+              Transform your business data into actionable insights with our comprehensive analytics platform. Designed specifically for women micro-entrepreneurs, our solutions include revenue tracking, customer analytics, predictive modeling, and performance metrics to help you make data-driven decisions and achieve sustainable business growth in the competitive market.
             </p>
-            
+
             {/* Additional SEO Content */}
             <div className="mt-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               <div className="bg-card rounded-xl p-6 border border-border">
                 <h4 className="font-semibold text-lg mb-3 text-primary">Why Choose Femtrics?</h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  As Hyderabad's leading data analytics provider for women entrepreneurs, we offer affordable business intelligence solutions that help you track revenue, understand customer behavior, optimize operations, and scale your business with confidence.
+                  As India's premier data analytics provider for women entrepreneurs, we offer affordable business intelligence solutions that help you track revenue, understand customer behavior, optimize operations, and scale your business with confidence.
                 </p>
               </div>
               <div className="bg-card rounded-xl p-6 border border-border">
@@ -482,14 +482,14 @@ const Index = () => {
                 {t("common.ourReach")}
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
-                Serving Women Across Hyderabad, Delhi, Mumbai
+                Serving Women Across Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
                 We're expanding our reach across India to empower more women entrepreneurs
                 with data-driven insights.
               </p>
               <img
-                src={hero2}
+                src={hero1}
                 alt="Women entrepreneurs across Hyderabad"
                 className="w-full h-auto rounded-2xl shadow-lg mb-8 lg:hidden"
               />
@@ -538,11 +538,11 @@ const Index = () => {
             <AnimatedSection direction="right" delay={0.2}>
               <div className="relative">
                 <img
-                  src={hero3}
+                  src={workshopsHero}
                   alt="Women entrepreneurs across India using Femtrics analytics"
                   className="w-full h-auto rounded-2xl shadow-lg mb-8"
                 />
-                
+
                 {/* Stats Overlay */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -551,7 +551,7 @@ const Index = () => {
                   className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-gray-100"
                 >
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-primary">3</div>
+                    <div className="text-2xl font-bold text-primary">6</div>
                     <div className="text-sm text-muted-foreground font-medium">Major Cities</div>
                   </div>
                 </motion.div>
@@ -562,7 +562,7 @@ const Index = () => {
                 <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
                   From our Hyderabad headquarters, we're rapidly expanding to serve women entrepreneurs across India's major business hubs.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
@@ -573,7 +573,7 @@ const Index = () => {
                       <p className="text-muted-foreground">Targeting high-potential markets with strong women entrepreneur communities</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
                       <Users className="w-5 h-5 text-primary" />
@@ -583,7 +583,7 @@ const Index = () => {
                       <p className="text-muted-foreground">Collaborating with regional NGOs and women's organizations</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
                       <TrendingUp className="w-5 h-5 text-primary" />
@@ -599,7 +599,7 @@ const Index = () => {
                   <div className="flex items-center gap-3">
                     <Sparkles className="w-5 h-5 text-primary flex-shrink-0" />
                     <p className="text-primary font-medium">
-                      Coming soon: Bangalore, Chennai, and Pune!
+                      Expanding to more cities soon!
                     </p>
                   </div>
                 </div>
@@ -613,16 +613,13 @@ const Index = () => {
       {/* Goals / Impact Metrics */}
       <section className="section-padding bg-background">
         <div className="container-tight">
-          <AnimatedSection className="text-center mb-16">
-            {/* Title removed as requested */}
-          </AnimatedSection>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {[
-              { display: "40+", label: "woman business onboarded" },
-              { display: "30-35%", label: "Revenue improvement" },
-              { display: "20%", label: "Inventory waste reduction" },
-              { display: "70+", label: "dashboards deployed" },
+              { display: "500+", label: "Women Empowered with business analytics" },
+              { display: "40%", label: "Growth Average revenue increase" },
+              { display: "6+", label: "Business Types From boutiques to tiffin services" },
+              { display: "15+", label: "Workshops Training programs conducted" },
             ].map((metric, index) => (
               <AnimatedSection key={metric.label} delay={index * 0.1}>
                 <motion.div
@@ -641,8 +638,9 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { display: "12-15", label: "Forecasting models used monthly" },
-              { display: "50+", label: "participants trained" },
+              { display: "60+", label: "Participants Trained" },
+              { display: "50+", label: "Workshops Conducted" },
+              { display: "95%", label: "Satisfaction Rate" },
             ].map((metric, index) => (
               <AnimatedSection key={metric.label} delay={(index + 4) * 0.1}>
                 <motion.div
@@ -661,7 +659,7 @@ const Index = () => {
         </div>
       </section>
 
-      
+
       {/* CTA Section */}
       <section className="section-padding bg-background">
         <div className="container-tight">
@@ -673,7 +671,7 @@ const Index = () => {
               Join 60+ Women Entrepreneurs Growing Their Businesses with Femtrics
             </h3>
             <p className="text-muted-foreground text-xl md:text-2xl mb-10 leading-relaxed">
-              Take the first step towards data-driven business decisions. Our affordable analytics solutions are designed specifically for women entrepreneurs in Hyderabad who want to scale their businesses and maximize their revenue potential.
+              Take the first step towards data-driven business decisions. Our affordable analytics solutions are designed specifically for women entrepreneurs who want to scale their businesses and maximize their revenue potential.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild variant="hero" size="lg" className="btn-shimmer">

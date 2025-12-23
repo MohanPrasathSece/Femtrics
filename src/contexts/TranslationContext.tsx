@@ -27,7 +27,7 @@ const translations: Translations = {
   "nav.join": { en: "Join Us", hi: "हमसे जुड़ें", te: "మాతో చేరండి" },
   "nav.contact": { en: "Contact", hi: "संपर्क", te: "సంప్రదించండి" },
   "nav.getStarted": { en: "Get Started", hi: "शुरू करें", te: "ప్రారంభించండి" },
-  
+
   // Hero Section
   "hero.tagline": { en: "A Business-Analytics Social Enterprise", hi: "एक व्यापार-विश्लेषण सामाजिक उद्यम", te: "ఒక వ్యాపార-విశ్లేషణ సామాజిక సంస్థ" },
   "hero.title": { en: "Where women lead with data, not guesswork.", hi: "जहां महिलाएं अनुमान नहीं, डेटा के साथ आगे बढ़ती हैं।", te: "మహిళలు ఊహాజనితంగా కాకుండా, డేటాతో నడిచే చోట." },
@@ -36,7 +36,7 @@ const translations: Translations = {
   "hero.learnMore": { en: "Learn More", hi: "अधिक जानें", te: "మరింత తెలుసుకోండి" },
   "hero.free": { en: "100% Free for Eligible Businesses", hi: "पात्र व्यवसायों के लिए 100% निःशुल्क", te: "అర్హత ఉన్న వ్యాపారాల కోసం 100% ఉచితం" },
   "hero.noTech": { en: "No Technical Skills Required", hi: "तकनीकी कौशल की आवश्यकता नहीं", te: "సాంకేతిక నైపుణ్యాలు అవసరం లేదు" },
-  
+
   // Footer
   "footer.subscribe": { en: "Subscribe to Our Newsletter", hi: "हमारे न्यूज़लेटर की सदस्यता लें", te: "మా న్యూస్‌లెటర్‌కు సభ్యత్వం పొందండి" },
   "footer.email": { en: "Your Email", hi: "आपका ईमेल", te: "మీ ఇమెయిల్" },
@@ -49,8 +49,8 @@ const translations: Translations = {
   "footer.blog": { en: "Blog", hi: "ब्लॉग", te: "బ్లాగ్" },
   "footer.faq": { en: "FAQ", hi: "अक्सर पूछे जाने वाले प्रश्न", te: "తరచుగా అడిగే ప్రశ్నలు" },
   "footer.support": { en: "Support", hi: "समर्थन", te: "మద్దతు" },
-  "footer.location": { en: "Hyderabad, India", hi: "हैदराबाद, भारत", te: "హైదరాబాదు, భారత్" },
-  
+  "footer.location": { en: "Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune", hi: "हैदराबाद, दिल्ली, मुंबई, बैंगलोर, चेन्नई, पुणे", te: "హైదరాబాద్, ఢిల్లీ, ముంబై, బెంగళూరు, చెన్నై, పూణే" },
+
   // Common
   "common.whoWeServe": { en: "Who We Serve", hi: "हम किसकी सेवा करते हैं", te: "మేము ఎవరికి సేవ చేస్తాము" },
   "common.womenMicroEntrepreneurs": { en: "Women Micro-Entrepreneurs", hi: "महिला सूक्ष्म-उद्यमी", te: "మహిళా సూక్ష్మ-వ్యాపారులు" },
@@ -85,7 +85,7 @@ const translations: Translations = {
 
   // Index (Home)
   "index.whatDrivesUs": { en: "What Drives Us", hi: "हमें क्या प्रेरित करता है", te: "మాకు ప్రేరణ ఇచ్చేది" },
-  "index.servingWomenHyd": { en: "Serving Women Across Hyderabad", hi: "हैदराबाद भर में महिलाओं की सेवा", te: "హైదరాబాద్ అంతటా మహిళలకు సేవ" },
+  "index.servingWomenHyd": { en: "Serving Women Across India", hi: "पूरे भारत में महिलाओं की सेवा", te: "భారతదేశం అంతటా మహిళలకు సేవ" },
   "index.primaryAreas": { en: "Primary Areas", hi: "प्रमुख क्षेत्र", te: "ప్రాధాన్య ప్రాంతాలు" },
   "index.partnerAreas": { en: "Partner Areas", hi: "भागीदार क्षेत्र", te: "భాగస్వామ్య ప్రాంతాలు" },
   "index.areasCovered": { en: "Areas Covered", hi: "कवरेज क्षेत्र", te: "కవర్ చేసిన ప్రాంతాలు" },
@@ -127,7 +127,7 @@ const translations: Translations = {
   "dashboard.whatYouGet": { en: "What You Get", hi: "आपको क्या मिलेगा", te: "మీకు లభించేవి" },
   "dashboard.ctaTitle": { en: "Ready to see your data?", hi: "क्या आप अपना डेटा देखने के लिए तैयार हैं?", te: "మీ డేటాను చూడడానికి సిద్ధంగా ఉన్నారా?" },
   "dashboard.ctaDesc": { en: "Join Femtrics today and get your personalized business dashboard", hi: "आज ही फेमट्रिक्स से जुड़ें और अपना पर्सनलाइज्ड बिजनेस डैशबोर्ड प्राप्त करें", te: "ఈరోజే ఫెమ్ట్రిక్స్‌లో చేరండి మరియు మీ వ్యక్తిగతీకరించిన బిజినెస్ డాష్‌బోర్డ్ పొందండి" },
-  
+
   // Form Fields
   "form.fullName": { en: "Full Name", hi: "पूरा नाम", te: "పూర్తి పేరు" },
   "form.phoneNumber": { en: "Phone Number", hi: "फ़ोन नंबर", te: "ఫోన్ నంబర్" },
@@ -164,7 +164,7 @@ const translations: Translations = {
   "form.businessEmailRequiredTitle": { en: "Business Email Required", hi: "व्यवसाय ईमेल आवश्यक", te: "వ్యాపార ఇమెయిల్ అవసరం" },
   "form.businessEmailRequiredDesc": { en: "Please use your business email address instead of a personal email (Gmail, Yahoo, Hotmail, etc.). This helps us verify your business and provide better service.", hi: "कृपया व्यक्तिगत ईमेल (Gmail, Yahoo, Hotmail आदि) के बजाय अपना व्यवसाय ईमेल पता उपयोग करें। यह हमें आपके व्यवसाय को सत्यापित करने और बेहतर सेवा प्रदान करने में मदद करता है।", te: "దయచేసి వ్యక్తిగత ఇమెయిల్ (Gmail, Yahoo, Hotmail మొదలైనవి)కి బదులుగా మీ వ్యాపార ఇమెయిల్ చిరునామాను ఉపయోగించండి. ఇది మీ వ్యాపారాన్ని ధృవీకరించడంలో మరియు మంచి సేవను అందించడంలో మాకు సహాయపడుతుంది." },
   "form.iUnderstand": { en: "I Understand", hi: "मैं समझ गया", te: "నాకు అర్థమైంది" },
-  
+
   // Join Page Additional
   "join.growBusiness": { en: "Grow your business with data", hi: "डेटा के साथ अपने व्यवसाय को बढ़ाएं", te: "డేటాతో మీ వ్యాపారాన్ని పెంచండి" },
   "join.join100": { en: "Join 100+ women entrepreneurs who are already using Femtrics to make smarter business decisions and grow their revenue.", hi: "100+ महिला उद्यमियों में शामिल हों जो पहले से ही फेमट्रिक्स का उपयोग कर रहे हैं ताकि वे स्मार्ट व्यावसायिक निर्णय ले सकें और अपने राजस्व को बढ़ा सकें।", te: "ఇప్పటికే ఫెమ్ట్రిక్స్‌ను ఉపయోగిస్తున్న 100+ మహిళా వ్యాపారవేత్తలలో చేరండి, తద్వారా వారు తెలివైన వ్యాపార నిర్ణయాలు తీసుకోవచ్చు మరియు వారి ఆదాయాన్ని పెంచుకోవచ్చు." },
@@ -174,7 +174,7 @@ const translations: Translations = {
   "join.flexibleHours": { en: "Flexible! 4-8 hours per week. We work around your schedule.", hi: "लचीला! प्रति सप्ताह 4-8 घंटे। हम आपके कार्यक्रम के अनुसार काम करते हैं।", te: "వశ్యత! వారానికి 4-8 గంటలు. మేము మీ షెడ్యూల్ ప్రకారం పని చేస్తాము." },
   "join.makeDifference": { en: "Make a real difference", hi: "वास्तविक बदलाव लाएं", te: "నిజమైన తేడా తీసుకురండి" },
   "join.useSkills": { en: "Use your skills to empower women entrepreneurs. Whether you're a data enthusiast, designer, or just passionate about social impact—we need you.", hi: "महिला उद्यमियों को सशक्त बनाने के लिए अपने कौशल का उपयोग करें। चाहे आप डेटा उत्साही हों, डिज़ाइनर हों, या सिर्फ सामाजिक प्रभाव के बारे में भावुक हों—हमें आपकी जरूरत है।", te: "మహిళా వ్యాపారవేత్తలను సాధికారితం చేయడానికి మీ నైపుణ్యాలను ఉపయోగించండి. మీరు డేటా ఉత్సాహి అయినా, డిజైనర్ అయినా లేదా సామాజిక ప్రభావం గురించి ఉత్సాహంతో ఉన్నా—మాకు మీరు అవసరం." },
-  
+
   // Contact Page Additional
   "contact.selectSubject": { en: "Select subject", hi: "विषय चुनें", te: "విషయం ఎంచుకోండి" },
   "contact.business": { en: "Join as a Business", hi: "व्यवसाय के रूप में शामिल हों", te: "వ్యాపారంగా చేరండి" },
@@ -185,7 +185,7 @@ const translations: Translations = {
   "contact.other": { en: "General Inquiry", hi: "सामान्य पूछताछ", te: "సాధారణ విచారణ" },
   "contact.messageSent": { en: "Message sent successfully! We'll get back to you soon.", hi: "संदेश सफलतापूर्वक भेजा गया! हम जल्द ही आपसे संपर्क करेंगे।", te: "సందేశం విజయవంతంగా పంపబడింది! మేము త్వరలో మిమ్మల్ని సంప్రదిస్తాము." },
   "contact.messageFailed": { en: "Failed to send message. Please try again.", hi: "संदेश भेजने में विफल। कृपया पुनः प्रयास करें।", te: "సందేశం పంపడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి." },
-  
+
   // About Page
   "about.aboutFemtrics": { en: "About Femtrics", hi: "फेमट्रिक्स के बारे में", te: "ఫెమ్ట్రిక్స్ గురించి" },
   "about.socialEnterprise": { en: "A Business-Analytics Social Enterprise for", hi: "के लिए एक व्यापार-विश्लेषण सामाजिक उद्यम", te: "కోసం ఒక వ్యాపార-విశ్లేషణ సామాజిక సంస్థ" },
@@ -194,7 +194,7 @@ const translations: Translations = {
   "about.bornFromBelief": { en: "Born from a simple belief", hi: "एक साधारण विश्वास से जन्म", te: "సాధారణ నమ్మకం నుండి జన్మించింది" },
   "about.teamStructure": { en: "Team Structure", hi: "टीम संरचना", te: "టీమ్ నిర్మాణం" },
   "about.everyVolunteerGets": { en: "Every Volunteer Gets", hi: "हर स्वयंसेवक को मिलता है", te: "ప్రతి స్వచ్ఛందకుడికి లభిస్తుంది" },
-  
+
   // Micro Conversion Modal
   "microConversion.title": { en: "Get Your Free Mini-Audit", hi: "अपना मुफ्त मिनी-ऑडिट प्राप्त करें", te: "మీ ఉచిత మినీ-ఆడిట్ పొందండి" },
   "microConversion.description": { en: "Quick 30-second form to get started", hi: "शुरू करने के लिए 30 सेकंड का त्वरित फॉर्म", te: "ప్రారంభించడానికి 30 సెకన్ల శీఘ్ర ఫారమ్" },

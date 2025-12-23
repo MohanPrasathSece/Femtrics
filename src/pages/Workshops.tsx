@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { sendEmailWithGmailSMTP, sendConfirmationEmail, createWorkshopRegistrationEmail } from "@/utils/emailService";
 import { useTranslation } from "@/contexts/TranslationContext";
-import workshopsHero from "@/assets/workshops-hero.png";
 import hero3 from "@/assets/hero-3.png";
+import hero2 from "@/assets/hero-2.png";
 import femtricsLogo from "/logo.png";
 
 const workshops = [
@@ -84,7 +84,7 @@ const Workshops = () => {
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
-      metaDescription.content = "Join Femtrics workshops - Free data analytics training for women entrepreneurs in Hyderabad. Learn business insights, revenue tracking, and data-driven decisions.";
+      metaDescription.content = "Join Femtrics workshops - Free data analytics training for women entrepreneurs across India. Learn business insights, revenue tracking, and data-driven decisions.";
     }
 
     // Update canonical URL
@@ -103,7 +103,7 @@ const Workshops = () => {
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Femtrics Workshops | Data Analytics Training');
-    updateMetaTag('twitter:description', 'Free data analytics workshops for women entrepreneurs in Hyderabad.');
+    updateMetaTag('twitter:description', 'Free data analytics workshops for women entrepreneurs in India.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
@@ -265,10 +265,10 @@ const Workshops = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
-      <SEO 
-        title="Data Analytics Workshops for Women Entrepreneurs in Hyderabad | Femtrics"
-        description="Join Femtrics' hands-on data analytics workshops designed for women entrepreneurs in Hyderabad. Learn to track business metrics, analyze data, and make data-driven decisions for business growth."
-        keywords="data analytics workshops Hyderabad, women entrepreneur training, business analytics courses, data literacy for women, Hyderabad workshops, small business analytics, Femtrics workshops, data-driven business training"
+      <SEO
+        title="Data Analytics Workshops for Women Entrepreneurs | Femtrics"
+        description="Join Femtrics' hands-on data analytics workshops designed for women entrepreneurs across India. Learn to track business metrics, analyze data, and make data-driven decisions for business growth."
+        keywords="data analytics workshops India, women entrepreneur training, business analytics courses, data literacy for women, small business analytics, Femtrics workshops, data-driven business training"
         canonical="/workshops"
         jsonLd={[
           {
@@ -284,11 +284,9 @@ const Workshops = () => {
             },
             "location": {
               "@type": "Place",
-              "name": "Hyderabad, Telangana",
+              "name": "India",
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "Hyderabad",
-                "addressRegion": "Telangana",
                 "addressCountry": "IN"
               }
             },
@@ -298,7 +296,7 @@ const Workshops = () => {
         ]}
       />
       <Header />
-      
+
 
       {/* Hero */}
       <section className="pt-40 pb-24 hero-bg relative overflow-hidden max-w-[100vw]">
@@ -308,47 +306,47 @@ const Workshops = () => {
         <div className="container-tight relative z-10 max-w-[100vw] overflow-x-hidden">
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-border/50 shadow-xl p-8 md:p-12 lg:p-16 max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <AnimatedSection className="max-w-xl">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
-                Educational Programs
-              </span>
-              <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
-                <img
-                  src={femtricsLogo}
-                  alt="Femtrics Logo"
-                  className="w-16 h-16 md:w-20 md:h-20"
-                />
-                <span>
-                  Femtrics: Learn to lead with <span className="text-gradient italic">data</span>
+              <AnimatedSection className="max-w-xl">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-base font-medium mb-6">
+                  Educational Programs
                 </span>
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                Free, hands-on workshops designed for women entrepreneurs and students.
-                No prior experience needed—just a willingness to learn.
-              </p>
-            </AnimatedSection>
+                <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.1] mb-6 flex items-center gap-4">
+                  <img
+                    src={femtricsLogo}
+                    alt="Femtrics Logo"
+                    className="w-16 h-16 md:w-20 md:h-20"
+                  />
+                  <span>
+                    Femtrics: Learn to lead with <span className="text-gradient italic">data</span>
+                  </span>
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                  Free, hands-on workshops designed for women entrepreneurs and students.
+                  No prior experience needed—just a willingness to learn.
+                </p>
+              </AnimatedSection>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative"
-            >
-              <div className="relative">
-                <motion.img
-                  src={workshopsHero}
-                  alt="Women in workshop learning data analytics"
-                  className="rounded-3xl shadow-2xl w-full h-auto"
-                  whileHover={{ scale: 1.02 }}
-                />
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft hidden lg:block" />
-                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10 hidden lg:block" />
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="relative"
+              >
+                <div className="relative">
+                  <motion.img
+                    src={hero3}
+                    alt="Women in workshop learning data analytics"
+                    className="rounded-3xl shadow-2xl w-full h-auto"
+                    whileHover={{ scale: 1.02 }}
+                  />
+                  <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-primary/20 -z-10 animate-pulse-soft hidden lg:block" />
+                  <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl bg-background -z-10 hidden lg:block" />
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Educational Impact Section */}
       <section className="section-padding bg-background">
@@ -920,7 +918,7 @@ const Workshops = () => {
 
             <AnimatedSection direction="right" delay={0.2}>
               <img
-                src={hero3}
+                src={hero2}
                 alt="Workshop resources and materials"
                 className="rounded-3xl shadow-2xl border border-pink-200"
               />

@@ -1,43 +1,43 @@
 // Advanced SEO Keyword Strategy for Femtrics
-// Target: Rank #1 on Google for women entrepreneurs data analytics in Hyderabad
+// Target: Rank #1 on Google for women entrepreneurs data analytics in India
 
 export const keywordStrategy = {
   // Primary Keywords (High Volume, High Intent)
   primary: [
-    "data analytics for women entrepreneurs Hyderabad",
+    "data analytics for women entrepreneurs India",
     "business analytics for women in business",
     "women entrepreneur data insights India",
-    "small business analytics Hyderabad",
+    "small business analytics India",
     "female business owner data solutions"
   ],
-  
+
   // Secondary Keywords (Medium Volume, Good Intent)
   secondary: [
     "data analytics for micro entrepreneurs",
     "business intelligence for women owned businesses",
-    "affordable analytics solutions Hyderabad",
+    "affordable analytics solutions India",
     "women business data dashboard",
     "revenue tracking for small businesses"
   ],
-  
+
   // Long-Tail Keywords (Low Volume, High Intent)
   longTail: [
-    "how to track business data for home bakery in Hyderabad",
+    "how to track business data for home bakery in India",
     "data analytics tools for boutique owners India",
     "business insights for tiffin service owners",
-    "revenue analytics for women entrepreneurs Telangana",
+    "revenue analytics for women entrepreneurs India",
     "affordable business analytics for Instagram sellers"
   ],
-  
+
   // Local SEO Keywords
   local: [
     "data analytics Hyderabad women entrepreneurs",
-    "business analytics near me Hyderabad",
-    "women business consulting Secunderabad",
-    "data insights for small businesses Telangana",
-    "female entrepreneur support Hyderabad"
+    "business analytics near me",
+    "women business consulting India",
+    "data insights for small businesses India",
+    "female entrepreneur support India"
   ],
-  
+
   // Question-Based Keywords (Featured Snippets)
   questions: [
     "what is data analytics for small business",
@@ -46,12 +46,12 @@ export const keywordStrategy = {
     "how to track business revenue and growth",
     "data driven decisions for women entrepreneurs"
   ],
-  
+
   // Competitor Keywords
   competitor: [
     "business analytics solutions for SMEs",
     "data consulting for small businesses",
-    "business intelligence Hyderabad",
+    "business intelligence India",
     "analytics for startups India",
     "data visualization for entrepreneurs"
   ]
@@ -73,7 +73,7 @@ export const contentPillars = {
     },
     {
       title: "Local Business Intelligence",
-      keywords: ["Hyderabad business", "local analytics", "Telangana entrepreneurs"],
+      keywords: ["India business", "local analytics", "Indian entrepreneurs"],
       content: ["Local Market Insights", "Regional Trends", "City-Specific Data"]
     }
   ]
@@ -82,27 +82,27 @@ export const contentPillars = {
 // SEO Content Templates
 export const seoContentTemplates = {
   homepage: {
-    title: "Data Analytics for Women Entrepreneurs in Hyderabad | Business Insights & Growth",
-    description: "Femtrics empowers women entrepreneurs in Hyderabad with affordable data analytics solutions. Get actionable business insights, revenue tracking, and growth strategies for your small business.",
-    h1: "Data Analytics Solutions for Women Entrepreneurs in Hyderabad",
+    title: "Data Analytics for Women Entrepreneurs | Business Insights & Growth",
+    description: "Femtrics empowers women entrepreneurs across India with affordable data analytics solutions. Get actionable business insights, revenue tracking, and growth strategies for your small business.",
+    h1: "Data Analytics Solutions for Women Entrepreneurs in India",
     h2: "Transform Your Business with Data-Driven Insights",
     h3: "Affordable Analytics Solutions for Women-Led Businesses"
   },
-  
+
   service: {
-    title: "Business Analytics Services for Women Entrepreneurs | Femtrics Hyderabad",
-    description: "Professional data analytics services designed for women entrepreneurs. Revenue tracking, customer insights, and growth analytics for small businesses in Hyderabad.",
+    title: "Business Analytics Services for Women Entrepreneurs | Femtrics",
+    description: "Professional data analytics services designed for women entrepreneurs. Revenue tracking, customer insights, and growth analytics for small businesses in India.",
     h1: "Business Analytics Services for Women Entrepreneurs",
     h2: "Comprehensive Data Solutions for Your Business Growth",
     h3: "Expert Analytics Consulting for Women-Led Businesses"
   },
-  
+
   local: {
-    title: "Hyderabad Women Entrepreneurs | Data Analytics & Business Support",
-    description: "Local data analytics support for women entrepreneurs in Hyderabad. Get business insights, market analysis, and growth strategies tailored for the Hyderabad market.",
-    h1: "Data Analytics for Women Entrepreneurs in Hyderabad",
-    h2: "Local Business Intelligence for Hyderabad's Women Entrepreneurs",
-    h3: "Hyderabad-Specific Market Insights and Analytics"
+    title: "Women Entrepreneurs India | Data Analytics & Business Support",
+    description: "Local data analytics support for women entrepreneurs in India. Get business insights, market analysis, and growth strategies tailored for the Indian market.",
+    h1: "Data Analytics for Women Entrepreneurs in India",
+    h2: "Local Business Intelligence for Indian Women Entrepreneurs",
+    h3: "Regional Market Insights and Analytics"
   }
 };
 
@@ -120,7 +120,7 @@ export const eatSignals = {
       uniqueness: "Original insights and case studies"
     }
   },
-  
+
   authoritativeness: {
     backlinks: [
       "Women's business organizations",
@@ -135,7 +135,7 @@ export const eatSignals = {
       "Industry awards"
     ]
   },
-  
+
   trustworthiness: {
     transparency: {
       pricing: "Clear pricing information",
@@ -156,7 +156,7 @@ export const richSnippets = {
     questions: [
       {
         question: "What is Femtrics?",
-        answer: "Femtrics is a data analytics platform designed specifically for women micro-entrepreneurs in Hyderabad, providing affordable business insights and analytics solutions."
+        answer: "Femtrics is a data analytics platform designed specifically for women micro-entrepreneurs in India, providing affordable business insights and analytics solutions."
       },
       {
         question: "How can data analytics help my business?",
@@ -172,7 +172,7 @@ export const richSnippets = {
       }
     ]
   },
-  
+
   HowTo: {
     steps: [
       "Sign up for Femtrics analytics dashboard",
@@ -182,7 +182,7 @@ export const richSnippets = {
       "Implement data-driven business decisions"
     ]
   },
-  
+
   Review: {
     aggregateRating: "4.8",
     reviewCount: "127",
@@ -208,16 +208,16 @@ export const technicalSEO = {
     FID: "Under 100ms",
     CLS: "Under 0.1"
   },
-  
+
   mobileOptimization: {
     responsive: "Mobile-first design",
     speed: "Under 3s load time",
     usability: "Touch-friendly interface"
   },
-  
+
   schemaMarkup: [
     "Organization",
-    "LocalBusiness", 
+    "LocalBusiness",
     "Service",
     "FAQPage",
     "HowTo",
@@ -225,7 +225,7 @@ export const technicalSEO = {
     "Article",
     "WebPage"
   ],
-  
+
   internalLinking: {
     strategy: "Topic clusters with pillar pages",
     anchorText: "Keyword-rich anchor text",

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useLocation } from "react-router-dom";
 import femtricsLogo from "/logo.png";
@@ -75,30 +75,6 @@ export const Footer = () => {
               <p className="text-white/70 text-sm leading-relaxed mb-3">
                 {t("footer.tagline")}
               </p>
-              <div className="flex gap-4">
-                <motion.a
-                  href="https://instagram.com/femtrics"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-200"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={18} className="text-white" />
-                </motion.a>
-                <motion.a
-                  href="https://linkedin.com/company/femtrics"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-200"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={18} className="text-white" />
-                </motion.a>
-              </div>
             </div>
 
             {/* Quick Links */}

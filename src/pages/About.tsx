@@ -28,7 +28,7 @@ const About = () => {
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
-      metaDescription.content = "Learn about Femtrics - Our mission to empower women micro-entrepreneurs in Hyderabad with affordable data analytics solutions and business insights.";
+      metaDescription.content = "Learn about Femtrics - Our mission to empower women micro-entrepreneurs across India with affordable data analytics solutions and business insights.";
     }
 
     // Update canonical URL
@@ -47,7 +47,7 @@ const About = () => {
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'About Femtrics | Empowering Women Entrepreneurs');
-    updateMetaTag('twitter:description', 'Femtrics mission: Empowering women micro-entrepreneurs with data analytics in Hyderabad.');
+    updateMetaTag('twitter:description', 'Femtrics mission: Empowering women micro-entrepreneurs with data analytics across India.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
@@ -62,10 +62,10 @@ const About = () => {
   }
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
-      <SEO 
-        title="About Femtrics - Empowering Women Entrepreneurs with Data Analytics in Hyderabad"
-        description="Learn about Femtrics' mission to empower women micro-entrepreneurs in Hyderabad through affordable data analytics solutions. Our story, team, and commitment to women's economic empowerment."
-        keywords="about Femtrics, women empowerment Hyderabad, data analytics mission, women entrepreneurs support, Femtrics story, social impact Hyderabad, women-led businesses, economic empowerment"
+      <SEO
+        title="About Femtrics - Empowering Women Entrepreneurs with Data Analytics"
+        description="Learn about Femtrics' mission to empower women micro-entrepreneurs across India through affordable data analytics solutions. Our story, team, and commitment to women's economic empowerment."
+        keywords="about Femtrics, women empowerment India, data analytics mission, women entrepreneurs support, Femtrics story, social impact India, women-led businesses, economic empowerment"
         canonical="/about"
         jsonLd={[
           {
@@ -84,7 +84,7 @@ const About = () => {
         ]}
       />
       <Header />
-      
+
 
       {/* Hero */}
       <section className="pt-40 pb-24 relative overflow-hidden max-w-[100vw]">
@@ -96,95 +96,95 @@ const About = () => {
         <div className="container-tight relative max-w-[100vw] overflow-x-hidden">
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-border/50 shadow-xl p-8 md:p-12 lg:p-16 max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left" className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                About Femtrics
-              </div>
+              <AnimatedSection direction="left" className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  About Femtrics
+                </div>
 
-              <div className="space-y-6">
-                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1]">
-                  <span className="block">Femtrics: Business Analytics</span>
-                  <span className="block text-gradient">For Women</span>
-                  <span className="block text-3xl md:text-4xl lg:text-5xl text-muted-foreground font-normal">By Women</span>
-                </h1>
+                <div className="space-y-6">
+                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1]">
+                    <span className="block">Femtrics: Business Analytics</span>
+                    <span className="block text-gradient">For Women</span>
+                    <span className="block text-3xl md:text-4xl lg:text-5xl text-muted-foreground font-normal">By Women</span>
+                  </h1>
 
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-                  Empowering women micro-entrepreneurs with affordable, simple, and actionable business analytics to grow revenue, reduce waste, and make confident data-driven decisions.
-                </p>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+                    Empowering women micro-entrepreneurs with affordable, simple, and actionable business analytics to grow revenue, reduce waste, and make confident data-driven decisions.
+                  </p>
 
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
-                    <Target className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium">Social Enterprise</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
-                    <Heart className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium">Women-Focused</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
-                    <BarChart3 className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium">Data-Driven</span>
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                      <Target className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-medium">Social Enterprise</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                      <Heart className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-medium">Women-Focused</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
+                      <BarChart3 className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-medium">Data-Driven</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </AnimatedSection>
+              </AnimatedSection>
 
-            <AnimatedSection direction="right" delay={0.2}>
-              <div className="relative">
-                {/* Main Image */}
-                <motion.div
-                  whileHover={{ scale: 1.02, rotate: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative"
-                >
-                  <img
-                    src={hero2}
-                    alt="Women entrepreneurs learning data analytics"
-                    className="rounded-3xl shadow-2xl border border-pink-200 w-full"
-                  />
-
-                  {/* Floating Cards */}
+              <AnimatedSection direction="right" delay={0.2}>
+                <div className="relative">
+                  {/* Main Image */}
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
+                    whileHover={{ scale: 1.02, rotate: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Users className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold">500+ Women</p>
-                        <p className="text-xs text-muted-foreground">Empowered</p>
-                      </div>
-                    </div>
-                  </motion.div>
+                    <img
+                      src={hero2}
+                      alt="Women entrepreneurs learning data analytics"
+                      className="rounded-3xl shadow-2xl border border-pink-200 w-full"
+                    />
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
-                    className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-secondary" />
+                    {/* Floating Cards */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.6 }}
+                      className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Users className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold">500+ Women</p>
+                          <p className="text-xs text-muted-foreground">Empowered</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold">40% Growth</p>
-                        <p className="text-xs text-muted-foreground">Avg. Revenue</p>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6, duration: 0.6 }}
+                      className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-lg border border-pink-100"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-secondary" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold">40% Growth</p>
+                          <p className="text-xs text-muted-foreground">Avg. Revenue</p>
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </div>
-            </AnimatedSection>
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Impact Banner */}
       <section className="section-padding bg-gradient-to-b from-background to-muted/30">
@@ -197,7 +197,7 @@ const About = () => {
               Empowering Women Through Data
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We're transforming the lives of women micro-entrepreneurs across Hyderabad with data-driven insights and practical business solutions.
+              We're transforming the lives of women micro-entrepreneurs across India with data-driven insights and practical business solutions.
             </p>
           </AnimatedSection>
 
@@ -272,7 +272,7 @@ const About = () => {
                   <div>
                     <h3 className="font-display text-2xl md:text-3xl font-semibold mb-4">Our Mission</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                      To empower women micro-entrepreneurs in Hyderabad—boutique owners, tiffin services,
+                      To empower women micro-entrepreneurs across India—boutique owners, tiffin services,
                       beauty service providers, tutors, home cooks—through affordable business analytics,
                       so they can make smarter decisions, increase income, and grow sustainably.
                     </p>

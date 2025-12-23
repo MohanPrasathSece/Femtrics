@@ -34,7 +34,7 @@ const faqs = [
   },
   {
     question: "What kind of businesses can join?",
-    answer: "We work with all types of micro and small businesses—home bakers, boutique owners, tiffin services, mehndi artists, beauticians, tutors, craft sellers, and Instagram-based businesses. If you're a woman entrepreneur in Hyderabad, we'd love to hear from you.",
+    answer: "We work with all types of micro and small businesses—home bakers, boutique owners, tiffin services, mehndi artists, beauticians, tutors, craft sellers, and Instagram-based businesses. Women entrepreneurs from anywhere in India can apply for our services.",
   },
   {
     question: "Do I need technical skills?",
@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     question: "Which areas do you serve?",
-    answer: "We primarily serve Jubilee Hills, Banjara Hills, Madhapur, Kondapur, Gachibowli, and HITEC City. We also work with NGO partners to reach women in Old City, Secunderabad, LB Nagar, and Kukatpally.",
+    answer: "Businesses from anywhere in the country can apply. We primarily operate in Hyderabad, Delhi, Mumbai, Bangalore, Chennai, and Pune, with specific neighborhood coverage in each city. We also work with NGO partners to reach women in underserved areas across these regions.",
   },
 ];
 
@@ -77,7 +77,7 @@ export const Contact = () => {
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
-      metaDescription.content = "Contact Femtrics for data analytics solutions, workshops, and partnerships. Reach out to empower women entrepreneurs in Hyderabad with business insights.";
+      metaDescription.content = "Contact Femtrics for data analytics solutions, workshops, and partnerships. Reach out to empower women entrepreneurs across India with business insights.";
     }
 
     // Update canonical URL
@@ -96,7 +96,7 @@ export const Contact = () => {
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Contact Femtrics | Get in Touch');
-    updateMetaTag('twitter:description', 'Reach out to Femtrics for data analytics solutions and workshops in Hyderabad.');
+    updateMetaTag('twitter:description', 'Reach out to Femtrics for data analytics solutions and workshops across India.');
   }, []);
 
   function updateMetaTag(property: string, content: string) {
@@ -194,10 +194,10 @@ export const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <SEO 
-        title="Contact Femtrics - Get in Touch for Data Analytics Solutions in Hyderabad"
-        description="Contact Femtrics for data analytics solutions for women entrepreneurs in Hyderabad. Get in touch for workshops, consulting, and business analytics support. Call or email us today."
-        keywords="contact Femtrics, data analytics Hyderabad, women entrepreneurs contact, business analytics consulting, Femtrics phone, email support, Hyderabad data workshops"
+      <SEO
+        title="Contact Femtrics - Get in Touch for Data Analytics Solutions"
+        description="Contact Femtrics for data analytics solutions for women entrepreneurs in India. Get in touch for workshops, consulting, and business analytics support. Call or email us today."
+        keywords="contact Femtrics, data analytics India, women entrepreneurs contact, business analytics consulting, Femtrics phone, email support, data workshops"
         canonical="/contact"
         jsonLd={[
           {
@@ -222,7 +222,7 @@ export const Contact = () => {
         ]}
       />
       <Header />
-      
+
 
       {/* Hero */}
       <section className="pt-40 pb-24 hero-bg">
@@ -258,18 +258,6 @@ export const Contact = () => {
                     label: t("contact.phone"),
                     value: "+91 82478 90920",
                     href: "tel:+918247890920",
-                  },
-                  {
-                    icon: Mail,
-                    label: t("contact.email"),
-                    value: "hello@femtrics.org",
-                    href: "mailto:hello@femtrics.org",
-                  },
-                  {
-                    icon: MapPin,
-                    label: t("contact.location"),
-                    value: "Hyderabad, Telangana, India",
-                    href: null,
                   },
                   {
                     icon: Clock,
