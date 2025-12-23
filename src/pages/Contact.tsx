@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     question: "Which areas do you serve?",
-    answer: "Businesses from anywhere in the country can apply. We primarily operate in Hyderabad, Delhi, Mumbai, Bangalore, Chennai, and Pune, with specific neighborhood coverage in each city. We also work with NGO partners to reach women in underserved areas across these regions.",
+    answer: "Businesses from anywhere in the country can apply. We primarily operate in Hyderabad, Delhi, Mumbai, and Bangalore, with specific neighborhood coverage in each city. We also work with NGO partners to reach women in underserved areas across these regions.",
   },
 ];
 

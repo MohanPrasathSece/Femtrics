@@ -608,7 +608,7 @@ const Join = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />
-                        Based in our service cities (Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune)
+                        Based in our service cities (Hyderabad, Delhi, Mumbai, Bangalore)
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />

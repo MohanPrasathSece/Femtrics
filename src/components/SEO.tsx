@@ -14,8 +14,8 @@ interface SEOProps {
 
 const SEO: React.FC<SEOProps> = ({
   title = 'Femtrics | Data Analytics for Women Entrepreneurs | Business Insights & Growth',
-  description = 'Femtrics empowers women micro-entrepreneurs across India (Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune) with affordable data analytics solutions. Get actionable business insights, revenue tracking, inventory management, and marketing ROI analysis to grow your business.',
-  keywords = 'Femtrics, women entrepreneurs India, data analytics for women, business insights, micro-entrepreneurs India, female business owners, data-driven decisions, small business analytics, revenue tracking, inventory management, marketing ROI, business dashboard, women-led businesses, startups India, business growth analytics, Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune',
+  description = 'Femtrics empowers women micro-entrepreneurs across India (Hyderabad, Delhi, Mumbai, Bangalore) with affordable data analytics solutions. Get actionable business insights, revenue tracking, inventory management, and marketing ROI analysis to grow your business.',
+  keywords = 'Femtrics, women entrepreneurs India, data analytics for women, business insights, micro-entrepreneurs India, female business owners, data-driven decisions, small business analytics, revenue tracking, inventory management, marketing ROI, business dashboard, women-led businesses, startups India, business growth analytics, Hyderabad, Delhi, Mumbai, Bangalore',
   canonical = 'https://femtrics.com/',
   ogImage = 'https://femtrics.com/cover.png',
   ogType = 'website',
@@ -45,7 +45,7 @@ const SEO: React.FC<SEOProps> = ({
       "telephone": "+91-XXXXXXXXXX",
       "contactType": "customer service",
       "availableLanguage": ["English", "Hindi", "Telugu"],
-      "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"]
+      "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore"]
     },
     "address": {
       "@type": "PostalAddress",
@@ -67,7 +67,7 @@ const SEO: React.FC<SEOProps> = ({
     ],
     "foundingDate": "2023",
     "numberOfEmployees": "1-10",
-    "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"],
+    "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore"],
     "knowsLanguage": ["English", "Hindi", "Telugu"],
     "serviceType": "Data Analytics Consulting",
     "award": ["Best Women Entrepreneur Support Platform 2024"],
@@ -102,7 +102,7 @@ const SEO: React.FC<SEOProps> = ({
     "priceRange": "$$",
     "paymentAccepted": ["Cash", "Credit Card", "Bank Transfer"],
     "currenciesAccepted": "INR",
-    "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"]
+    "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore"]
   };
 
   // Website Schema

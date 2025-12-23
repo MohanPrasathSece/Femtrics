@@ -8,7 +8,8 @@ export const keywordStrategy = {
     "business analytics for women in business",
     "women entrepreneur data insights India",
     "small business analytics India",
-    "female business owner data solutions"
+    "female business owner data solutions",
+    "data analytics Hyderabad Delhi Mumbai Bangalore"
   ],
 
   // Secondary Keywords (Medium Volume, Good Intent)
@@ -32,8 +33,10 @@ export const keywordStrategy = {
   // Local SEO Keywords
   local: [
     "data analytics Hyderabad women entrepreneurs",
+    "data analytics Delhi women entrepreneurs",
+    "data analytics Mumbai women entrepreneurs",
+    "data analytics Bangalore women entrepreneurs",
     "business analytics near me",
-    "women business consulting India",
     "data insights for small businesses India",
     "female entrepreneur support India"
   ],

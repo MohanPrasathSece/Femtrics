@@ -107,7 +107,7 @@ const Index = () => {
               "name": "Femtrics"
             },
             "serviceType": "Business Analytics Consulting",
-            "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"]
+            "areaServed": ["Hyderabad", "Delhi", "Mumbai", "Bangalore"]
           },
           {
             "@context": "https://schema.org",
@@ -482,7 +482,7 @@ const Index = () => {
                 {t("common.ourReach")}
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
-                Serving Women Across Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune
+                Serving Women Across Hyderabad, Delhi, Mumbai, Bangalore
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
                 We're expanding our reach across India to empower more women entrepreneurs
@@ -551,7 +551,7 @@ const Index = () => {
                   className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-gray-100"
                 >
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-primary">6</div>
+                    <div className="text-2xl font-bold text-primary">4</div>
                     <div className="text-sm text-muted-foreground font-medium">Major Cities</div>
                   </div>
                 </motion.div>

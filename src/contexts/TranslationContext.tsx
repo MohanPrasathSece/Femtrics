@@ -49,7 +49,7 @@ const translations: Translations = {
   "footer.blog": { en: "Blog", hi: "ब्लॉग", te: "బ్లాగ్" },
   "footer.faq": { en: "FAQ", hi: "अक्सर पूछे जाने वाले प्रश्न", te: "తరచుగా అడిగే ప్రశ్నలు" },
   "footer.support": { en: "Support", hi: "समर्थन", te: "మద్దతు" },
-  "footer.location": { en: "Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune", hi: "हैदराबाद, दिल्ली, मुंबई, बैंगलोर, चेन्नई, पुणे", te: "హైదరాబాద్, ఢిల్లీ, ముంబై, బెంగళూరు, చెన్నై, పూణే" },
+  "footer.location": { en: "Hyderabad, Delhi, Mumbai, Bangalore", hi: "हैदराबाद, दिल्ली, मुंबई, बैंगलोर", te: "హైదరాబాద్, ఢిల్లీ, ముంబై, బెంగళూరు" },
 
   // Common
   "common.whoWeServe": { en: "Who We Serve", hi: "हम किसकी सेवा करते हैं", te: "మేము ఎవరికి సేవ చేస్తాము" },

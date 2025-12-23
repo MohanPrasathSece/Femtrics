@@ -43,8 +43,6 @@ export const advancedSEOStrategy = {
       "Delhi business",
       "Mumbai business",
       "Bangalore startups",
-      "Chennai business",
-      "Pune entrepreneurs",
       "business in India",
       "Indian economy",
       "startup ecosystem India",
@@ -62,7 +60,7 @@ export const advancedSEOStrategy = {
       "NASSCOM Women in Tech"
     ],
     locations: [
-      "Hyderabad, Delhi, Mumbai, Bangalore, Chennai, Pune",
+      "Hyderabad, Delhi, Mumbai, Bangalore",
       "Hyderabad",
       "Delhi",
       "Mumbai",
@@ -138,7 +136,7 @@ export const advancedSEOStrategy = {
         name: "Femtrics"
       },
       serviceType: "Business Analytics Consulting",
-      areaServed: ["Hyderabad", "Delhi", "Mumbai", "Bangalore", "Chennai", "Pune"],
+      areaServed: ["Hyderabad", "Delhi", "Mumbai", "Bangalore"],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Analytics Services",
