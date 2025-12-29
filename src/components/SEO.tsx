@@ -195,6 +195,14 @@ const SEO: React.FC<SEOProps> = ({
       <link rel="alternate" hrefLang="en-in" href={fullCanonical} />
       <link rel="alternate" hrefLang="x-default" href={fullCanonical} />
 
+      {/* Favicon and Web Manifest */}
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+      <link rel="icon" href="/favicon-16x16.png" sizes="16x16" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec4899" />
+      <link rel="manifest" href="/manifest.json" />
+
       {/* Additional Meta Tags */}
       <meta name="theme-color" content="#ec4899" />
       <meta name="msapplication-TileColor" content="#ec4899" />
