@@ -112,7 +112,6 @@ const Index = () => {
           {
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "@id": "https://femtrics.site/#faq-home",
             "mainEntity": [
               {
                 "@type": "Question",
@@ -127,7 +126,23 @@ const Index = () => {
                 "name": "Who can benefit from Femtrics services?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Women micro-entrepreneurs including home bakers, boutique owners, tiffin services, mehndi artists, tutors, and Instagram-based businesses can benefit from our analytics solutions."
+                  "text": "Women micro-entrepreneurs including home bakers, boutique owners, tiffin services, mehndi artists, tutors, and Instagram-based businesses can benefit from Femtrics."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What services does Femtrics offer?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Femtrics offers a MicroBiz Insight Dashboard, data analytics workshops, business consulting, and customized analytics solutions."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where is Femtrics located?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Femtrics is based in Hyderabad, Telangana, India, and serves women entrepreneurs across the region."
                 }
               }
             ]
