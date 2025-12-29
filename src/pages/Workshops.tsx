@@ -94,12 +94,12 @@ const Workshops = () => {
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = 'https://femtrics.com/workshops';
+    canonical.href = 'https://femtrics.site/workshops';
 
     // Update Open Graph tags
     updateMetaTag('og:title', 'Femtrics Workshops | Data Analytics Training');
     updateMetaTag('og:description', 'Free data analytics workshops for women entrepreneurs. Learn business insights and revenue tracking.');
-    updateMetaTag('og:url', 'https://femtrics.com/workshops');
+    updateMetaTag('og:url', 'https://femtrics.site/workshops');
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Femtrics Workshops | Data Analytics Training');
@@ -274,12 +274,12 @@ const Workshops = () => {
           {
             "@context": "https://schema.org",
             "@type": "Event",
-            "@id": "https://femtrics.com/#workshop-event",
+            "@id": "https://femtrics.site/#workshop-event",
             "name": "Data Analytics Workshops for Women Entrepreneurs",
             "description": "Hands-on data analytics workshops designed specifically for women micro-entrepreneurs to learn data-driven business decision making.",
             "organizer": {
               "@type": "Organization",
-              "@id": "https://femtrics.com/#organization",
+              "@id": "https://femtrics.site/#organization",
               "name": "Femtrics"
             },
             "location": {

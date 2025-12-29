@@ -87,12 +87,12 @@ export const Contact = () => {
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = 'https://femtrics.com/contact';
+    canonical.href = 'https://femtrics.site/contact';
 
     // Update Open Graph tags
     updateMetaTag('og:title', 'Contact Femtrics | Get in Touch');
     updateMetaTag('og:description', 'Contact Femtrics for data analytics solutions and workshops for women entrepreneurs.');
-    updateMetaTag('og:url', 'https://femtrics.com/contact');
+    updateMetaTag('og:url', 'https://femtrics.site/contact');
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'Contact Femtrics | Get in Touch');
@@ -203,13 +203,13 @@ export const Contact = () => {
           {
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            "@id": "https://femtrics.com/#contact-page",
+            "@id": "https://femtrics.site/#contact-page",
             "name": "Contact Femtrics",
             "description": "Get in touch with Femtrics for data analytics solutions and workshops for women entrepreneurs.",
-            "url": "https://femtrics.com/contact",
+            "url": "https://femtrics.site/contact",
             "mainEntity": {
               "@type": "Organization",
-              "@id": "https://femtrics.com/#organization",
+              "@id": "https://femtrics.site/#organization",
               "name": "Femtrics",
               "contactPoint": {
                 "@type": "ContactPoint",

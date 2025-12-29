@@ -38,12 +38,12 @@ const About = () => {
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = 'https://femtrics.com/about';
+    canonical.href = 'https://femtrics.site/about';
 
     // Update Open Graph tags
     updateMetaTag('og:title', 'About Femtrics | Empowering Women Entrepreneurs');
     updateMetaTag('og:description', 'Learn about Femtrics mission to empower women entrepreneurs with data analytics solutions.');
-    updateMetaTag('og:url', 'https://femtrics.com/about');
+    updateMetaTag('og:url', 'https://femtrics.site/about');
 
     // Update Twitter tags
     updateMetaTag('twitter:title', 'About Femtrics | Empowering Women Entrepreneurs');
@@ -71,13 +71,13 @@ const About = () => {
           {
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            "@id": "https://femtrics.com/#about-page",
+            "@id": "https://femtrics.site/#about-page",
             "name": "About Femtrics",
             "description": "Learn about Femtrics' mission to empower women micro-entrepreneurs through data analytics solutions.",
-            "url": "https://femtrics.com/about",
+            "url": "https://femtrics.site/about",
             "mainEntity": {
               "@type": "Organization",
-              "@id": "https://femtrics.com/#organization",
+              "@id": "https://femtrics.site/#organization",
               "name": "Femtrics"
             }
           }

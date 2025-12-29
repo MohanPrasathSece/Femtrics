@@ -487,13 +487,13 @@ const Join = () => {
           {
             "@context": "https://schema.org",
             "@type": "JoinPage",
-            "@id": "https://femtrics.com/#join-page",
+            "@id": "https://femtrics.site/#join-page",
             "name": "Join Femtrics",
             "description": "Join Femtrics to support women entrepreneurs through data analytics and business insights.",
-            "url": "https://femtrics.com/join",
+            "url": "https://femtrics.site/join",
             "mainEntity": {
               "@type": "Organization",
-              "@id": "https://femtrics.com/#organization",
+              "@id": "https://femtrics.site/#organization",
               "name": "Femtrics"
             }
           }

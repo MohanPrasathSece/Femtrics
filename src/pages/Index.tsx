@@ -98,12 +98,12 @@ const Index = () => {
           {
             "@context": "https://schema.org",
             "@type": "Service",
-            "@id": "https://femtrics.com/#service-home",
+            "@id": "https://femtrics.site/#service-home",
             "name": "Data Analytics for Women Entrepreneurs",
             "description": "Comprehensive data analytics solutions designed specifically for women micro-entrepreneurs to make data-driven business decisions.",
             "provider": {
               "@type": "Organization",
-              "@id": "https://femtrics.com/#organization",
+              "@id": "https://femtrics.site/#organization",
               "name": "Femtrics"
             },
             "serviceType": "Business Analytics Consulting",
@@ -112,7 +112,7 @@ const Index = () => {
           {
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "@id": "https://femtrics.com/#faq-home",
+            "@id": "https://femtrics.site/#faq-home",
             "mainEntity": [
               {
                 "@type": "Question",

@@ -16,26 +16,26 @@ const SEO: React.FC<SEOProps> = ({
   title = 'Femtrics | Data Analytics for Women Entrepreneurs | Business Insights & Growth',
   description = 'Femtrics empowers women micro-entrepreneurs across India (Hyderabad, Delhi, Mumbai, Bangalore) with affordable data analytics solutions. Get actionable business insights, revenue tracking, inventory management, and marketing ROI analysis to grow your business.',
   keywords = 'Femtrics, women entrepreneurs India, data analytics for women, business insights, micro-entrepreneurs India, female business owners, data-driven decisions, small business analytics, revenue tracking, inventory management, marketing ROI, business dashboard, women-led businesses, startups India, business growth analytics, Hyderabad, Delhi, Mumbai, Bangalore',
-  canonical = 'https://femtrics.com/',
-  ogImage = 'https://femtrics.com/cover.png',
+  canonical = 'https://femtrics.site/',
+  ogImage = 'https://femtrics.site/cover.png',
   ogType = 'website',
   noindex = false,
   jsonLd = [],
   breadcrumb = []
 }) => {
   const siteTitle = title.includes('Femtrics') ? title : `${title} | Femtrics`;
-  const fullCanonical = canonical.startsWith('http') ? canonical : `https://femtrics.com${canonical}`;
+  const fullCanonical = canonical.startsWith('http') ? canonical : `https://femtrics.site${canonical}`;
 
   // Enhanced Organization Schema with E-E-A-T signals
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://femtrics.com/#organization",
+    "@id": "https://femtrics.site/#organization",
     "name": "Femtrics",
-    "url": "https://femtrics.com",
+    "url": "https://femtrics.site",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://femtrics.com/logo.png",
+      "url": "https://femtrics.site/logo.png",
       "width": 512,
       "height": 512
     },
@@ -82,9 +82,9 @@ const SEO: React.FC<SEOProps> = ({
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://femtrics.com/#localbusiness",
+    "@id": "https://femtrics.site/#localbusiness",
     "name": "Femtrics",
-    "url": "https://femtrics.com",
+    "url": "https://femtrics.site",
     "telephone": "+91-XXXXXXXXXX",
     "address": {
       "@type": "PostalAddress",
@@ -109,15 +109,15 @@ const SEO: React.FC<SEOProps> = ({
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://femtrics.com/#website",
-    "url": "https://femtrics.com",
+    "@id": "https://femtrics.site/#website",
+    "url": "https://femtrics.site",
     "name": "Femtrics",
     "description": "Data analytics solutions for women entrepreneurs in India",
     "inLanguage": "en-US",
     "isAccessibleForFree": true,
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://femtrics.com/search?q={search_term_string}",
+      "target": "https://femtrics.site/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -130,7 +130,7 @@ const SEO: React.FC<SEOProps> = ({
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": `https://femtrics.com${item.url}`
+      "item": `https://femtrics.site${item.url}`
     }))
   } : null;
 
@@ -188,7 +188,12 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:image:alt" content="Femtrics - Data Analytics for Women Entrepreneurs" />
       <meta name="twitter:creator" content="@femtrics" />
       <meta name="twitter:site" content="@femtrics" />
-      <meta name="twitter:domain" content="femtrics.com" />
+      <meta name="twitter:domain" content="femtrics.site" />
+
+      {/* Hreflang Tags for International SEO */}
+      <link rel="alternate" hrefLang="en" href={fullCanonical} />
+      <link rel="alternate" hrefLang="en-in" href={fullCanonical} />
+      <link rel="alternate" hrefLang="x-default" href={fullCanonical} />
 
       {/* Additional Meta Tags */}
       <meta name="theme-color" content="#ec4899" />

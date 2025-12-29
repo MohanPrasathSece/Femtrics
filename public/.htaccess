@@ -3,12 +3,13 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 Disallow: /*.json$
+Disallow: /src/
+Disallow: /node_modules/
 
 # Sitemap location
 Sitemap: https://femtrics.site/sitemap.xml
 
 # Allow search engines to crawl important directories
-Allow: /src/
 Allow: /public/
 Allow: /assets/
 
