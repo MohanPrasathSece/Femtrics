@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /private/
+Allow: /manifest.json
 Disallow: /*.json$
 
 # Sitemap location
