@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage with main images -->
+  <url>
+    <loc>https://femtrics.site/</loc>
+    <image:image>
+      <image:loc>https://femtrics.site/cover.png</image:loc>
+      <image:title>Femtrics - Data Analytics for Women Entrepreneurs</image:title>
+      <image:caption>Empowering women micro-entrepreneurs in Hyderabad with affordable data analytics solutions and business insights</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://femtrics.site/logo.png</image:loc>
+      <image:title>Femtrics Logo</image:title>
+      <image:caption>Femtrics - Data Analytics Platform for Women Entrepreneurs</image:caption>
+    </image:image>
+  </url>
+
+  <!-- About page images -->
+  <url>
+    <loc>https://femtrics.site/about</loc>
+    <image:image>
+      <image:loc>https://femtrics.site/founder.jpg</image:loc>
+      <image:title>Harshini Kalakuntla - Founder of Femtrics</image:title>
+      <image:caption>Harshini Kalakuntla, founder of Femtrics, empowering women entrepreneurs through data analytics</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Workshops page images -->
+  <url>
+    <loc>https://femtrics.site/workshops</loc>
+    <image:image>
+      <image:loc>https://femtrics.site/hero-3.png</image:loc>
+      <image:title>Women in Data Analytics Workshop</image:title>
+      <image:caption>Women entrepreneurs learning data analytics skills at Femtrics workshop in Hyderabad</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://femtrics.site/hero-2.png</image:loc>
+      <image:title>Workshop Resources and Materials</image:title>
+      <image:caption>Data analytics workshop materials and resources for women entrepreneurs</image:caption>
+    </image:image>
+  </url>
+
+  <!-- NGO Partners page images -->
+  <url>
+    <loc>https://femtrics.site/join</loc>
+    <image:image>
+      <image:loc>https://femtrics.site/ngos/image.png</image:loc>
+      <image:title>NGO Partnership with Femtrics</image:title>
+      <image:caption>Partner NGOs working with Femtrics to empower women entrepreneurs</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://femtrics.site/ngos/new.png</image:loc>
+      <image:title>Women Entrepreneur Support Network</image:title>
+      <image:caption>Network of organizations supporting women entrepreneurs through data analytics</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

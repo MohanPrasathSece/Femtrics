@@ -6,6 +6,7 @@ Disallow: /*.json$
 
 # Sitemap location
 Sitemap: https://femtrics.site/sitemap.xml
+Sitemap: https://femtrics.site/image-sitemap.xml
 
 # Allow search engines to crawl important directories
 Allow: /src/
