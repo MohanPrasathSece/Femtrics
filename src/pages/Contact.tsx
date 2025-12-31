@@ -30,7 +30,7 @@ import { isBusinessEmail, isValidPhoneNumber } from "@/lib/emailValidation";
 const faqs = [
   {
     question: "Is Femtrics free to use?",
-    answer: "Yes! Our basic analytics dashboard and all workshops are completely free for eligible women entrepreneurs. We're a social enterprise funded by grants and donations.",
+    answer: "Yes! Our basic analytics dashboard and all workshops are completely free for eligible women entrepreneurs. We're an initiative funded by grants and donations.",
   },
   {
     question: "What kind of businesses can join?",

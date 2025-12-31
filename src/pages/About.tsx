@@ -116,7 +116,7 @@ const About = () => {
                   <div className="flex flex-wrap gap-4 pt-4">
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
                       <Target className="w-4 h-4 text-primary" />
-                      <span className="text-sm font-medium">Social Enterprise</span>
+                      <span className="text-sm font-medium">Initiative</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-pink-50 border border-pink-200">
                       <Heart className="w-4 h-4 text-primary" />
@@ -156,7 +156,7 @@ const About = () => {
                           <Users className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold">500+ Women</p>
+                          <p className="text-sm font-semibold">90+ Women</p>
                           <p className="text-xs text-muted-foreground">Empowered</p>
                         </div>
                       </div>
@@ -206,7 +206,7 @@ const About = () => {
               {[
                 {
                   icon: Users,
-                  title: "500+ Women",
+                  title: "90+ Women",
                   description: "Empowered with business analytics",
                   color: "bg-primary/10 text-primary"
                 },

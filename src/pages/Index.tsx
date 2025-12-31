@@ -243,7 +243,7 @@ const Index = () => {
                 className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100"
               >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">500+</div>
+                  <div className="text-2xl font-bold text-primary">90+</div>
                   <div className="text-sm text-muted-foreground">Women Empowered</div>
                 </div>
               </motion.div>
@@ -631,7 +631,7 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {[
-              { display: "500+", label: "Women Empowered with business analytics" },
+              { display: "90+", label: "Women Empowered with business analytics" },
               { display: "40%", label: "Growth Average revenue increase" },
               { display: "6+", label: "Business Types From boutiques to tiffin services" },
               { display: "15+", label: "Workshops Training programs conducted" },

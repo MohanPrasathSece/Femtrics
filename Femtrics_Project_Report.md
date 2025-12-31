@@ -103,7 +103,7 @@ The true measure of Femtrics is its impact on women entrepreneurs.
 
 | **Metric** | **Value** | **Context** |
 | :--- | :--- | :--- |
-| 👩‍💼 **Women Empowered** | **500+** | Across Hyderabad, Delhi, Mumbai |
+| 👩‍💼 **Women Empowered** | **90+** | Across Hyderabad, Delhi, Mumbai |
 | 📈 **Revenue Growth** | **40%** | Average increase within 6 months |
 | 🎓 **Workshops** | **50+** | Providing data literacy training |
 | ⭐ **Satisfaction** | **95%** | Net Promoter Score |

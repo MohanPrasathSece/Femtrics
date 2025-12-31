@@ -29,7 +29,7 @@ const translations: Translations = {
   "nav.getStarted": { en: "Get Started", hi: "शुरू करें", te: "ప్రారంభించండి" },
 
   // Hero Section
-  "hero.tagline": { en: "A Business-Analytics Social Enterprise", hi: "एक व्यापार-विश्लेषण सामाजिक उद्यम", te: "ఒక వ్యాపార-విశ్లేషణ సామాజిక సంస్థ" },
+  "hero.tagline": { en: "A Business-Analytics Initiative", hi: "एक व्यापार-विश्लेषण पहल", te: "ఒక వ్యాపార-విశ్లేషణ ప్రారంభం" },
   "hero.title": { en: "Where women lead with data, not guesswork.", hi: "जहां महिलाएं अनुमान नहीं, डेटा के साथ आगे बढ़ती हैं।", te: "మహిళలు ఊహాజనితంగా కాకుండా, డేటాతో నడిచే చోట." },
   "hero.description": { en: "Femtrics provides affordable, simple, and actionable business analytics to women micro-entrepreneurs so they can grow revenue, reduce waste, and make data-driven decisions.", hi: "फेमट्रिक्स महिला सूक्ष्म-उद्यमियों को सस्ती, सरल और व्यावहारिक व्यापार विश्लेषण प्रदान करता है ताकि वे राजस्व बढ़ा सकें, अपव्यय कम कर सकें और डेटा-आधारित निर्णय ले सकें।", te: "ఫెమ్ట్రిక్స్ మహిళా సూక్ష్మ-వ్యాపారులకు సరసమైన, సరళమైన మరియు చర్యాత్మక వ్యాపార విశ్లేషణను అందిస్తుంది, తద్వారా వారు ఆదాయాన్ని పెంచుకోవచ్చు, వృథా తగ్గించవచ్చు మరియు డేటా-ఆధారిత నిర్ణయాలు తీసుకోవచ్చు." },
   "hero.apply": { en: "Apply Your Business", hi: "अपना व्यवसाय आवेदन करें", te: "మీ వ్యాపారాన్ని దరఖాస్తు చేయండి" },
@@ -188,7 +188,7 @@ const translations: Translations = {
 
   // About Page
   "about.aboutFemtrics": { en: "About Femtrics", hi: "फेमट्रिक्स के बारे में", te: "ఫెమ్ట్రిక్స్ గురించి" },
-  "about.socialEnterprise": { en: "A Business-Analytics Social Enterprise for", hi: "के लिए एक व्यापार-विश्लेषण सामाजिक उद्यम", te: "కోసం ఒక వ్యాపార-విశ్లేషణ సామాజిక సంస్థ" },
+  "about.socialEnterprise": { en: "A Business-Analytics Initiative for", hi: "के लिए एक व्यापार-विश्लेषण पहल", te: "కోసం ఒక వ్యాపార-విశ్లేషణ ప్రారంభం" },
   "about.women": { en: "Women", hi: "महिलाएं", te: "మహిళలు" },
   "about.ourStory": { en: "Our Story", hi: "हमारी कहानी", te: "మా కథ" },
   "about.bornFromBelief": { en: "Born from a simple belief", hi: "एक साधारण विश्वास से जन्म", te: "సాధారణ నమ్మకం నుండి జన్మించింది" },
