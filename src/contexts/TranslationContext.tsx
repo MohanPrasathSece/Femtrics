@@ -60,7 +60,7 @@ const translations: Translations = {
   "common.ourGoals": { en: "Our Goals", hi: "हमारे लक्ष्य", te: "మా లక్ష్యాలు" },
   "common.analyticsThatWork": { en: "Analytics That Work For You", hi: "आपके लिए काम करने वाला विश्लेषण", te: "మీ కోసం పని చేసే విశ్లేషణ" },
   "common.simpleAffordable": { en: "Simple, affordable, and actionable analytics solutions designed for micro-entrepreneurs", hi: "सूक्ष्म-उद्यमियों के लिए डिज़ाइन किए गए सरल, सस्ती और व्यावहारिक विश्लेषण समाधान", te: "సూక్ష్మ-వ్యాపారుల కోసం రూపొందించబడిన సరళమైన, సరసమైన మరియు చర్యాత్మక విశ్లేషణ పరిష్కారాలు" },
-  "common.womenOnboarded": { en: "Women onboarded", hi: "महिलाएं शामिल हुईं", te: "మహిళలు చేరారు" },
+  "common.womenOnboarded": { en: "businesses onboarded", hi: "व्यवसाय शामिल हुए", te: "వ్యాపారాలు చేరాయి" },
   "common.revenueImprovement": { en: "Revenue improvement", hi: "राजस्व में सुधार", te: "ఆదాయ మెరుగుదల" },
   "common.inventoryWasteReduction": { en: "Inventory waste reduction", hi: "इन्वेंटरी अपव्यय में कमी", te: "ఇన్వెంటరీ వృథా తగ్గింపు" },
   "common.dashboardsDeployed": { en: "Dashboards deployed", hi: "डैशबोर्ड तैनात", te: "డాష్‌బోర్డ్‌లు అమలు చేయబడ్డాయి" },

@@ -156,8 +156,8 @@ const About = () => {
                           <Users className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold">90+ Women</p>
-                          <p className="text-xs text-muted-foreground">Empowered</p>
+                          <p className="text-sm font-semibold">90+</p>
+                          <p className="text-xs text-muted-foreground">businesses onboarded</p>
                         </div>
                       </div>
                     </motion.div>
@@ -206,8 +206,8 @@ const About = () => {
               {[
                 {
                   icon: Users,
-                  title: "90+ Women",
-                  description: "Empowered with business analytics",
+                  title: "90+",
+                  description: "businesses onboarded",
                   color: "bg-primary/10 text-primary"
                 },
                 {
